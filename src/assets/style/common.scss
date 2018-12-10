@@ -94,6 +94,9 @@ input[type="number"] {
         -ms-flex-pack: center;
             justify-content: center;
 }
+.tl{
+    text-align: left;
+}
 .tc{
 	text-align: center;
 }
@@ -182,7 +185,7 @@ input[type="number"] {
 .active{color: #7a98f7;border-bottom: 1px solid #7a98f7;}
 .bg-part{background-color: #181b2a;}
 .radius4{border-radius: 4px;}
-.bdb{border-bottom: 1px solid #1B2A3E;}
+.bdb{border-bottom: 1px solid #303b4b;}
 .baseBtn {
     background-color: rgb(86, 151, 244);
     color: rgb(255, 255, 255);
