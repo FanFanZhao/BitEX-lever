@@ -258,7 +258,7 @@ export default {
         border-radius: 50%;
         width: 50px;
         height: 50px;
-        background: #2e1b85;
+        background: #7a98f7;
         text-align: center;
       }
     }
@@ -291,7 +291,7 @@ export default {
         cursor: pointer;
       }
       > .now {
-        color: #2e1b85;
+        color: #7a98f7;
         font-weight: 600;
       }
     }
@@ -334,7 +334,7 @@ export default {
           height: 30px;
           span {
             float: right;
-            background: #2e1b85;
+            background: #7a98f7;
             padding: 0 16px;
             border-radius: 2px;
             color: #fff;
@@ -385,7 +385,7 @@ export default {
         cursor: pointer;
         > .selected {
           font-weight: bold;
-          color: #2e1b85;
+          color: #7a98f7;
         }
       }
       > .inp {
@@ -407,7 +407,7 @@ export default {
       > .tip {
         font-size: 12px;
         margin-top: 10px 16px;
-        color: #2e1b85;
+        color: #7a98f7;
       }
       > .btns {
         justify-content: space-between;
@@ -423,7 +423,7 @@ export default {
           background: #ccc;
         }
         > .ok {
-          background: #2e1b85;
+          background: #7a98f7;
           color: #fff;
         }
       }

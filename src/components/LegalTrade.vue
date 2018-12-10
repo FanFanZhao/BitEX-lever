@@ -1,6 +1,6 @@
 <template>
 	<div id="legaltrade-box" class="white">
-		<div class="buy-sell flex bg-part">
+		<div class="buy-sell flex">
 			<div class="buy-box bod_rc">
 				<div class="title">购买</div>
 				<ul :class="['flex',{'now':type == 'sell'}]">
@@ -252,21 +252,11 @@
 					};
 					_this.buyHttp('/api/do_legal_deal', datas, function(res) {
 						if(res.data.type == 'ok'){
-						console.log(123456)
-							if (res.data.message.data.type == 'sell') {
-								// layer.msg(res.data.message.msg)
-					            if(_this.type=='sell'){
-									layer.msg(res.data.message.msg+'如30分钟未完成交易,可自行取消交易！')
-								}
-							setTimeout(function() {
-								_this.$router.push({path:'/legalPay',query:{id:res.data.message.data.id}});
-							}, 500)
-						} else {
+						    console.log(res)
 							layer.msg(res.data.message.msg)
 							setTimeout(function() {
 								_this.$router.push({path:'/legalPayDetail',query:{id:res.data.message.data.id}});
 							}, 500)
-						}
 					}else{
 						layer.msg(res.data.message);
 					}
@@ -292,7 +282,7 @@
 				}).then(res => {
 					console.log(res);
 					if (res.data.type == 'ok') {
-						layer.msg(res.data.message)
+						// layer.msg(res.data.message)
 						callback && callback(res)
 					} else {
 						layer.msg(res.data.message)
@@ -321,7 +311,7 @@
 </script>
 
 <style lang='scss'>
-	$purple:#563BD1;
+	$purple:#638bd4;
 
 	.body {
 		width: 100%;
@@ -366,7 +356,7 @@
 					>.current {
 						// color: $purple;
 						// border-bottom: 2px solid $purple;
-						// background: #563BD1;
+						// background: #638bd4;
 						border-bottom: 2px solid #638bd4;
 						font-weight: 600;
 						color: #638bd4;
@@ -396,7 +386,6 @@
 
 				>div:last-child {
 					text-align: right;
-					justify-content: flex-end;
 				}
 			}
 
@@ -428,7 +417,7 @@
 
 					>div:last-child {
 						text-align: right;
-
+					    justify-content: flex-end;
 						>button {
 							background-color: #638BD4;
 							padding: 0px 10px;
@@ -540,6 +529,8 @@
 							line-height: 38px;
 							padding-left: 10px;
 							font-size: 15px;
+							background: none;
+							color: #c7cce6
 						}
 
 						>button {
@@ -550,7 +541,9 @@
 							margin-right: 15px;
 							margin-top: 9px;
 							padding-left: 20px;
+							border: none;
 							border-left: 1px solid #e5e5e5;
+							color: #fff
 						}
 
 						>span {

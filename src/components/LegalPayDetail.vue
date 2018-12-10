@@ -35,14 +35,10 @@
         <span>下单时间：</span>
         <span>{{msg.format_create_time}}</span>
       </div>
-      <div>
-        <span>识别码：</span>
-        <span style="color:red">{{msg.messy_code}}</span>
-      </div>
-      <div v-if="msg.pay_voucher">
+      <!-- <div v-if="msg.pay_voucher">
         <span>支付凭证：</span>
         <img :src="msg.pay_voucher" alt="" class="curPer" style="width:40px;height:40px" @click="evimgs(msg.pay_voucher)">
-      </div>
+      </div> -->
       <div>
         <span>参考号：</span>
         <span>{{msg.id}}</span>
@@ -189,7 +185,7 @@ export default {
         headers:{Authorization:this.token}
       }).then(res => {
         layer.msg(res.data.message);
-        this.showConfirm = false;
+        this.hasPay = false;
       })
     },
     evimgs(src){
@@ -246,7 +242,7 @@ export default {
         color: #fff;
         border-radius: 2px;
         padding: 0 16px;
-        background: #2E1B85;
+        background: #7a98f7;
         margin-right: 30px;
         font-size: 14px;
       }
@@ -264,7 +260,7 @@ export default {
     height: 100%;
     background: rgba(0,0,0,.7);
     >.content{
-      background: #fff;
+      background: #262a42;
       margin: 200px auto 0;
       border-radius: 2px;
       width: 360px;
@@ -276,13 +272,13 @@ export default {
       }
       >.flex{
         margin-top: 10px;
-        border-top: 1px solid #ccc;
+        border-top: 1px solid #1B2A3E;
         cursor: pointer;
         div{
           width: 50%;
         }
         >div:first-child{
-          border-right: 1px solid #ccc;
+          border-right: 1px solid #1B2A3E;
         }
       }
     }

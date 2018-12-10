@@ -1,5 +1,5 @@
 <template>
-  <div id="myshops">
+  <div id="myshops" class="white">
     <div class="title bgf8">我的店铺</div>
     <div class="list-box bgf8">
       <div class="list-header flex">
@@ -95,7 +95,7 @@ export default {
           height: 30px;
           border-radius: 50%;
           text-align: center;
-          background: #2e1b85;
+          background: #7a98f7;
           color: #fff;
           margin-right: 5px;
           line-height: 30px;
@@ -106,7 +106,7 @@ export default {
       float: right;
       padding: 0 14px;
       border-radius: 2px;
-      background: #2e1b85;
+      background: #7a98f7;
       color: #fff;
       cursor: pointer;
       font-size: 14px;
