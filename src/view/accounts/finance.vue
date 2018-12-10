@@ -25,6 +25,7 @@
         <p class="flex1 tc">冻结</p>
         <!-- <p class="flex1 tc">BTC估值<i></i></p> -->
         <!-- <p class="flex1 tc">锁仓</p> -->
+        <p class="flex1 tc">折合(CNY)</p>
         <p class="flex1 tc">操作</p>
       </div>
       <ul class="content_ul">
@@ -33,6 +34,7 @@
             <p class="flex1 tc">{{item.currency_name}}</p>
             <p class="flex1 tc">{{item.lever_balance || '0.00' | toFixeds}}</p>
             <p class="flex1 tc">{{item.lock_lever_balance || '0.00' | toFixeds}}</p>
+            <p class="flex1 tc">{{item.cny_price * item.lever_balance || '0.00' | toFixeds}}</p>
             <!-- <p class="flex1 tc">{{item.valuation}}</p> -->
             <!-- <p class="flex1 tc">{{item.lock_position}}</p> -->
             <p class="flex1 tc operation">

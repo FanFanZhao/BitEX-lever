@@ -31,7 +31,7 @@ export default {
   },
   data() {
     return {
-      name: "C2C账户",
+      name: "法币账户",
       leverName: "杠杆账户",
       totalMoney: "",
       leverMoney: "",
