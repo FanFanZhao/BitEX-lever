@@ -16,26 +16,31 @@
 			<div class="record light_blue" @click="recordList()">订单记录</div>
 		</div>
 		<div class="list-box">
-			<div class="list-title flex ft14 gray9">
-				<div>商家</div>
+			<div class="list-title flex ft14 gray9 tc">
+				<div class="tl">商家</div>
 				<div>数量</div>
 				<div>限额</div>
 				<div>单价</div>
 				<div>支付方式</div>
-				<div>操作</div>
+				<div class="tr">操作</div>
 			</div>
 			<ul class="list">
-				<li v-for="(item,index) in list" :key="index" class="flex bod_bc ft14">
+				<li v-for="(item,index) in list" :key="index" class="bdb flex bod_bc ft14 tc">
 					<div class="flex alcenter">
-						<img :src="item.currency_logo" alt="">
-						<div class="flex column center">
+						<img :src="item.currency_logo" alt="" class="head">
+						<div class="flex column">
 							<span class="light_blue bold">{{item.seller_name}}</span>
 						</div>
 					</div>
-					<div class="flex alcenter">{{item.surplus_number}}  {{item.currency_name}}</div>
-					<div class="flex alcenter">￥{{(item.limitation.min-0).toFixed(2)}}-￥{{(item.limitation.max-0).toFixed(2)}}CNY</div>
-					<div class="flex alcenter price ft16 bold">{{item.price}}</div>
-					<div class="flex alcenter">{{item.way_name}}</div>
+					<div class="flex alcenter center">{{item.surplus_number}}  {{item.currency_name}}</div>
+					<div class="flex alcenter center">￥{{(item.limitation.min-0).toFixed(2)}}-￥{{(item.limitation.max-0).toFixed(2)}}CNY</div>
+					<div class="flex alcenter price ft16 bold center">{{item.price}}</div>
+					<!-- <div class="flex alcenter">{{item.way_name}}</div> -->
+					<div class="flex alcenter center">
+						<img v-if="item.way_name == '支付宝'" src="../assets/images/zfb_icon.png" /> 
+						 <img v-if="item.way_name == '微信'" src="../assets/images/wx_icon.png" />
+						<img v-if="item.way_name == '1'" src="../assets/images/bank_icon.png" />
+					</div>
 					<div class="flex alcenter end"  @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id,item.type)">
 						<button class="curPer">{{classify}}{{name}}</button>
 					</div>
@@ -60,7 +65,7 @@
 					<div class="totals-num">
 						<input v-if=" types == 'trade' " class="number" type="number" :placeholder='"请输入欲"+money_type+"总额"' v-model="nums">
 						<input v-else class="number" type="number" :placeholder='"请输入要"+money_type+"数量"' v-model="nums">
-						<button class="all" type="button" v-if=" type== 'buy' " @click="allMoney();">全部买入</button>
+						<button class="all" type="button" v-if=" type== 'sell' " @click="allMoney();">全部买入</button>
 						<button class="all" type="button" v-else @click="allMoney();">全部卖出</button>
 						<span class="name">{{name01}}</span>
 					</div>
@@ -108,7 +113,9 @@
 				totalNums: '0.00',
 				ID:'',
 				money_type:'',
-				name01:'CNY'
+				name01:'CNY',
+				interval:function(){}
+
 			};
 		},
 		created() {
@@ -128,7 +135,9 @@
 		},
 		methods: {
 			close(){
-                this.shows=false;
+				this.shows=false;
+				clearInterval(this.interval);//清除定时器
+				this.time=60
 			},
 			getCoins() {
 				this.$http({
@@ -209,13 +218,21 @@
 				_this.prices = prices;
 				_this.minNum = min;
 				_this.maxNum = max;
-			      var t1 = setInterval(function() {
+			    // var t1 = setInterval(function() {
+				// 	_this.time--;
+				// 	if (_this.time <= 0) {
+				// 		_this.shows = false;
+				// 		document.body.removeAttribute("class", "body");
+				// 		clearInterval(t1);//清除定时器
+				// 	}
+				// }, 1000)
+				_this.interval=setInterval(function() {
 					_this.time--;
 					if (_this.time <= 0) {
 						_this.shows = false;
 						document.body.removeAttribute("class", "body");
-						//清除定时器
-						clearInterval(t1);
+						clearInterval(_this.interval);//清除定时器
+						_this.time=60;
 					}
 				}, 1000)
 			},
@@ -400,7 +417,7 @@
 						flex: 1;
 						line-height: 36px;
 
-						>img {
+						>.head {
 							width: 36px;
 							height: 36px;
 							border-radius: 50%;
