@@ -60,7 +60,7 @@
 					<div class="totals-num">
 						<input v-if=" types == 'trade' " class="number" type="number" :placeholder='"请输入欲"+money_type+"总额"' v-model="nums">
 						<input v-else class="number" type="number" :placeholder='"请输入要"+money_type+"数量"' v-model="nums">
-						<button class="all" type="button" v-if=" type== 'buy' " @click="allMoney();">全部买入</button>
+						<button class="all" type="button" v-if=" type== 'sell' " @click="allMoney();">全部买入</button>
 						<button class="all" type="button" v-else @click="allMoney();">全部卖出</button>
 						<span class="name">{{name01}}</span>
 					</div>
@@ -108,7 +108,9 @@
 				totalNums: '0.00',
 				ID:'',
 				money_type:'',
-				name01:'CNY'
+				name01:'CNY',
+				interval:function(){}
+
 			};
 		},
 		created() {
@@ -128,7 +130,9 @@
 		},
 		methods: {
 			close(){
-                this.shows=false;
+				this.shows=false;
+				clearInterval(this.interval);//清除定时器
+				this.time=60
 			},
 			getCoins() {
 				this.$http({
@@ -209,13 +213,21 @@
 				_this.prices = prices;
 				_this.minNum = min;
 				_this.maxNum = max;
-			      var t1 = setInterval(function() {
+			    // var t1 = setInterval(function() {
+				// 	_this.time--;
+				// 	if (_this.time <= 0) {
+				// 		_this.shows = false;
+				// 		document.body.removeAttribute("class", "body");
+				// 		clearInterval(t1);//清除定时器
+				// 	}
+				// }, 1000)
+				_this.interval=setInterval(function() {
 					_this.time--;
 					if (_this.time <= 0) {
 						_this.shows = false;
 						document.body.removeAttribute("class", "body");
-						//清除定时器
-						clearInterval(t1);
+						clearInterval(_this.interval);//清除定时器
+						_this.time=60;
 					}
 				}, 1000)
 			},
