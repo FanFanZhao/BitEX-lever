@@ -6,9 +6,10 @@
 				<!-- <li  class="base" :class="{active:index==current}"  v-for="(tabs,index) in tabList" :key="index"  @click="goto(index,tabs.page)">{{tabs.title}}</li> -->
 				<li  class="base" ><router-link to="/" exact>首页</router-link></li>
 				<!-- <li  class="base" ><router-link to="/c2c">C2C交易</router-link></li> -->
-				<li  class="base" ><router-link to="/legalTrade">法币交易</router-link></li>
-        <li  class="base" ><router-link to="/leverdealCenter">杠杆交易</router-link></li>
-        <li  class="base" ><router-link to="/finance">我的资产</router-link></li>
+				<li  class="base"><router-link to="/legalTrade">法币交易</router-link></li>
+        <li  class="base"><router-link to="/leverdealCenter">杠杆交易</router-link></li>
+        <li  class="base" v-if="isShow"><router-link to="/myLegalShops">我的商铺</router-link></li>
+        <li  class="base"><router-link to="/finance">我的资产</router-link></li>
 
         
 
@@ -91,6 +92,7 @@ export default {
       account_number: "",
       assets: "资产",
       orders: "订单",
+      isShow:false,
       show1: false,
       show2: false,
       show3: false,
@@ -221,6 +223,18 @@ export default {
   mounted() {
     this.account_number = localStorage.getItem('accountNum') || '';
     this.extension_code = localStorage.getItem('extension_code') || '';
+    this.is_seller = window.localStorage.getItem("is_seller") || "";
+    if(this.is_seller == 1){
+      this.isShow = true;
+    }
+    eventBus.$on("seller", msg => {
+      if(msg){
+          this.is_seller = window.localStorage.getItem("is_seller") || "";
+          if(this.is_seller == 1){
+            this.isShow = true;
+          }
+      }
+    });
     this.bus.$on("nav_name", name => {
       console.log(name);
       this.current = this.tabList.findIndex(

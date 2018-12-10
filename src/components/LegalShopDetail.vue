@@ -1,5 +1,5 @@
 <template>
-  <div id="legal-shop-detail">
+  <div id="legal-shop-detail" class="white">
     <div class="top flex bgf8">
       <div class="top-t flex bod_rc">
         <div class="logo">k</div>
@@ -129,7 +129,7 @@
           <span>最小交易数量：</span>
           <input type="text" v-model="min_number">
         </div>
-        <div class="btn" @click="fabu">发布</div>
+        <div class="btn curPer" @click="fabu">发布</div>
       </div>
     </div>
   </div>
@@ -393,7 +393,7 @@ export default {
         border-radius: 50%;
         width: 50px;
         height: 50px;
-        background: #2e1b85;
+        background: #7a98f7;
         text-align: center;
       }
     }
@@ -414,7 +414,7 @@ export default {
         font-size: 14px;
         height: 30px;
         line-height: 30px;
-        background: #2e1b85;
+        background: #7a98f7;
         cursor: pointer;
       }
     }
@@ -446,7 +446,7 @@ export default {
         cursor: pointer;
       }
       .now {
-        color: #2e1b85;
+        color: #7a98f7;
         font-weight: 600;
       }
     }
@@ -484,7 +484,7 @@ export default {
           height: 30px;
           span {
             float: right;
-            background: #2e1b85;
+            background: #7a98f7;
             padding: 0 12px;
             border-radius: 2px;
             color: #fff;
@@ -517,7 +517,7 @@ export default {
       border-radius: 4px;
       width: 440px;
       padding: 20px 30px 26px 30px;
-      background: #fff;
+      background: #262a42;
       line-height: 30px;
       position: relative;
       .close{
@@ -535,12 +535,12 @@ export default {
         .now{
           font-weight: 600;
           padding-bottom: 3px;
-          color: #2e1b85;
-          border-bottom: 2px solid #2e1b85;
+          color: #7a98f7;
+          border-bottom: 2px solid #7a98f7;
         }
       }
       >.btn{
-        background: #2e1b85;
+        background: #7a98f7;
         color: #fff;
         border-radius: 2px;
         text-align: center;
@@ -554,35 +554,37 @@ export default {
         }
         input,select{
           border-radius: 2px;
-          border: 1px solid #ccc;
+          border: 1px solid #1B2A3E;
           padding: 0 16px;
           flex:1;
+          background: #181b2a;
+          color: #fff;
         }
       }
       > .tab {
         margin: 10px 0 20px;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid #1B2A3E;
         span {
           margin-right: 20px;
         }
         cursor: pointer;
         > .selected {
           font-weight: bold;
-          color: #2e1b85;
+          color: #7a98f7;
         }
       }
       > .inp {
         display: flex;
         border-radius: 2px;
         justify-content: space-between;
-        border: 1px solid #ccc;
+        border: 1px solid #1B2A3E;
         padding: 3px 16px;
         span {
           padding-left: 10px;
           margin-left: 10px;
         }
         .all {
-          border-left: 1px solid #ccc;
+          border-left: 1px solid #1B2A3E;
           font-weight: 600;
           cursor: pointer;
         }
@@ -590,7 +592,7 @@ export default {
       > .tip {
         font-size: 12px;
         margin-top: 10px 16px;
-        color: #2e1b85;
+        color: #7a98f7;
       }
       > .btns {
         justify-content: space-between;
@@ -606,7 +608,7 @@ export default {
           background: #ccc;
         }
         > .ok {
-          background: #2e1b85;
+          background: #7a98f7;
           color: #fff;
         }
       }

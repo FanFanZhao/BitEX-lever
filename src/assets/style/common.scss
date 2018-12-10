@@ -24,7 +24,11 @@ input{
 	border:0;
     outline:0;
     border-radius: 2px;
-    // #181b2a
+}
+button{
+    border:0;
+    outline:0;
+    border-color: transparent;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -176,7 +180,9 @@ input[type="number"] {
 .topshadow{-webkit-box-shadow: 0 3px 6px rgba(0,0,0,.1);box-shadow: 0 3px 6px rgba(0,0,0,.1);}
 .ttBk{background-color: #1b1e2e;}
 .active{color: #7a98f7;border-bottom: 1px solid #7a98f7;}
-// .bg-part{background-color: #181b2a;}
+.bg-part{background-color: #181b2a;}
+.radius4{border-radius: 4px;}
+.bdb{border-bottom: 1px solid #1B2A3E;}
 .baseBtn {
     background-color: rgb(86, 151, 244);
     color: rgb(255, 255, 255);

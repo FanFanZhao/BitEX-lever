@@ -1,10 +1,10 @@
 <template>
-  <div id="legal-pay">
-    <div class="title">
+  <div id="legal-pay" class="white">
+    <div class="title bg-part">
       <span>请付款</span>
       <span>￥{{msg.deal_money}}</span>
     </div>
-    <div class="info">
+    <div class="info bg-part">
       <div>
         <span>交易单价：</span>
         <span>{{msg.price}}</span>
@@ -30,24 +30,20 @@
         <span>{{msg.seller_phone}}</span>
       </div>
       <div>
-        <span>识别码：</span>
-        <span style="color:red">{{msg.messy_code}}      (*转账时请务必备注此识别码)</span>
-      </div>
-      <div>
         <span>参考号：</span>
         <span>{{msg.id}}</span>
       </div>
       <div>
         <span>商家账户：</span>
-        <router-link :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span" style="color:#2E1B85">{{msg.seller_name}}</router-link>
+        <router-link :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span" style="color:#638bd4">{{msg.seller_name}}</router-link>
       </div>
       <div class="btns">
         <div class="btn" @click="showCancel = true">取消订单</div>
-        <!-- <div class="btn" @click="showConfirm = true">我已付款，点击确认</div> -->
-        <div class="btn imgbtn">
+        <div class="btn" @click="showConfirm = true">我已付款，点击确认</div>
+        <!-- <div class="btn imgbtn">
           我已付款，上传付款凭证
           <input type="file" id="file" accept="image/*" @change="file" >
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="cancel-box" v-if="showCancel">
@@ -191,7 +187,6 @@ export default {
   width: 1200px;
   margin: 50px auto;
   > .title {
-    background: #f8f8f8;
     margin-bottom: 20px;
     font-size: 20px;
     line-height: 60px;
@@ -203,7 +198,6 @@ export default {
     }
   }
   > .info {
-    background: #f8f8f8;
     padding: 0 30px;
     line-height: 40px;
     >div{
@@ -219,7 +213,7 @@ export default {
         color: #fff;
         border-radius: 2px;
         padding: 0 16px;
-        background: #2E1B85;
+        background: #638bd4;
         margin-right: 30px;
         font-size: 14px;
       }
@@ -240,7 +234,7 @@ export default {
       margin: 200px auto 0;
       border-radius: 2px;
       width: 360px;
-      background: #fff;
+      background: #181b2a;
       line-height: 40px;
       text-align: center;
       >div:first-child{
@@ -248,13 +242,13 @@ export default {
       }
       >.flex{
         margin-top: 10px;
-        border-top: 1px solid #ccc;
+        border-top: 1px solid #1B2A3E;
         cursor: pointer;
         div{
           width: 50%;
         }
         >div:first-child{
-          border-right: 1px solid #ccc;
+          border-right: 1px solid #1B2A3E;
         }
       }
     }

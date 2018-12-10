@@ -1,5 +1,5 @@
 <template>
-  <div id="legal-pay-detail" class="bg-part">
+  <div id="legal-pay-detail" class="bg-part white">
     <div class="title bg-part">
       <span v-if="msg.is_sure == 0">未完成</span>
       <span v-if="msg.is_sure == 1">已完成</span>
@@ -53,16 +53,12 @@
       </div>
       <div>
         <span>联系方式：</span>
-        <span>{{msg.is_seller==1?msg.buyer_phone:msg.seller_phone}}</span>
+        <span>{{msg.type=='sell'?msg.phone:msg.seller_phone}}</span>
       </div>
-      <div v-if="msg.pay_voucher"> 
+      <!-- <div v-if="msg.pay_voucher"> 
         <span>支付凭证</span>
         <img :src="msg.pay_voucher" alt="" class="pay_voucher" @click="evimgs(msg.pay_voucher)">
-      </div>
-      <div>
-        <span>识别码：</span>
-        <span style="color:red">{{msg.messy_code}}      (*转账时请务必备注此识别码)</span>
-      </div>
+      </div> -->
       <div>
         <span>参考号：</span>
         <span>{{msg.id}}</span>
@@ -74,9 +70,9 @@
       <div class="btns">
         <div class="btn" @click="showCancel = true" v-if="msg.is_sure == 0 && msg.type =='buy'">取消订单</div>
         <div class="btn" @click="showConfirm = true" v-if="(msg.is_sure == 3) && (msg.type =='sell')">确认已收款</div>
-        <div class="btn imgbtn" v-if="(msg.is_sure==0) && (msg.type=='buy')">
-          我已付款，上传付款凭证
-          <input type="file" id="file" accept="image/*" @change="file" >
+        <div class="btn imgbtn" v-if="(msg.is_sure==0) && (msg.type=='buy')" @click="showPay = true">
+          我已付款,请点击确认
+          <!-- <input type="file" id="file" accept="image/*" @change="file" > -->
         </div>
       </div>
     </div>
@@ -312,7 +308,7 @@ export default {
         color: #fff;
         border-radius: 2px;
         padding: 0 16px;
-        background: #2E1B85;
+        background: #7a98f7;
         margin-right: 30px;
         font-size: 14px;
       }
@@ -333,7 +329,7 @@ export default {
       margin: 200px auto 0;
       border-radius: 2px;
       width: 360px;
-      background: #fff;
+      background: #181b2a;
       line-height: 40px;
       text-align: center;
       >div:first-child{
@@ -341,13 +337,13 @@ export default {
       }
       >.flex{
         margin-top: 10px;
-        border-top: 1px solid #ccc;
+        border-top: 1px solid #1B2A3E;
         cursor: pointer;
         div{
           width: 50%;
         }
         >div:first-child{
-          border-right: 1px solid #ccc;
+          border-right: 1px solid #1B2A3E;
         }
       }
     }

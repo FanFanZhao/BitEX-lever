@@ -63,9 +63,11 @@ import indexFooter from '@/view/indexFooter'
                     // console.log(res);
                     if(res.data.type == 'ok'){
                     console.log(res)
-                    localStorage.setItem('user_id',res.data.message.id);
-                    // localStorage.setItem('email',res.data.message.email);
-                    localStorage.setItem('extension_code',res.data.message.extension_code);
+                        localStorage.setItem('user_id',res.data.message.id);
+                        // localStorage.setItem('email',res.data.message.email);
+                        localStorage.setItem('extension_code',res.data.message.extension_code);
+                        localStorage.setItem('is_seller',res.data.message.is_seller);
+                        eventBus.$emit("seller", res.data.message.is_seller);
                     }
                 }).catch(error=>{
                     
