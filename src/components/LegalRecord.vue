@@ -1,5 +1,5 @@
 <template>
-  <div id="legal-record">
+  <div id="legal-record" class="white">
     <div class="title bgf8">法币交易记录</div>
     <div class="filter-box ft14 bgf8">
       <div>

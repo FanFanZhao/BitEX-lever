@@ -1,5 +1,5 @@
 <template>
-	<div id="legaltrade-box">
+	<div id="legaltrade-box" class="white">
 		<div class="buy-sell flex bg-part">
 			<div class="buy-box bod_rc">
 				<div class="title">购买</div>
@@ -355,7 +355,7 @@
 						margin-right: 16px;
 						cursor: pointer;
 						padding: 2px 6px;
-						color: #638bd4;
+						color: #fff;
 					}
 				}
 
@@ -367,9 +367,9 @@
 						// color: $purple;
 						// border-bottom: 2px solid $purple;
 						// background: #563BD1;
-						border-bottom: 2px solid #333;
+						border-bottom: 2px solid #638bd4;
 						font-weight: 600;
-						color: #333;
+						color: #638bd4;
 						padding: 2px 6px;
 					}
 				}
@@ -396,6 +396,7 @@
 
 				>div:last-child {
 					text-align: right;
+					justify-content: flex-end;
 				}
 			}
 
@@ -434,6 +435,7 @@
 							color: #fff;
 							border-radius: 4px;
 							line-height: 36px;
+							border: none;
 						}
 					}
 				}
@@ -484,7 +486,7 @@
 			>.content {
 				width: 100%;
 				height: 100%;
-				background-color: rgba(0, 0, 0, 0);
+				background-color: rgba(0, 0, 0, 0.5);
 				position: absolute;
 				left: 0;
 				right: 0;
@@ -500,7 +502,7 @@
 					width: 400px;
 					border-radius: 10px;
 					margin: auto;
-					background-color: #fff;
+					background-color: #262a42;
 					padding: 15px;
 
 					>.title {

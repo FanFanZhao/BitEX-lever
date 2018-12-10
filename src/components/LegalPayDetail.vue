@@ -1,5 +1,5 @@
 <template>
-  <div id="legal-pay-detail" class="bg-part">
+  <div id="legal-pay-detail" class="bg-part white">
     <div class="title bg-part">
       <span v-if="msg.is_sure == 0">待付款</span>
       <span v-if="msg.is_sure == 1">已完成</span>
