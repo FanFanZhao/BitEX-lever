@@ -45,7 +45,12 @@
                 :class="['share',{'active':type ==item.value}]"
                 @click="select(item.value,'buy')"
               >{{item.value}}手</b>
-              <input type="number" class="share-input" v-model="buySahre">
+              <input
+                type="number"
+                class="share-input"
+                v-model="buySahre"
+                @input="changeValue('buy')"
+              >
             </div>
           </div>
           <div class="lever-total fColor1">
@@ -109,7 +114,12 @@
                 :class="['share',{'actives':types == item.value}]"
                 @click="select(item.value,'sell')"
               >{{item.value}}手</b>
-              <input type="number" class="share-input" v-model="sellShare">
+              <input
+                type="number"
+                class="share-input"
+                v-model="sellShare"
+                @input="changeValue('sell')"
+              >
             </div>
 
             <!-- <b :class="['share',{'actives':types =='3'}]" @click="select(3,'sell')">3手</b>
@@ -207,7 +217,7 @@
           </li>
           <li class="flex">
             <p>手数：</p>
-            <p>{{buyType == '1' ? type : types}}</p>
+            <p>{{buyType == '1' ? buySahre : sellShare}}</p>
           </li>
           <li class="flex">
             <p>倍数：</p>
@@ -248,8 +258,8 @@ export default {
       allBalance: 0,
       buyInfo: { buy_selected: "", buyNum: 0, url: "lever/submit" },
       sellInfo: { sell_selected: "", sellNum: 0, url: "lever/submit" },
-      type: 1,
-      types: 1,
+      type: "",
+      types: "",
       shares: 0,
       bons: "",
       totalPrice: "",
@@ -345,6 +355,10 @@ export default {
             // console.log(res.data)
             this.buyInfo.buyPrice = 0;
             this.buyInfo.buyNum = 0;
+            this.type = this.shareList[0].value;
+            this.types = this.shareList[0].value;
+            this.sellShare = this.types;
+            this.buySahre = this.type;
           } else {
             // layer.msg(res.data.message)
           }
@@ -359,8 +373,10 @@ export default {
       that.shares = options;
       if (values == "buy") {
         that.type = options;
+        that.buySahre = options;
       } else {
         that.types = options;
+        that.sellShare = options;
       }
       if (values == "sell" && that.sellInfo.sell_selected != "") {
         var i = layer.load();
@@ -466,76 +482,248 @@ export default {
     selectMuit(type) {
       let that = this;
       var i = layer.load();
-      this.$http({
-        url: "/api/" + "currency/quotation_new",
-        method: "get",
-        data: {},
-        headers: { Authorization: localStorage.getItem("token") }
-      })
-        .then(res => {
-          if (res.data.type == "ok") {
-            var list = res.data.message[0].quotation;
-            for (let i in list) {
-              if (that.currency_id == list[i].currency_id) {
-                var spread = parseFloat(list[i].spread).toFixed(4);
-                var transactionFee = parseFloat(
-                  list[i].lever_trade_fee
-                ).toFixed(4);
-                var bond = parseFloat(
-                  localStorage.getItem("lastPrice")
-                ).toFixed(4);
-                var prices = parseFloat((bond * spread) / 100).toFixed(4);
-                var pricesTotal = 0;
-                var muitNum = 0;
-                var share = 0;
-                if (type == "sell") {
-                  pricesTotal = parseFloat(bond - prices).toFixed(4);
-                  muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
-                  share = parseFloat(that.types).toFixed(4);
-                  var shareNum = parseFloat(list[i].lever_share_num).toFixed(4);
-                  var totalPrice = parseFloat(
-                    pricesTotal * share * shareNum
-                  ).toFixed(4);
-                  var bondsValue = parseFloat(
-                    (totalPrice - 0) / (muitNum - 0)
-                  ).toFixed(4);
-                  var tradeFreeValue = parseFloat(
-                    (totalPrice * transactionFee) / 100
-                  ).toFixed(4);
-                  console.log(shareNum);
-                  console.log(muitNum);
-                  console.log(share);
-                  that.totalPrice = parseFloat(bond * share).toFixed(4);
-                  that.trandeFree = tradeFreeValue;
-                  that.bons = bondsValue;
-                } else {
-                  pricesTotal = parseFloat(bond + prices).toFixed(4);
-                  muitNum = parseFloat(that.buyInfo.buy_selected);
-                  share = parseFloat(that.type).toFixed(4);
-                  var shareNum = parseFloat(list[i].lever_share_num).toFixed(4);
-                  var totalPrice = parseFloat(
-                    pricesTotal * share * shareNum
-                  ).toFixed(4);
-                  var bondsValue = parseFloat(
-                    (totalPrice - 0) / (muitNum - 0)
-                  ).toFixed(4);
-                  var tradeFreeValue = parseFloat(
-                    (totalPrice * transactionFee) / 100
-                  ).toFixed(4);
-                  that.totalPriceBuy = parseFloat(bond * share).toFixed(4);
-                  that.trandeFreeBuy = tradeFreeValue;
-                  that.bonsBuy = bondsValue;
+      if (type == "sell") {
+        if (that.sellShare != "") {
+          this.$http({
+            url: "/api/" + "currency/quotation_new",
+            method: "get",
+            data: {},
+            headers: { Authorization: localStorage.getItem("token") }
+          })
+            .then(res => {
+              if (res.data.type == "ok") {
+                var list = res.data.message[0].quotation;
+                for (let i in list) {
+                  if (that.currency_id == list[i].currency_id) {
+                    var spread = parseFloat(list[i].spread).toFixed(4);
+                    var transactionFee = parseFloat(
+                      list[i].lever_trade_fee
+                    ).toFixed(4);
+                    var bond = parseFloat(
+                      localStorage.getItem("lastPrice")
+                    ).toFixed(4);
+                    var prices = parseFloat((bond * spread) / 100).toFixed(4);
+                    var pricesTotal = 0;
+                    var muitNum = 0;
+                    var share = 0;
+                    pricesTotal = parseFloat(bond - prices).toFixed(4);
+                    muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(
+                      4
+                    );
+                    share = parseFloat(that.sellShare).toFixed(4);
+                    var shareNum = parseFloat(list[i].lever_share_num).toFixed(
+                      4
+                    );
+                    var totalPrice = parseFloat(
+                      pricesTotal * share * shareNum
+                    ).toFixed(4);
+                    var bondsValue = parseFloat(
+                      (totalPrice - 0) / (muitNum - 0)
+                    ).toFixed(4);
+                    var tradeFreeValue = parseFloat(
+                      (totalPrice * transactionFee) / 100
+                    ).toFixed(4);
+                    that.totalPrice = parseFloat(bond * share).toFixed(4);
+                    that.trandeFree = tradeFreeValue;
+                    that.bons = bondsValue;
+                  }
                 }
               }
-            }
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        }
+      } else {
+        if (that.buySahre != "") {
+          this.$http({
+            url: "/api/" + "currency/quotation_new",
+            method: "get",
+            data: {},
+            headers: { Authorization: localStorage.getItem("token") }
+          })
+            .then(res => {
+              if (res.data.type == "ok") {
+                var list = res.data.message[0].quotation;
+                for (let i in list) {
+                  if (that.currency_id == list[i].currency_id) {
+                    var spread = parseFloat(list[i].spread).toFixed(4);
+                    var transactionFee = parseFloat(
+                      list[i].lever_trade_fee
+                    ).toFixed(4);
+                    var bond = parseFloat(
+                      localStorage.getItem("lastPrice")
+                    ).toFixed(4);
+                    var prices = parseFloat((bond * spread) / 100).toFixed(4);
+                    var pricesTotal = 0;
+                    var muitNum = 0;
+                    var share = 0;
+                    pricesTotal = parseFloat(bond + prices).toFixed(4);
+                    muitNum = parseFloat(that.buyInfo.buy_selected);
+                    share = parseFloat(that.buySahre).toFixed(4);
+                    var shareNum = parseFloat(list[i].lever_share_num).toFixed(
+                      4
+                    );
+                    var totalPrice = parseFloat(
+                      pricesTotal * share * shareNum
+                    ).toFixed(4);
+                    var bondsValue = parseFloat(
+                      (totalPrice - 0) / (muitNum - 0)
+                    ).toFixed(4);
+                    var tradeFreeValue = parseFloat(
+                      (totalPrice * transactionFee) / 100
+                    ).toFixed(4);
+                    that.totalPriceBuy = parseFloat(bond * share).toFixed(4);
+                    that.trandeFreeBuy = tradeFreeValue;
+                    that.bonsBuy = bondsValue;
+                  }
+                }
+              }
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        }
+      }
+
       setTimeout(function() {
         layer.close(i);
       }, 1500);
+    },
+
+    // 手数输入
+    changeValue(type) {
+      let that = this;
+      if (type == "buy") {
+        if (that.buyInfo.buy_selected != "") {
+          var i = layer.load();
+          this.$http({
+            url: "/api/" + "currency/quotation_new",
+            method: "get",
+            data: {},
+            headers: { Authorization: localStorage.getItem("token") }
+          })
+            .then(res => {
+              if (res.data.type == "ok") {
+                var list = res.data.message[0].quotation;
+                for (let i in list) {
+                  if (that.currency_id == list[i].currency_id) {
+                    var spread = parseFloat(list[i].spread).toFixed(4);
+                    var transactionFee = parseFloat(
+                      list[i].lever_trade_fee
+                    ).toFixed(4);
+                    var bond = parseFloat(
+                      localStorage.getItem("lastPrice")
+                    ).toFixed(4);
+                    var prices = parseFloat((bond * spread) / 100).toFixed(4);
+                    var pricesTotal = 0;
+                    var muitNum = 0;
+                    pricesTotal = parseFloat(bond + prices).toFixed(4);
+                    muitNum = parseFloat(that.buyInfo.buy_selected);
+                    var share = parseFloat(that.buySahre).toFixed(4);
+                    var shareNum = parseFloat(list[i].lever_share_num).toFixed(
+                      4
+                    );
+                    var totalPrice = parseFloat(
+                      pricesTotal * share * shareNum
+                    ).toFixed(4);
+                    var bondsValue = parseFloat(
+                      (totalPrice - 0) / (muitNum - 0)
+                    ).toFixed(4);
+                    var tradeFreeValue = parseFloat(
+                      (totalPrice * transactionFee) / 100
+                    ).toFixed(4);
+                    if (parseFloat(bond * share).toFixed(4) == "NaN") {
+                      that.totalPriceBuy = "0.0000";
+                    } else {
+                      that.totalPriceBuy = parseFloat(bond * share).toFixed(4);
+                    }
+                    if (tradeFreeValue == "NaN") {
+                      that.trandeFreeBuy = "0.0000";
+                    } else {
+                      that.trandeFreeBuy = tradeFreeValue;
+                    }
+                    if (bondsValue == "NaN") {
+                      that.bonsBuy = "0.0000";
+                    } else {
+                      that.bonsBuy = bondsValue;
+                    }
+                    // that.totalPriceBuy = (bond * share).toFixed(4);
+                    // that.trandeFreeBuy = tradeFreeValue;
+                    // that.bonsBuy = bondsValue;
+                  }
+                }
+              }
+            })
+            .catch(error => {
+              console.log(error);
+            });
+          setTimeout(function() {
+            layer.close(i);
+          }, 1500);
+        }
+      } else {
+        var i = layer.load();
+        this.$http({
+          url: "/api/" + "currency/quotation_new",
+          method: "get",
+          data: {},
+          headers: { Authorization: localStorage.getItem("token") }
+        })
+          .then(res => {
+            if (res.data.type == "ok") {
+              var list = res.data.message[0].quotation;
+              for (let i in list) {
+                if (that.currency_id == list[i].currency_id) {
+                  var spread = parseFloat(list[i].spread).toFixed(4);
+                  var transactionFee = parseFloat(
+                    list[i].lever_trade_fee
+                  ).toFixed(4);
+                  var bond = parseFloat(
+                    localStorage.getItem("lastPrice")
+                  ).toFixed(4);
+                  var prices = parseFloat((bond * spread) / 100).toFixed(4);
+                  var pricesTotal = 0;
+                  var muitNum = 0;
+                  pricesTotal = parseFloat(bond - prices).toFixed(4);
+                  muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
+                  var share = parseFloat(that.sellShare).toFixed(4);
+                  var shareNum = parseFloat(list[i].lever_share_num).toFixed(4);
+                  var totalPrice = parseFloat(
+                    pricesTotal * share * shareNum
+                  ).toFixed(4);
+                  var bondsValue = parseFloat(
+                    (totalPrice - 0) / (muitNum - 0)
+                  ).toFixed(4);
+                  var tradeFreeValue = parseFloat(
+                    (totalPrice * transactionFee) / 100
+                  ).toFixed(4);
+                  if (parseFloat(bond * share).toFixed(4) == "NaN") {
+                    that.totalPrice = "0.0000";
+                  } else {
+                    that.totalPrice = parseFloat(bond * share).toFixed(4);
+                  }
+                  if (tradeFreeValue == "NaN") {
+                    that.trandeFree = "0.0000";
+                  } else {
+                    that.trandeFree = tradeFreeValue;
+                  }
+                  if (bondsValue == "NaN") {
+                    that.bons = "0.0000";
+                  } else {
+                    that.bons = bondsValue;
+                  }
+                }
+              }
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        setTimeout(function() {
+          layer.close(i);
+        }, 1500);
+      }
     },
     // 关闭买入卖出弹窗
     closeMosal() {
@@ -551,7 +739,7 @@ export default {
           legal_id: that.legal_id,
           currency_id: that.currency_id,
           multiple: that.sellInfo.sell_selected,
-          share: that.types,
+          share: that.sellShare,
           type: 2
         };
       } else {
@@ -559,7 +747,7 @@ export default {
           legal_id: that.legal_id,
           currency_id: that.currency_id,
           multiple: that.buyInfo.buy_selected,
-          share: that.type,
+          share: that.buySahre,
           type: 1
         };
       }
@@ -614,7 +802,7 @@ export default {
 </script>
 
 <style scoped>
-.share-total{
+.share-total {
   flex-wrap: wrap;
 }
 .title_box {
@@ -784,7 +972,7 @@ b.actives {
   text-align: center;
   padding: 5px 0;
   margin-right: 3.14px;
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
   height: auto;
   float: none;
   text-indent: 0;
