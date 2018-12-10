@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import home from '@/components/home'
 import homeContent from '@/view/homeContent'
 import dealCenter from '@/components/dealCenter'
+import fiatradCenter from '@/components/fiatradCenter'
 import payOpts from '@/view/payOpts'
 import userSetting from '@/components/userSetting'
 import c2c from '@/components/c2c'
@@ -63,6 +64,51 @@ export default new Router({
 					name:'homeContent',
 					component:homeContent
 					
+				},
+				{
+					path:'/legalTrade',
+					component:() => import ('../components/LegalTrade.vue')
+				},
+				{
+					path:'/legalPay',
+					component:() => import ('../components/LegalPay.vue')
+				},
+				{
+					path:'/legalPayDetail',
+					component:() => import ('../components/LegalPayDetail.vue')
+				},
+				{
+					path:'/shopLegalPayDetail',
+					component:() => import ('../components/shop_legal_pay_detail.vue')
+				},
+				{
+					path:'/legalRecord',
+					component:() => import ('../components/LegalRecord.vue')
+				},
+				{
+					path:'/legalTradeSet',
+					component:() => import ('../components/LegalTradeSet.vue')
+				},
+				{
+					path:'/legalSeller',
+					component:() => import ('../components/LegalSeller.vue')
+				},
+				{
+					path:'/myLegalShops',
+					component:() => import ('../components/MyLegalShops.vue')
+				},
+				{
+					path:'/legalShopDetail',
+					component:() => import ('../components/LegalShopDetail.vue')
+				},
+				{
+					path:'/shopLegalRecord',
+					component:() => import ('../components/shop_legal_record.vue')
+				},
+				{
+					path: '/fiatradCenter',
+					name: 'fiatradCenter',
+					component: fiatradCenter
 				},
 				{
 					path:'/userSetting',
