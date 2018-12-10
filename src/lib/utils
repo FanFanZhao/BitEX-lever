@@ -1,0 +1,14 @@
+let localUtils = {  //公共方法和属性
+	phone_reg : /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$/ig,
+	trim : function (val) { return val.replace(/\s/g,'')},
+	host:'http://www.2kex.com/',
+	laravel_api: 'http://www.2kex.com/api/',
+	node_api: 'http://47.75.197.189:3000/',
+	socket_api: 'http://jnbadmin.mobile369.com:2120/',
+};
+
+export default {
+	install: function (vm) {
+		vm.prototype.$utils = localUtils
+	}
+}

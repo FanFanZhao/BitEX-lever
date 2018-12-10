@@ -1,0 +1,379 @@
+
+.clearfix:before,.clearfix:after {
+    content:"";
+    display:table;
+}
+.clearfix:after {
+    clear:both;
+    overflow:hidden;
+}
+.clearfix {
+    zoom:1; /* for ie6 & ie7 */
+}
+.indexBlackes{
+  /* background: #010714; */
+  height: auto;
+  overflow: hidden;
+}
+.indexBlackes .banneres{
+  height: 410px;
+  /*background: #375AA9;*/
+  /* padding-top: 65px; */
+}
+.indexBlackes .banneres .content{
+  width: 1200px;
+  height: 100%;
+  min-width: 1200px;
+  margin: 0 auto;
+  background: url('../images/bg2.png') no-repeat;
+  background-size: cover;
+  text-align: center;
+}
+.indexBlackes .banneres .content h1{
+  font-size: 42px;
+  color: #fff;
+  margin-top: 115px;
+}
+.indexBlackes .banneres .content p.introduce{
+  font-size: 22px;
+  color: #B2CAFF;
+  margin-top: 20px;
+}
+.indexBlackes .banneres .content .QRCode>img{
+  margin-top: 45px;
+  width: 91px;
+  height: 91px;
+}
+.indexBlackes .banneres .content p.kefu{
+  margin-top: 10px;
+  font-size: 14px;
+  color: #B2CAFF;
+}
+.indexBlackes .carousel{
+  width:100%;
+  /*height: 115px;*/
+  margin: 0 auto;
+  position: relative;
+  /*overflow-x: auto;*/
+}
+.carousel .swiper-container{
+  width: 100%;
+  height: 115px;
+  margin: 0 auto;
+  overflow:hidden;
+}
+.carousel .swiper-slide{
+  height: 105px;
+  background: #161923;
+  text-align: center;
+}
+.carousel .swiper-slide p.name{
+  color: #6B80AE;
+  font-size: 14px;
+  margin-top: 18px;
+}
+.carousel .swiper-slide p.last{
+  color: #B9B9B9;
+  font-size: 20px;
+  margin: 5px;
+  /* margin-top: -3px; */
+}
+.carousel .swiper-slide p.range{
+  margin-top: -3px;
+  font-size: 14px;
+  color: #65CCA2;
+}
+.carousel .swiper-slide p.range.red{
+  color: #C2235F;
+}
+.carousel .swiper-slide p.range.red i{
+  color: #C2235F;
+}
+.carousel .swiper-slide.active{
+  background: #327ADD;
+}
+.carousel .swiper-slide.active p.name{
+  color: #B9B9B9;
+}
+.carousel .swiper-slide.active p.last{
+  color: #fff;
+}
+.carousel .swiper-slide.active:after{
+  display: block;
+  content: '';
+  width: 0;
+  height: 0;
+  margin: 10px auto 0;
+  border-left: 10px solid transparent;
+  border-top: 10px solid #327ADD;
+  border-right: 10px solid transparent;
+  /*border-bottom: 10px solid #4ed621;*/
+  box-sizing: border-box;
+}
+.carousel .swiper-pagination{
+  display: none;
+}
+.carousel .swiper-button-prev{
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%232B3144'%2F%3E%3C%2Fsvg%3E");
+  transform: translateY(-5px);
+  left: -35px;
+}
+.carousel .swiper-button-next{
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%232B3144'%2F%3E%3C%2Fsvg%3E");
+  right: -35px;
+  transform: translateY(-5px);
+}
+.indexBlackes .active-data{
+  width: 100%;
+  height: 120px;
+  margin: 0 auto;
+  background:#161923;
+}
+.indexBlackes .active-data .data{
+  width: 70px;
+  float: left;
+  text-align: left;
+  margin-left: 150px;
+}
+.indexBlackes .active-data .data .name{
+  color: #6B80AE;
+  font-size: 12px;
+  margin-top: 24px;
+}
+.indexBlackes .active-data .data .content{
+  color: #FFFFFF;
+  font-size: 22px;
+  margin-top: 14px;
+}
+.indexBlackes .active-data .high{
+  margin-left: 50px!important;
+}
+.indexBlackes .active-data .range .content{
+  color: #65CCA2;
+}
+.indexBlackes .active-data .range .red{
+  color: #C2235F;
+}
+.indexBlackes .active-data .time{
+  width: 58px;
+  height: 25px;
+  background: #327ADD;
+  color: #fff;
+  float: right;
+  line-height: 25px;
+  text-align: center;
+  margin-top: 33px;
+  margin-right: 30px;
+  font-size: 16px;
+}
+.indexBlackes #chart{
+  margin: 0 auto;
+  background:#161923!important;
+}
+.coinTable{
+	width: 100%;
+  margin: 0 auto;
+  padding: 30px 60px;
+	margin-bottom: 104px;
+}
+.tabul{
+  padding: 0 25px;
+}
+.coinTable .tabhang .tabul ul li{
+	float: left;
+	font-size: 16px;
+	margin:18px 47px 18px 0;
+    color: #9F9F9F;
+    padding: 10px;
+}
+.coinTable .tabhang .tabul ul .active{
+    color: #6B80AE;
+    line-height: inherit;
+
+}
+.tabhang{
+  border: 1px solid #4e5b85;
+}
+.coinTable .tabhang .tabtable .table-nav{
+  padding: 0 25px;
+	width: 100%;
+	height: 43px!important;
+	font-size: 16px;
+	color: #6B80AE;
+	height: 75px;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-pack: start;
+	    justify-content: space-between;
+	-ms-flex-align: center;
+	    align-items: center;
+	background: #262a42;
+	margin-bottom: 8px;
+}
+.coinTable .tabhang .tabtable .table-nav li{
+	padding-left: 20px;
+}
+.coinTable .tabhang .tabtable .table-nav li:nth-child(1){
+	width: 187px;
+}
+.coinTable .tabhang .tabtable .table-nav li:nth-child(2){
+	width: 240px;
+}
+.coinTable .tabhang .tabtable .table-nav li:nth-child(3){
+	width: 137px;
+}
+.coinTable .tabhang .tabtable .table-nav li:nth-child(4){
+	width: 200px;
+}
+.coinTable .tabhang .tabtable .table-nav li:nth-child(5){
+	width: 200px;
+}
+.coinTable .tabhang .tabtable .table-nav li:nth-child(6){
+	width: 200px;
+}
+.coinTable .tabhang .tabtable .table-nav li:nth-child(7){
+	width: 138px;
+	text-align: center;
+	padding-right: 20px;
+}
+.coinTable .tabhang .tabtable .content{
+  padding: 0 25px;
+	height: 40px;
+	font-size: 14px;
+	color: #61688a;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-pack: start;
+	    justify-content: space-between;
+	-ms-flex-align: center;
+	    align-items: center;
+	margin-bottom: 8px;
+}
+.coinTable .tabhang .tabtable .content li{
+	padding-left: 20px;
+}
+.tabtable{
+  background: #202437
+}
+.coinTable .tabhang .tabtable .content li button{
+	color: #fff;
+	width: 90px;
+	height: 34px;
+	background: #0485d8;
+	border-radius: 5px;
+	outline: none;
+	border: none;
+	font-size: 14px;
+	cursor: pointer;
+}
+.coinTable .tabhang .tabtable .content li:nth-child(1){
+	width: 187px;
+}
+.coinTable .tabhang .tabtable .content li:nth-child(2){
+	width: 240px;
+}
+.coinTable .tabhang .tabtable .content li:nth-child(3){
+	width: 137px;
+}
+.coinTable .tabhang .tabtable .content li:nth-child(4){
+	width: 200px;
+}
+.coinTable .tabhang .tabtable .content li:nth-child(5){
+	width: 200px;
+}
+.coinTable .tabhang .tabtable .content li:nth-child(6){
+	width: 200px;
+}
+.coinTable .tabhang .tabtable .content li:nth-child(7){
+	width: 138px;
+	text-align: center;
+	padding-right: 20px;
+}
+.coinTable .tabhang .tabtable .content .red{
+	color: #e43a35;
+}
+.coinTable .tabhang .tabtable .content .green{
+	color: #0AAA6C;
+}
+.coinTable .tabhang .tabtable .content .hovertd{
+	cursor: pointer;
+}
+.coinTable .tabhang .tabtable .content .hovertd i{
+	float: left;
+	font-size: 30px;
+	margin-right: 10px;
+}
+.coinTable .tabhang .tabtable .content .hovertd .icon-BTYUSDT-copy{
+	color: #ff8f21;
+}
+.coinTable .tabhang .tabtable .content .hovertd .icon-BTCUSDT-copy{
+	color: #3dabcb;
+}
+.coinTable .tabhang .tabtable .content .hovertd .icon-BCCUSDT-copy{
+	color: #e6ac00;
+}
+.coinTable .tabhang .tabtable .content .hovertd .icon-BCCBTC-copy{
+	color: #e6ac00;
+}
+.coinTable .tabhang .tabtable .content .hovertd .icon-ETHUSDT-copy{
+	color: #e14f55;
+}
+.coinTable .tabhang .tabtable .content .hovertd .icon-ETHBTC-copy{
+	color: #e14f55;
+}
+.coinTable .tabhang .tabtable .content .hovertd .icon-ETCUSDT-copy{
+	color: #09afd8;
+}
+.coinTable .tabhang .tabtable .content .hovertd .icon-ETCBTC-copy{
+	color: #09afd8;
+}
+.coinTable .tabhang .tabtable .content .hovertd .icon-ZECUSDT-copy{
+	color: #ec7121;
+}
+.coinTable .tabhang .tabtable .content .hovertd .icon-ZECBTC-copy{
+	color: #ec7121;
+}
+.coinTable .tabhang .tabtable .content .hovertd .icon-LTCUSDT-copy{
+	color: #47ad50;
+}
+.coinTable .tabhang .tabtable .content .hovertd .icon-LTCBTC-copy{
+	color: #47ad50;
+}
+.coinTable .tabhang .tabtable .content .hovertd .icon-BTSUSDT-copy{
+	color: #635383;
+}
+.coinTable .tabhang .tabtable .content .hovertd .icon-SCUSDT-copy{
+	color: #7fb131;
+}
+.coinTable .tabhang .tabtable .content .hovertd .icon-DCRUSDT-copy{
+	color: #09afd8;
+}
+.coinTable .tabhang .tabtable .content .last{
+	text-align: center;
+	/* padding-right: 20px; */
+}
+.icon-arrow-up{
+	color: #de5604;
+}
+.icon-arrow-down{
+	color: #78b632;
+}
+
+.bottom{
+	width:100%;
+	height:160px;
+	background:#060e20;
+	padding-top: 60px;
+}
+.bottom p{
+	font-size:14px;
+	font-family:MicrosoftYaHei;
+	color:rgba(208,208,208,1);
+	line-height:24px;
+	text-align: center;
+	color: #6B80AE;
+}
+.list-list{
+  height: 680px;
+  overflow-y: scroll;
+}

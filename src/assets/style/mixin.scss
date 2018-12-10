@@ -1,0 +1,43 @@
+//变量
+$border_grey:1px solid #ebebeb;
+$theme_color:#F16B7F;
+//垂直居中
+@mixin middle{
+  position:absolute;
+  top:50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+//圆角
+@mixin border-radius($radius:50%){
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+//文本垂直居中
+@mixin line-height($height){
+  height:$height;
+  line-height:$height;
+}
+@mixin center{
+  position:absolute;
+  left:50%;
+  top:50%;
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -o-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+@mixin ellipsis{
+  overflow:hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width:100%;
+}
+
+
+
