@@ -8,15 +8,13 @@
     </div>
     <!-- 限价交易 -->
     <div class="content clear" v-if="show">
-      <div class="w50 fl first">
-        <div class="ft14">
-          <div class="available clear fColor1" v-if="address.length<=0">
+       <div class="available clear fColor1 first" v-if="address.length<=0">
             <span class="baseColor curPer" @click="goNext('login')">登录</span>
             或
             <span class="baseColor curPer" @click="goNext('register')">注册</span>
             开始交易
           </div>
-          <div class="clear available" v-else>
+          <div class="clear available padds" v-else>
             <span class="fl fColor1">可用 {{user_legal | tofixedFour}} {{legal_name}}</span>
             <!-- <span class="fr baseColor curPer" @click="goNext('account')">充币</span> -->
           </div>
@@ -25,6 +23,16 @@
                         <input type="number" v-model="buyInfo.buyPrice" @keydown.69.prevent >
                         <span>{{currency_name}}</span>
           </div>-->
+          <div class="control-price first">
+            <span :class="['active']" @click="selectTypes()">市价交易</span>
+            <span @click="selectTypes()">限价交易</span>
+            <div>
+              <label>价格：</label>
+              <input type="text" v-model="inputPrice" placeholder="请输入价格">
+            </div>
+          </div>
+      <div class="w50 fl first">
+        <div class="ft14">
           <div class="mt40 input-item clear">
             <label>倍数：</label>
             <select class="buy_multiple" v-model="buyInfo.buy_selected" @change="selectMuit('buy')">
@@ -39,18 +47,20 @@
           <div class="mt40 input-item clear">
             <label>手数：</label>
             <div class="flex share-total">
+              <input
+                type="number"
+                class="share-input"
+                v-model="buySahre"
+                placeholder="请输入购买手数"
+                @input="changeValue('buy')"
+              >
               <b
                 v-for="item in shareList"
                 :key="item.value"
                 :class="['share',{'active':type ==item.value}]"
                 @click="select(item.value,'buy')"
               >{{item.value}}手</b>
-              <input
-                type="number"
-                class="share-input"
-                v-model="buySahre"
-                @input="changeValue('buy')"
-              >
+              
             </div>
           </div>
           <div class="lever-total fColor1">
@@ -81,10 +91,10 @@
             <span class="baseColor curPer" @click="goNext('register')">注册</span>
             开始交易
           </div>
-          <div class="clear available" v-else>
+          <!-- <div class="clear available" v-else> -->
             <!-- <span class="fl fColor1">可用 {{user_currency | tofixedFour}} {{legal_name}}</span> -->
             <!-- <span class="fr baseColor curPer" @click="goNext('account')">充币</span> -->
-          </div>
+          <!-- </div> -->
           <!-- <div class="mt40 input-item clear">
                         <label>卖出价</label>
                         <input type="number" @keydown.69.prevent v-model="sellInfo.sellPrice">
@@ -108,18 +118,19 @@
           <div class="mt40 input-item clear">
             <label>手数：</label>
             <div class="flex share-total">
+              <input
+                type="number"
+                class="share-input"
+                v-model="sellShare"
+                placeholder="请输入购买手数"
+                @input="changeValue('sell')"
+              >
               <b
                 v-for="item in shareList"
                 :key="item.value"
                 :class="['share',{'actives':types == item.value}]"
                 @click="select(item.value,'sell')"
               >{{item.value}}手</b>
-              <input
-                type="number"
-                class="share-input"
-                v-model="sellShare"
-                @input="changeValue('sell')"
-              >
             </div>
 
             <!-- <b :class="['share',{'actives':types =='3'}]" @click="select(3,'sell')">3手</b>
@@ -272,7 +283,9 @@ export default {
       comfirmShow: false,
       shareList: [],
       buySahre: "",
-      sellShare: ""
+      sellShare: "",
+      inputPrice: '',
+      selectType:''
     };
   },
   created() {
@@ -648,9 +661,6 @@ export default {
                     } else {
                       that.bonsBuy = bondsValue;
                     }
-                    // that.totalPriceBuy = (bond * share).toFixed(4);
-                    // that.trandeFreeBuy = tradeFreeValue;
-                    // that.bonsBuy = bondsValue;
                   }
                 }
               }
@@ -788,6 +798,10 @@ export default {
           console.log(error);
           that.comfirmShow = false;
         });
+    },
+    // 选择交易类型
+    selectTypes(){
+      
     }
   },
   computed: {
@@ -802,8 +816,35 @@ export default {
 </script>
 
 <style scoped>
+.padds{
+  margin: 0 15px 0 25px;
+  padding: 0 10px;
+}
 .share-total {
   flex-wrap: wrap;
+}
+.control-price{
+  margin: 20px 0 0;
+  color: #fff;
+}
+.control-price span{
+  margin-right: 15px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+.control-price .active{
+  border-bottom: 1px solid #7a98f7;
+}
+.control-price div{
+  margin-top: 30px;
+}
+.control-price input{
+  width: 60%;
+  line-height: 30px;
+  padding: 5px 10px;
+  border: 1px solid #52688c;
+  background-color: rgba(0, 0, 0, 0);
+  color: #fff;
 }
 .title_box {
   height: 48px;
@@ -967,15 +1008,14 @@ b.actives {
   border-radius: 2px;
   font-size: 14px;
   color: #fff;
-  line-height: 1.2;
-  width: 23.5%;
-  text-align: center;
-  padding: 5px 0;
-  margin-right: 3.14px;
+  line-height: 26px;
+  width: 100%;
+  padding: 5px 10px;
   background-color: rgba(0, 0, 0, 0);
   height: auto;
   float: none;
   text-indent: 0;
+  margin-bottom: 10px;
 }
 </style>
 
