@@ -38,13 +38,14 @@
           </div>
           <div class="mt40 input-item clear">
             <label>手数：</label>
-            <div>
+            <div class="flex share-total">
               <b
                 v-for="item in shareList"
                 :key="item.value"
                 :class="['share',{'active':type ==item.value}]"
                 @click="select(item.value,'buy')"
               >{{item.value}}手</b>
+              <input type="number" class="share-input" v-model="buySahre">
             </div>
           </div>
           <div class="lever-total fColor1">
@@ -101,13 +102,14 @@
           </div>
           <div class="mt40 input-item clear">
             <label>手数：</label>
-            <div>
+            <div class="flex share-total">
               <b
                 v-for="item in shareList"
                 :key="item.value"
                 :class="['share',{'actives':types == item.value}]"
                 @click="select(item.value,'sell')"
               >{{item.value}}手</b>
+              <input type="number" class="share-input" v-model="sellShare">
             </div>
 
             <!-- <b :class="['share',{'actives':types =='3'}]" @click="select(3,'sell')">3手</b>
@@ -258,7 +260,9 @@ export default {
       lastPrice: "",
       buyType: "",
       comfirmShow: false,
-      shareList: []
+      shareList: [],
+      buySahre: "",
+      sellShare: ""
     };
   },
   created() {
@@ -381,28 +385,22 @@ export default {
                   var prices = parseFloat((bond * spread) / 100).toFixed(4);
                   var pricesTotal = 0;
                   var muitNum = 0;
-                    pricesTotal = parseFloat(bond - prices).toFixed(4);
-                    muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(
-                      4
-                    );
-                   var share = parseFloat(options).toFixed(4);
-                    console.log(share);
-                    console.log(muitNum);
-                    var shareNum = parseFloat(list[i].lever_share_num).toFixed(
-                      4
-                    );
-                    var totalPrice = parseFloat(
-                      pricesTotal * share * shareNum
-                    ).toFixed(4);
-                    var bondsValue = parseFloat(
-                      (totalPrice - 0) / (muitNum - 0)
-                    ).toFixed(4);
-                    var tradeFreeValue = parseFloat(
-                      (totalPrice * transactionFee) / 100
-                    ).toFixed(4);
-                    that.totalPrice = parseFloat(bond * share).toFixed(4);
-                    that.trandeFree = tradeFreeValue;
-                    that.bons = bondsValue;
+                  pricesTotal = parseFloat(bond - prices).toFixed(4);
+                  muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
+                  var share = parseFloat(options).toFixed(4);
+                  var shareNum = parseFloat(list[i].lever_share_num).toFixed(4);
+                  var totalPrice = parseFloat(
+                    pricesTotal * share * shareNum
+                  ).toFixed(4);
+                  var bondsValue = parseFloat(
+                    (totalPrice - 0) / (muitNum - 0)
+                  ).toFixed(4);
+                  var tradeFreeValue = parseFloat(
+                    (totalPrice * transactionFee) / 100
+                  ).toFixed(4);
+                  that.totalPrice = parseFloat(bond * share).toFixed(4);
+                  that.trandeFree = tradeFreeValue;
+                  that.bons = bondsValue;
                 }
               }
             }
@@ -410,9 +408,9 @@ export default {
           .catch(error => {
             console.log(error);
           });
-          setTimeout(function(){
-            layer.close(i)
-          },1500)
+        setTimeout(function() {
+          layer.close(i);
+        }, 1500);
       } else if (values == "buy" && that.buyInfo.buy_selected != "") {
         var i = layer.load();
         this.$http({
@@ -436,26 +434,22 @@ export default {
                   var prices = parseFloat((bond * spread) / 100).toFixed(4);
                   var pricesTotal = 0;
                   var muitNum = 0;
-                    pricesTotal = parseFloat(bond + prices).toFixed(4);
-                    muitNum = parseFloat(that.buyInfo.buy_selected);
-                   var share = parseFloat(options).toFixed(4);
-                    console.log(share);
-                    console.log(muitNum);
-                    var shareNum = parseFloat(list[i].lever_share_num).toFixed(
-                      4
-                    );
-                    var totalPrice = parseFloat(
-                      pricesTotal * share * shareNum
-                    ).toFixed(4);
-                    var bondsValue = parseFloat(
-                      (totalPrice - 0) / (muitNum - 0)
-                    ).toFixed(4);
-                    var tradeFreeValue = parseFloat(
-                      (totalPrice * transactionFee) / 100
-                    ).toFixed(4);
-                    that.totalPriceBuy = (bond * share).toFixed(4);
-                    that.trandeFreeBuy = tradeFreeValue;
-                    that.bonsBuy = bondsValue;
+                  pricesTotal = parseFloat(bond + prices).toFixed(4);
+                  muitNum = parseFloat(that.buyInfo.buy_selected);
+                  var share = parseFloat(options).toFixed(4);
+                  var shareNum = parseFloat(list[i].lever_share_num).toFixed(4);
+                  var totalPrice = parseFloat(
+                    pricesTotal * share * shareNum
+                  ).toFixed(4);
+                  var bondsValue = parseFloat(
+                    (totalPrice - 0) / (muitNum - 0)
+                  ).toFixed(4);
+                  var tradeFreeValue = parseFloat(
+                    (totalPrice * transactionFee) / 100
+                  ).toFixed(4);
+                  that.totalPriceBuy = (bond * share).toFixed(4);
+                  that.trandeFreeBuy = tradeFreeValue;
+                  that.bonsBuy = bondsValue;
                 }
               }
             }
@@ -463,9 +457,9 @@ export default {
           .catch(error => {
             console.log(error);
           });
-          setTimeout(function(){
-            layer.close(i)
-          },1500)
+        setTimeout(function() {
+          layer.close(i);
+        }, 1500);
       }
     },
     // 选择倍数
@@ -539,9 +533,9 @@ export default {
         .catch(error => {
           console.log(error);
         });
-        setTimeout(function(){
-            layer.close(i)
-          },1500)
+      setTimeout(function() {
+        layer.close(i);
+      }, 1500);
     },
     // 关闭买入卖出弹窗
     closeMosal() {
@@ -620,6 +614,9 @@ export default {
 </script>
 
 <style scoped>
+.share-total{
+  flex-wrap: wrap;
+}
 .title_box {
   height: 48px;
   line-height: 48px;
@@ -712,7 +709,7 @@ input:disabled {
   font-size: 14px;
   color: #fff;
   line-height: 1.2;
-  width: 18.8%;
+  width: 23.5%;
   text-align: center;
   padding: 5px 0;
   margin-right: 3.14px;
@@ -776,6 +773,21 @@ b.actives {
 .modal-btn button:last-child {
   border-left: 1px solid #2e333c;
   background: #689cf1;
+}
+.input-item .share-input {
+  border: 1px solid #eee;
+  border-radius: 2px;
+  font-size: 14px;
+  color: #fff;
+  line-height: 1.2;
+  width: 23.5%;
+  text-align: center;
+  padding: 5px 0;
+  margin-right: 3.14px;
+  background-color: rgba(0,0,0,0);
+  height: auto;
+  float: none;
+  text-indent: 0;
 }
 </style>
 
