@@ -1,6 +1,6 @@
 <template>
-  <div id="legal-pay-detail" class="bg-part white">
-    <div class="title bg-part">
+  <div id="legal-pay-detail" class="white">
+    <div class="title bg-part radius4">
       <span v-if="msg.is_sure == 0">待付款</span>
       <span v-if="msg.is_sure == 1">已完成</span>
       <span v-if="msg.is_sure == 2">已取消</span>
@@ -10,7 +10,7 @@
       <div v-if="msg.is_sure == 2">订单已取消</div>
       <div v-if="msg.is_sure == 3">已付款，请仔细查看支付信息</div>
     </div>
-    <div class="info bg-part ft14">
+    <div class="info bg-part ft14 radius4">
       <div>
         <span>交易总额：</span>
         <span>{{msg.deal_money}}</span>
@@ -19,6 +19,10 @@
         <span>{{msg.is_seller=='0'?'卖家':'买家'}}</span>
         <span>{{msg.seller_name}}</span>
       </div>
+      <!-- <div class="curPer">
+        <span>商家账户：</span>
+        <router-link :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span" >{{msg.seller_name}}</router-link>
+      </div> -->
       <div>
         <span>单价：</span>
         <span>{{msg.price}}</span>
@@ -42,10 +46,6 @@
       <div>
         <span>参考号：</span>
         <span>{{msg.id}}</span>
-      </div>
-      <div class="curPer">
-        <span>商家账户：</span>
-        <router-link :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span" >{{msg.seller_name}}</router-link>
       </div>
       <div class="btns">
         <!-- <div class="btn" @click="showCancel = true">取消订单</div>

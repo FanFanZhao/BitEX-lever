@@ -269,11 +269,19 @@
 					};
 					_this.buyHttp('/api/do_legal_deal', datas, function(res) {
 						if(res.data.type == 'ok'){
-						    console.log(res)
-							layer.msg(res.data.message.msg)
-							setTimeout(function() {
-								_this.$router.push({path:'/legalPayDetail',query:{id:res.data.message.data.id}});
+							console.log(res)
+							if(res.data.message.data.type == 'sell'){
+								layer.msg(res.data.message.msg)
+								setTimeout(function() {
+								_this.$router.push({path:'/legalPay',query:{id:res.data.message.data.id}});
 							}, 500)
+							}else{
+								layer.msg(res.data.message.msg)
+								setTimeout(function() {
+									_this.$router.push({path:'/legalPayDetail',query:{id:res.data.message.data.id}});
+								}, 500)
+							}
+							
 					}else{
 						layer.msg(res.data.message);
 					}

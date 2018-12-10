@@ -16,7 +16,7 @@
     </div>
     
     <ul class="ft14 bgf8">
-      <li v-for="(item,index) in list" :key="index" class="bdb">
+      <li v-for="(item,index) in list" :key="index" class="">
         <div class="flex li-t">
           <div class="ft14 bold cblue">
             <span v-if="item.type == 'sell'">购买</span>
@@ -143,9 +143,9 @@ export default {
     margin-top: 20px;
     li {
       padding: 10px;
-      // background: #eee;
-      margin-top: 10px;
+      background: #181b2a;
       border-radius: 4px;
+      margin-top: 10px;
       > div {
         justify-content: space-between;
         line-height: 30px;

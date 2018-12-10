@@ -1,6 +1,6 @@
 <template>
-  <div id="legal-pay-detail" class="bg-part white">
-    <div class="title bg-part">
+  <div id="legal-pay-detail" class="white">
+    <div class="title bg-part radius4">
       <span v-if="msg.is_sure == 0">未完成</span>
       <span v-if="msg.is_sure == 1">已完成</span>
       <span v-if="msg.is_sure == 2">已取消</span>
@@ -11,7 +11,7 @@
       <div v-if="msg.is_sure == 3">已付款，等待核实后确认</div>
      
     </div>
-    <div class="info bg-part ft14">
+    <div class="info bg-part ft14 radius4">
       <div>
         <span>交易总额：</span>
         <span>{{msg.deal_money}}</span>
@@ -183,9 +183,9 @@ export default {
       }).then(res => {
         // console.log(res);
         layer.msg(res.data.message);
-        
-      }).then(() => {
         this.showCancel = false;
+        location.reload();
+        
       })
     },
    // 卖家确认付款
