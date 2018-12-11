@@ -70,7 +70,7 @@
           
             //法币列表
             this.$http({
-					url: '/api/' + 'currency/quotation',
+					url: '/api/' + 'currency/quotation_new',
 					method:'get',
 					data:{}
 				}).then(res=>{

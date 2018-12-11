@@ -306,7 +306,7 @@ export default {
     },
     getQuotation() {
       this.$http({
-        url: "/api/currency/quotation",
+        url: "/api/currency/quotation_new",
         method: "get"
       }).then(res => {
         if (res.data.type == "ok" && res.data.message.length != 0) {
@@ -452,7 +452,7 @@ export default {
         background: #3b2128;
       }
     }
-    li:nth-child(4){
+    li:last-child{
       >div{
         border-right: none;
       }
