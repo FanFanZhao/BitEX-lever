@@ -388,7 +388,8 @@ export default {
         if (res.data.type == "ok") {
           layer.msg(res.data.message);
           this.isShow=false
-         
+          this.getSellerInfo();
+          this.getList();
         }
       });
     }
