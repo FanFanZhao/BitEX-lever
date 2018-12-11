@@ -39,7 +39,7 @@ Axios.interceptors.request.use(function (config) {
 })
 Axios.interceptors.response.use(function(response){
 	if(response.data.type == '999'){
-		layer.msg('登录过时，请重新登录');
+		// layer.msg('登录过时，请重新登录');
 		localStorage.clear();
 		setTimeout(() => {
 			router.push("/components/login");

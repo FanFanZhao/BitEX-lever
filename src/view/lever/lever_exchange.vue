@@ -39,7 +39,8 @@ export default {
       currency_name: "",
       legal_name: "",
       currency_id: "",
-      legal_id: ""
+      legal_id: "",
+      buySell:function(){}
     };
   },
   filters: {
@@ -64,7 +65,7 @@ export default {
     that.legal_name = localStorage.getItem("legal_name");
     that.currency_name = localStorage.getItem("currency_name");
     that.buy_sell(that.legal_id, that.currency_id);
-    setInterval(function(){
+    that.buySell = setInterval(function(){
       that.buy_sell(that.legal_id, that.currency_id);
     },3000)
     that.connect(
@@ -136,6 +137,12 @@ export default {
           }
         }
       });
+    }
+  },
+  destroyed(){
+    let that = this;
+    if(that.buySell){
+      clearInterval(that.buySell)
     }
   }
 };

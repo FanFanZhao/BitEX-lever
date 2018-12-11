@@ -119,7 +119,9 @@ export default {
       riskRate: "",
       totalPro: "",
       stopModal: false,
-      selectType: "all"
+      selectType: "all",
+      leverDealall:function(){},
+      
     };
   },
   created() {
@@ -127,7 +129,7 @@ export default {
     this.legal_id = localStorage.getItem("legal_id");
     this.currency_id = localStorage.getItem("currency_id");
     this.init();
-    setInterval(function() {
+    that.leverDealall = setInterval(function() {
       that.loads();
     }, 6000);
   },
@@ -425,6 +427,12 @@ export default {
           that.stopModal = false;
           console.log(error);
         });
+    }
+  },
+  destroyed(){
+    let that = this;
+    if(that.leverDealall){
+      clearInterval(that.leverDealall)
     }
   }
 };
