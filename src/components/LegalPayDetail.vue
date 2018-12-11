@@ -13,7 +13,7 @@
     <div class="info bg-part ft14 radius4">
       <div>
         <span>交易总额：</span>
-        <span>{{msg.deal_money}}</span>
+        <span>{{msg.deal_money || '0.000' | toFixeds}}</span>
       </div>
       <div>
         <span>{{msg.is_seller=='0'?'卖家':'买家'}}</span>
@@ -25,11 +25,11 @@
       </div> -->
       <div>
         <span>单价：</span>
-        <span>{{msg.price}}</span>
+        <span>{{msg.price || '0.000' | toFixeds}}</span>
       </div>
       <div>
         <span>数量：</span>
-        <span>{{msg.number}}</span>
+        <span>{{msg.number || '0.000' | toFixeds}}</span>
       </div>
       <div>
         <span>联系方式：</span>
@@ -105,6 +105,12 @@ export default {
       msg:{}
     };
   },
+  filters: {
+			toFixeds: function(value) {
+				value = Number(value);
+				return value.toFixed(3);
+			}
+		},
   created() {
     var token = window.localStorage.getItem("token") || "";
       // this.id = this.$route.query.id;
