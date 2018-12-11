@@ -300,7 +300,9 @@ export default {
       inputPrice: "",
       selectType: "",
       selectedStatus: 1,
-      sellInputValue: ""
+      sellInputValue: "",
+      minShare:1,
+      maxShare:0
     };
   },
   created() {
@@ -391,6 +393,8 @@ export default {
             this.user_legal = res.data.message.user_lever;
             this.lastPrice = res.data.message.last_price;
             this.shareList = res.data.message.multiple.share;
+            this.minShare = res.data.message.lever_share_limit.min;
+            this.maxShare = res.data.message.lever_share_limit.max;
             // console.log(res.data)
             this.buyInfo.buyPrice = 0;
             this.buyInfo.buyNum = 0;
@@ -582,8 +586,43 @@ export default {
     // 手数输入
     changeValue(type) {
       let that = this;
+      let textValue = /^[1-9]*[0-9][0-9]*$/;
+      if(type == 'sell'){
+        if(that.sellShare != ''){
+          if(!textValue.test(that.sellShare)){
+            layer.msg("请输入整数");
+            return;
+          }else if(that.sellShare < that.minShare){
+            layer.msg('输入的值不能低于' + that.minShare);
+            return;
+          }else{
+            if(that.maxShare > 0){
+              if(that.sellShare > that.maxShare){
+                layer.msg('输入的值不能高于' + that.maxShare);
+                return;
+              }
+            }
+          }
+        }
+      }else{
+        if(that.buySahre != ''){
+          if(!textValue.test(that.buySahre)){
+            layer.msg("请输入整数");
+            return;
+          }else if(that.buySahre < that.minShare){
+            layer.msg('输入的值不能低于' + that.minShare);
+            return;
+          }else{
+            if(that.maxShare > 0){
+              if(that.buySahre > that.maxShare){
+                layer.msg('输入的值不能高于' + that.maxShare);
+                return;
+              }
+            }
+          }
+        }
+      }
       if (that.selectedStatus != 0) {
-        console.log(12);
         if (type == "sell" && that.sellInfo.sell_selected != "") {
           // 价格
           var bond = parseFloat(localStorage.getItem("lastPrice")).toFixed(4);

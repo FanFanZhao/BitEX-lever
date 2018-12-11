@@ -1,7 +1,7 @@
 <template>
 	<div class="nav_bar">
 		<div class="content clear" style="height:60px">
-			<div class="fl"><img src="@/assets/images/logo.png" class="navbar-logo" style="width:40px;"></div>
+			<div class="fl"><img src="@/assets/images/logo.png" class="navbar-logo" style="width:32px;position:relative;top:-2px;"></div>
 			<ul  class="navbar-item fl mouseDefault ml20">
 				<!-- <li  class="base" :class="{active:index==current}"  v-for="(tabs,index) in tabList" :key="index"  @click="goto(index,tabs.page)">{{tabs.title}}</li> -->
 				<li  class="base" ><router-link to="/" exact>首页</router-link></li>
