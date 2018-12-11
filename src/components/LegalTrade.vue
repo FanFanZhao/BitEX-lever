@@ -67,8 +67,8 @@
 					<div class="totals-num">
 						<input v-if=" types == 'trade' " class="number" type="number" :placeholder='"请输入欲"+money_type+"总额"' v-model="nums">
 						<input v-else class="number" type="number" :placeholder='"请输入要"+money_type+"数量"' v-model="nums">
-						<button class="all" type="button" v-if=" type== 'sell' " @click="allMoney();">全部买入</button>
-						<button class="all" type="button" v-else @click="allMoney();">全部卖出</button>
+						<button class="all curPer" type="button" v-if=" type== 'sell' " @click="allMoney();">全部买入</button>
+						<button class="all curPer" type="button" v-else @click="allMoney();">全部卖出</button>
 						<span class="name">{{name01}}</span>
 					</div>
 					<div class="maxnum">限额{{minNum || '0.000' | toFixeds}}-{{maxNum || '0.000' | toFixeds}}</div>
@@ -259,7 +259,7 @@
 					console.log(res);
 					if (res.data.type == 'ok') {
 						_this.surplus_number=res.data.message.surplus_number;
-					    _this.user_legal_balance=res.data.message.user_legal_balance;
+					    _this.user_legal_balance=(res.data.message.user_legal_balance-0).toFixed(5);
 					} else {
 
 					}
