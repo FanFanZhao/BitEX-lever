@@ -25,10 +25,17 @@
 					{
 						src1: require("@/assets/images/icon_delegate.png"),
 						src2: require("@/assets/images/icon_delegate_s.png"),
-						text: 'c2c账户',
+						text: '法币账户',
 						page:'legal',
 						children:['legal']
 					},
+					// {
+					// 	src1: require("@/assets/images/icon_delegate.png"),
+					// 	src2: require("@/assets/images/icon_delegate_s.png"),
+					// 	text: 'c2c账户',
+					// 	page:'legal',
+					// 	children:['legal']
+					// },
 					{
 						src1: require("@/assets/images/transfer.png"),
 						src2: require("@/assets/images/transferSelected.png"),

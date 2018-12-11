@@ -46,6 +46,8 @@
 					</div>
 				</li>
 			</ul>
+			<div class="more tc mt20 curPer" @click="getMore()" v-if="list.length&&more">加载更多</div>
+			<div class="more tc mt20" v-else>没有更多了</div>
 			<!-- 分页 -->
 			<!-- <paginate v-show="pages" :page-count="pages" :click-handler="pagesList" :prev-text="'上一页'" :next-text="'下一页'"
 			 :container-class="'pages'">
@@ -114,6 +116,7 @@
 				ID:'',
 				money_type:'',
 				name01:'CNY',
+				more:true,
 				interval:function(){}
 
 			};
@@ -172,14 +175,23 @@
 				}).then(res => {
 					if (res.data.type == 'ok') {
 						layer.close(i);
-						this.list = res.data.message.data;
-						let total = parseInt(res.data.message.total);
-						if (total > 10) {
-							this.pages = Math.ceil(total / 10)
-
+						if(res.data.message.data.length>0){
+							this.list =this.list.concat(res.data.message.data);
+							this.page=this.page+1;
+						}else{
+                            this.more=false
 						}
+						// let total = parseInt(res.data.message.total);
+						// if (total > 10) {
+						// 	this.pages = Math.ceil(total / 10)
+
+						// }
 					}
 				});
+			},
+			// 加载更多
+			getMore(){
+                this.getList(this.type,this.id,this.page)
 			},
 			// 点击改变选中分类
 			changeClassify(ids, type, names) {

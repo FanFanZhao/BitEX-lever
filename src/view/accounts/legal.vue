@@ -1,10 +1,11 @@
 <template>
     <div>
         <div class="top">
-            <p>C2C账户  总资产折合：{{totle}}CNY</p>
+            <p>法币账户  总资产折合：{{totle}}CNY</p>
         </div>
         <ul class="list">
-            <li v-for="(item,index) in list" :key="index" v-if="item.is_legal == 1 && item.is_lever == 1" @click="go_legalAccount(item.currency)">
+            <!-- <li v-for="(item,index) in list" :key="index" v-if="item.is_legal == 1 && item.is_lever == 1" @click="go_legalAccount(item.currency)"> -->
+            <li v-for="(item,index) in list" :key="index" v-if="item.is_legal == 1 && item.is_lever == 1">
                 <p class="legal_name">{{item.currency_name}}</p>
                 <div class="balance_detail">
                     <div class="use_balance flex1">
@@ -19,6 +20,12 @@
                        <p class="ft12 mincny">冻结</p>
                        <p class="lock_balance_num">
                            {{item.lock_legal_balance || '0.00' | toFixeds}}
+                       </p>
+                    </div>
+                    <div class="convert flex1">
+                       <p class="ft12 mincny">折合</p>
+                       <p class="lock_balance_num">
+                           {{(item.legal_balance*item.cny_price) || '0.00' | toFixeds}} (CNY)
                        </p>
                     </div>
                 </div>
