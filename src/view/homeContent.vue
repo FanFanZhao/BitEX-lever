@@ -22,7 +22,7 @@
                   <!-- <p class="mt5 color47 now_cny">≈{{(item.now_price*6.9641).toFixed(2)}} CNY</p> -->
                   <p class="mt15"><span class="color47">24H量</span> <span class="volume">{{(item.volume-0).toFixed(2)}}</span></p>
                 </div>
-                <button :class="[{'downcolor': item.change.substring(0,1) == '-'}]">{{item.change}}</button>
+                <button :class="[{'downcolor': item.change.substring(0,1) == '-'}]">{{item.change}}%</button>
               </div>
               
             </li>

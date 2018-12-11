@@ -11,7 +11,7 @@
         <div>操作</div>
       </div>
       <ul class="list">
-        <li class="flex" v-for="(item,index) in list" :key="index">
+        <li class="flex bdb" v-for="(item,index) in list" :key="index">
           <div class="flex">
             <span class="icon">{{item.name.charAt(0)}}</span>
             <span>{{item.name}}</span>
