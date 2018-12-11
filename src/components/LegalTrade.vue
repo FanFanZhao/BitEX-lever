@@ -37,9 +37,9 @@
 					<div class="flex alcenter price ft16 bold center">{{item.price}}</div>
 					<!-- <div class="flex alcenter">{{item.way_name}}</div> -->
 					<div class="flex alcenter center">
-						<img v-if="item.way_name == '支付宝'" src="../assets/images/zfb_icon.png" /> 
-						 <img v-if="item.way_name == '微信'" src="../assets/images/wx_icon.png" />
-						<img v-if="item.way_name == '1'" src="../assets/images/bank_icon.png" />
+						<img v-if="item.way == 'ali_pay'" src="../assets/images/zfb_icon.png" /> 
+						 <img v-if="item.way == 'we_chat'" src="../assets/images/wx_icon.png" />
+						<img v-if="item.way == 'bank'" src="../assets/images/bank_icon.png" />
 					</div>
 					<div class="flex alcenter end"  @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id,item.type)">
 						<button class="curPer">{{classify}}{{name}}</button>

@@ -141,15 +141,17 @@
         <footer>
           <div class="content flex">
             <dl>
-              <dt>网站功能</dt>
-              <router-link to="/c2c" tag="dd">c2c交易</router-link>
-              <router-link to="/leverdealCenter" tag="dd">杠杆交易</router-link>
+              <dt>关于我们</dt>
+              <!-- <router-link to="/c2c" tag="dd">c2c交易</router-link>
+              <router-link to="/leverdealCenter" tag="dd">杠杆交易</router-link> -->
+              <dd v-for="item in footFrist" @click="goDetail(item.id)">{{item.title}}</dd>
             </dl>
             <dl>
-              <dt>用户帮助</dt>
-              <router-link to="/components/login" tag="dd">登录</router-link>
+              <dt>用户支持</dt>
+              <dd v-for="item in footSecond" @click="goDetail(item.id)">{{item.title}}</dd>
+              <!-- <router-link to="/components/login" tag="dd">登录</router-link>
               <router-link to="/components/register" tag="dd">注册</router-link>
-              <router-link to="/forgetPwd" tag="dd">找回密码</router-link>
+              <router-link to="/forgetPwd" tag="dd">找回密码</router-link> -->
             </dl>
             <dl>
               <!-- <dt>app下载</dt>
@@ -191,6 +193,8 @@ export default {
       coin_list: [],
       noticeList: [],
       swiperImgs: [],
+      footFrist:[],
+      footSecond:[],
     };
   },
   created() {
@@ -213,6 +217,8 @@ export default {
 
     this.connect();
     this.getNews();
+    this.aboutUs();
+    this.help();
   },
   methods: {
     goDetail(id) {
@@ -376,6 +382,38 @@ export default {
       this.$router.push({
         name: "noticeDetail",
         query: { id: id }
+      });
+    },
+    aboutUs(){
+      var that = this;
+      this.$http.post("/api/news/list",{"c_id":9}).then(res => {
+        if (res.data.type == "ok") {
+             console.log(res);
+             var list = res.data.message.list;
+             if (list.length > 2) {
+            that.footFrist = list;
+          } else {
+            that.footFrist = list;
+          }
+        } else {
+          // layer.msg(res.message);
+        }
+      });
+    },
+    help(){
+      var that = this;
+      this.$http.post("/api/news/list",{"c_id":10}).then(res => {
+        if (res.data.type == "ok") {
+             console.log(res);
+             var list = res.data.message.list;
+             if (list.length > 2) {
+            that.footSecond = list;
+          } else {
+            that.footSecond = list;
+          }
+        } else {
+          // layer.msg(res.message);
+        }
       });
     }
   }

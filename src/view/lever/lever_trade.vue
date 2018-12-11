@@ -8,32 +8,37 @@
     </div>
     <!-- 限价交易 -->
     <div class="content clear" v-if="show">
-       <div class="available clear fColor1 first" v-if="address.length<=0">
-            <span class="baseColor curPer" @click="goNext('login')">登录</span>
-            或
-            <span class="baseColor curPer" @click="goNext('register')">注册</span>
-            开始交易
-          </div>
-          <div class="clear available padds" v-else>
-            <span class="fl fColor1">可用 {{user_legal | tofixedFour}} {{legal_name}}</span>
-            <!-- <span class="fr baseColor curPer" @click="goNext('account')">充币</span> -->
-          </div>
-          <!-- <div class="mt40 input-item clear">
+      <div class="available clear fColor1 first" v-if="address.length<=0">
+        <span class="baseColor curPer" @click="goNext('login')">登录</span>
+        或
+        <span class="baseColor curPer" @click="goNext('register')">注册</span>
+        开始交易
+      </div>
+      <div class="clear available padds" v-else>
+        <span class="fl fColor1">可用 {{user_legal | tofixedFour}} {{legal_name}}</span>
+        <!-- <span class="fr baseColor curPer" @click="goNext('account')">充币</span> -->
+      </div>
+      <!-- <div class="mt40 input-item clear">
                         <label>买入价</label>
                         <input type="number" v-model="buyInfo.buyPrice" @keydown.69.prevent >
                         <span>{{currency_name}}</span>
-          </div>-->
-          <div class="control-price first">
-            <span :class="['active']" @click="selectTypes()">市价交易</span>
-            <span @click="selectTypes()">限价交易</span>
-            <div>
-              <label>价格：</label>
-              <input type="text" v-model="inputPrice" placeholder="请输入价格">
-            </div>
-          </div>
+      </div>-->
+      <div class="control-price first">
+        <span :class="[{'active':selectedStatus == 1}]" @click="selectTypes(1)">市价交易</span>
+        <span :class="[{'active':selectedStatus == 0}]" @click="selectTypes(0)">限价交易</span>
+      </div>
       <div class="w50 fl first">
         <div class="ft14">
           <div class="mt40 input-item clear">
+            <div class="mb10" v-if="selectedStatus == 0">
+              <label>价格：</label>
+              <input
+                type="text"
+                v-model="inputPrice"
+                placeholder="请输入价格"
+                @input="changePrice('buy')"
+              >
+            </div>
             <label>倍数：</label>
             <select class="buy_multiple" v-model="buyInfo.buy_selected" @change="selectMuit('buy')">
               <option disabled value>请选择倍数</option>
@@ -60,7 +65,6 @@
                 :class="['share',{'active':type ==item.value}]"
                 @click="select(item.value,'buy')"
               >{{item.value}}手</b>
-              
             </div>
           </div>
           <div class="lever-total fColor1">
@@ -92,8 +96,8 @@
             开始交易
           </div>
           <!-- <div class="clear available" v-else> -->
-            <!-- <span class="fl fColor1">可用 {{user_currency | tofixedFour}} {{legal_name}}</span> -->
-            <!-- <span class="fr baseColor curPer" @click="goNext('account')">充币</span> -->
+          <!-- <span class="fl fColor1">可用 {{user_currency | tofixedFour}} {{legal_name}}</span> -->
+          <!-- <span class="fr baseColor curPer" @click="goNext('account')">充币</span> -->
           <!-- </div> -->
           <!-- <div class="mt40 input-item clear">
                         <label>卖出价</label>
@@ -101,6 +105,15 @@
                         <span>{{currency_name}}</span>
           </div>-->
           <div class="mt40 input-item clear">
+            <div class="mb10" v-if="selectedStatus == 0">
+              <label>价格：</label>
+              <input
+                type="text"
+                v-model="sellInputValue"
+                placeholder="请输入价格"
+                @input="changePrice('sell')"
+              >
+            </div>
             <label>倍数：</label>
             <select
               class="sell_multiple"
@@ -284,8 +297,10 @@ export default {
       shareList: [],
       buySahre: "",
       sellShare: "",
-      inputPrice: '',
-      selectType:''
+      inputPrice: "",
+      selectType: "",
+      selectedStatus: 1,
+      sellInputValue: ""
     };
   },
   created() {
@@ -310,7 +325,6 @@ export default {
     that.currency_name = localStorage.getItem("currency_name");
     that.buy_sell(that.legal_id, that.currency_id);
     eventBus.$on("tocel", function(datas) {
-      console.log(datas);
       if (datas) {
         that.buy_sell(that.legal_id, that.currency_id);
       }
@@ -330,10 +344,17 @@ export default {
 
     buyCoin() {
       var that = this;
-      if (this.buyInfo.buy_selected == "") {
+      if (that.buyInfo.buy_selected == "") {
         layer.msg("请选择倍数");
         return;
       }
+      if (that.selectedStatus == 0) {
+        if (that.inputPrice == "") {
+          layer.msg("请输入价格");
+          return;
+        }
+      }
+
       that.comfirmShow = true;
       that.buyType = 1;
     },
@@ -342,6 +363,12 @@ export default {
       if (this.sellInfo.sell_selected == "") {
         layer.msg("请选择倍数");
         return;
+      }
+      if (that.selectedStatus == 0) {
+        if (that.inputPrice == "") {
+          layer.msg("请输入价格");
+          return;
+        }
       }
       that.comfirmShow = true;
       that.buyType = 2;
@@ -358,7 +385,6 @@ export default {
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
-          console.log(res);
           if (res.data.type == "ok") {
             this.multiple = res.data.message.multiple.muit;
             this.user_currency = res.data.message.all_levers;
@@ -391,348 +417,220 @@ export default {
         that.types = options;
         that.sellShare = options;
       }
-      if (values == "sell" && that.sellInfo.sell_selected != "") {
-        var i = layer.load();
-        this.$http({
-          url: "/api/" + "currency/quotation_new",
-          method: "get",
-          data: {},
-          headers: { Authorization: localStorage.getItem("token") }
-        })
-          .then(res => {
-            if (res.data.type == "ok") {
-              var list = res.data.message[0].quotation;
-              for (let i in list) {
-                if (that.currency_id == list[i].currency_id) {
-                  var spread = parseFloat(list[i].spread).toFixed(4);
-                  var transactionFee = parseFloat(
-                    list[i].lever_trade_fee
-                  ).toFixed(4);
-                  var bond = parseFloat(
-                    localStorage.getItem("lastPrice")
-                  ).toFixed(4);
-                  var prices = parseFloat((bond * spread) / 100).toFixed(4);
-                  var pricesTotal = 0;
-                  var muitNum = 0;
+      if (that.selectedStatus != 0) {
+        console.log(1);
+        if (values == "sell" && that.sellInfo.sell_selected != "") {
+          // 价格
+          var bond = parseFloat(localStorage.getItem("lastPrice")).toFixed(4);
+          // 倍数
+          var muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
+          // 手数
+          var share = parseFloat(options).toFixed(4);
+          that.pricesType(bond, values, share, muitNum);
+        } else if (values == "buy" && that.buyInfo.buy_selected != "") {
+          // 价格
+          var bond = parseFloat(localStorage.getItem("lastPrice")).toFixed(4);
+          // 倍数
+          var muitNum = parseFloat(that.buyInfo.buy_selected).toFixed(4);
+          // 手数
+          var share = parseFloat(options).toFixed(4);
+          that.pricesType(bond, values, share, muitNum);
+        } else {
+          that.totalPriceBuy = 0.0;
+          that.trandeFreeBuy = 0.0;
+          that.bonsBuy = 0.0;
+        }
+      } else {
+        if (values == "sell" && that.sellInfo.sell_selected != "") {
+          if (that.sellInputValue != "") {
+            // 价格
+            var bond = that.inputPrice;
+            // 倍数
+            var muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
+            // 手数
+            var share = parseFloat(options).toFixed(4);
+            that.pricesType(bond, values, share, muitNum);
+          }
+        } else if (values == "buy" && that.buyInfo.buy_selected != "") {
+          if (that.inputPrice != "") {
+            // 价格
+            var bond = that.inputPrice;
+            // 倍数
+            var muitNum = parseFloat(that.buyInfo.buy_selected).toFixed(4);
+            // 手数
+            var share = parseFloat(options).toFixed(4);
+            that.pricesType(bond, values, share, muitNum);
+          }
+        } else {
+          that.totalPriceBuy = 0.0;
+          that.trandeFreeBuy = 0.0;
+          that.bonsBuy = 0.0;
+        }
+      }
+    },
+    pricesType(bond, type, share, muitNum) {
+      let that = this;
+      var i = layer.load();
+      this.$http({
+        url: "/api/" + "currency/quotation_new",
+        method: "get",
+        data: {},
+        headers: { Authorization: localStorage.getItem("token") }
+      })
+        .then(res => {
+          if (res.data.type == "ok") {
+            var list = res.data.message[0].quotation;
+            for (let i in list) {
+              if (that.currency_id == list[i].currency_id) {
+                var spread = parseFloat(list[i].spread).toFixed(4);
+                var transactionFee = parseFloat(
+                  list[i].lever_trade_fee
+                ).toFixed(4);
+                var prices = parseFloat((bond * spread) / 100).toFixed(4);
+                var pricesTotal = 0;
+                if (type == "sell") {
                   pricesTotal = parseFloat(bond - prices).toFixed(4);
-                  muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
-                  var share = parseFloat(options).toFixed(4);
-                  var shareNum = parseFloat(list[i].lever_share_num).toFixed(4);
-                  var totalPrice = parseFloat(
-                    pricesTotal * share * shareNum
-                  ).toFixed(4);
-                  var bondsValue = parseFloat(
-                    (totalPrice - 0) / (muitNum - 0)
-                  ).toFixed(4);
-                  var tradeFreeValue = parseFloat(
-                    (totalPrice * transactionFee) / 100
-                  ).toFixed(4);
-                  that.totalPrice = parseFloat(bond * share).toFixed(4);
+                } else {
+                  pricesTotal = parseFloat(bond + prices).toFixed(4);
+                }
+                muitNum = parseFloat(muitNum).toFixed(4);
+                share = parseFloat(share).toFixed(4);
+                var shareNum = parseFloat(list[i].lever_share_num).toFixed(4);
+                var totalPrice = parseFloat(
+                  pricesTotal * share * shareNum
+                ).toFixed(4);
+                var bondsValue = parseFloat(
+                  (totalPrice - 0) / (muitNum - 0)
+                ).toFixed(4);
+                var tradeFreeValue = parseFloat(
+                  (totalPrice * transactionFee) / 100
+                ).toFixed(4);
+                if (type == "buy") {
+                  that.totalPriceBuy = (bond * share).toFixed(4);
+                  that.trandeFreeBuy = tradeFreeValue;
+                  that.bonsBuy = bondsValue;
+                } else {
+                  that.totalPrice = (bond * share).toFixed(4);
                   that.trandeFree = tradeFreeValue;
                   that.bons = bondsValue;
                 }
               }
             }
-          })
-          .catch(error => {
-            console.log(error);
-          });
-        setTimeout(function() {
-          layer.close(i);
-        }, 1500);
-      } else if (values == "buy" && that.buyInfo.buy_selected != "") {
-        var i = layer.load();
-        this.$http({
-          url: "/api/" + "currency/quotation_new",
-          method: "get",
-          data: {},
-          headers: { Authorization: localStorage.getItem("token") }
+          }
         })
-          .then(res => {
-            if (res.data.type == "ok") {
-              var list = res.data.message[0].quotation;
-              for (let i in list) {
-                if (that.currency_id == list[i].currency_id) {
-                  var spread = parseFloat(list[i].spread).toFixed(4);
-                  var transactionFee = parseFloat(
-                    list[i].lever_trade_fee
-                  ).toFixed(4);
-                  var bond = parseFloat(
-                    localStorage.getItem("lastPrice")
-                  ).toFixed(4);
-                  var prices = parseFloat((bond * spread) / 100).toFixed(4);
-                  var pricesTotal = 0;
-                  var muitNum = 0;
-                  pricesTotal = parseFloat(bond + prices).toFixed(4);
-                  muitNum = parseFloat(that.buyInfo.buy_selected);
-                  var share = parseFloat(options).toFixed(4);
-                  var shareNum = parseFloat(list[i].lever_share_num).toFixed(4);
-                  var totalPrice = parseFloat(
-                    pricesTotal * share * shareNum
-                  ).toFixed(4);
-                  var bondsValue = parseFloat(
-                    (totalPrice - 0) / (muitNum - 0)
-                  ).toFixed(4);
-                  var tradeFreeValue = parseFloat(
-                    (totalPrice * transactionFee) / 100
-                  ).toFixed(4);
-                  that.totalPriceBuy = (bond * share).toFixed(4);
-                  that.trandeFreeBuy = tradeFreeValue;
-                  that.bonsBuy = bondsValue;
-                }
-              }
-            }
-          })
-          .catch(error => {
-            console.log(error);
-          });
-        setTimeout(function() {
-          layer.close(i);
-        }, 1500);
-      }
+        .catch(error => {
+          console.log(error);
+        });
+      setTimeout(function() {
+        layer.close(i);
+      }, 1500);
     },
     // 选择倍数
     selectMuit(type) {
       let that = this;
-      var i = layer.load();
-      if (type == "sell") {
-        if (that.sellShare != "") {
-          this.$http({
-            url: "/api/" + "currency/quotation_new",
-            method: "get",
-            data: {},
-            headers: { Authorization: localStorage.getItem("token") }
-          })
-            .then(res => {
-              if (res.data.type == "ok") {
-                var list = res.data.message[0].quotation;
-                for (let i in list) {
-                  if (that.currency_id == list[i].currency_id) {
-                    var spread = parseFloat(list[i].spread).toFixed(4);
-                    var transactionFee = parseFloat(
-                      list[i].lever_trade_fee
-                    ).toFixed(4);
-                    var bond = parseFloat(
-                      localStorage.getItem("lastPrice")
-                    ).toFixed(4);
-                    var prices = parseFloat((bond * spread) / 100).toFixed(4);
-                    var pricesTotal = 0;
-                    var muitNum = 0;
-                    var share = 0;
-                    pricesTotal = parseFloat(bond - prices).toFixed(4);
-                    muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(
-                      4
-                    );
-                    share = parseFloat(that.sellShare).toFixed(4);
-                    var shareNum = parseFloat(list[i].lever_share_num).toFixed(
-                      4
-                    );
-                    var totalPrice = parseFloat(
-                      pricesTotal * share * shareNum
-                    ).toFixed(4);
-                    var bondsValue = parseFloat(
-                      (totalPrice - 0) / (muitNum - 0)
-                    ).toFixed(4);
-                    var tradeFreeValue = parseFloat(
-                      (totalPrice * transactionFee) / 100
-                    ).toFixed(4);
-                    that.totalPrice = parseFloat(bond * share).toFixed(4);
-                    that.trandeFree = tradeFreeValue;
-                    that.bons = bondsValue;
-                  }
-                }
-              }
-            })
-            .catch(error => {
-              console.log(error);
-            });
+      if (that.selectedStatus != 0) {
+        if (type == "sell" && that.sellShare != "") {
+          // 价格
+          var bond = parseFloat(localStorage.getItem("lastPrice")).toFixed(4);
+          // 倍数
+          var muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
+          // 手数
+          var share = parseFloat(that.sellShare).toFixed(4);
+          that.pricesType(bond, type, share, muitNum);
+        } else if (type == "buy" && that.buySahre != "") {
+          // 价格
+          var bond = parseFloat(localStorage.getItem("lastPrice")).toFixed(4);
+          // 倍数
+          var muitNum = parseFloat(that.buyInfo.buy_selected).toFixed(4);
+          // 手数
+          var share = parseFloat(that.buySahre).toFixed(4);
+          that.pricesType(bond, type, share, muitNum);
+        } else {
+          that.totalPriceBuy = 0.0;
+          that.trandeFreeBuy = 0.0;
+          that.bonsBuy = 0.0;
         }
       } else {
-        if (that.buySahre != "") {
-          this.$http({
-            url: "/api/" + "currency/quotation_new",
-            method: "get",
-            data: {},
-            headers: { Authorization: localStorage.getItem("token") }
-          })
-            .then(res => {
-              if (res.data.type == "ok") {
-                var list = res.data.message[0].quotation;
-                for (let i in list) {
-                  if (that.currency_id == list[i].currency_id) {
-                    var spread = parseFloat(list[i].spread).toFixed(4);
-                    var transactionFee = parseFloat(
-                      list[i].lever_trade_fee
-                    ).toFixed(4);
-                    var bond = parseFloat(
-                      localStorage.getItem("lastPrice")
-                    ).toFixed(4);
-                    var prices = parseFloat((bond * spread) / 100).toFixed(4);
-                    var pricesTotal = 0;
-                    var muitNum = 0;
-                    var share = 0;
-                    pricesTotal = parseFloat(bond + prices).toFixed(4);
-                    muitNum = parseFloat(that.buyInfo.buy_selected);
-                    share = parseFloat(that.buySahre).toFixed(4);
-                    var shareNum = parseFloat(list[i].lever_share_num).toFixed(
-                      4
-                    );
-                    var totalPrice = parseFloat(
-                      pricesTotal * share * shareNum
-                    ).toFixed(4);
-                    var bondsValue = parseFloat(
-                      (totalPrice - 0) / (muitNum - 0)
-                    ).toFixed(4);
-                    var tradeFreeValue = parseFloat(
-                      (totalPrice * transactionFee) / 100
-                    ).toFixed(4);
-                    that.totalPriceBuy = parseFloat(bond * share).toFixed(4);
-                    that.trandeFreeBuy = tradeFreeValue;
-                    that.bonsBuy = bondsValue;
-                  }
-                }
-              }
-            })
-            .catch(error => {
-              console.log(error);
-            });
+        if (type == "sell" && that.sellShare != "") {
+          if (that.sellInputValue != "") {
+            // 价格
+            var bond = that.inputPrice;
+            // 倍数
+            var muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
+            // 手数
+            var share = parseFloat(that.sellShare).toFixed(4);
+            that.pricesType(bond, type, share, muitNum);
+          }
+        } else if (type == "buy" && that.sellShare != "") {
+          if (that.inputPrice != "") {
+            // 价格
+            var bond = that.inputPrice;
+            // 倍数
+            var muitNum = parseFloat(that.buyInfo.buy_selected).toFixed(4);
+            // 手数
+            var share = parseFloat(that.buySahre).toFixed(4);
+            that.pricesType(bond, type, share, muitNum);
+          }
+        } else {
+          that.totalPriceBuy = 0.0;
+          that.trandeFreeBuy = 0.0;
+          that.bonsBuy = 0.0;
         }
       }
-
-      setTimeout(function() {
-        layer.close(i);
-      }, 1500);
     },
 
     // 手数输入
     changeValue(type) {
       let that = this;
-      if (type == "buy") {
-        if (that.buyInfo.buy_selected != "") {
-          var i = layer.load();
-          this.$http({
-            url: "/api/" + "currency/quotation_new",
-            method: "get",
-            data: {},
-            headers: { Authorization: localStorage.getItem("token") }
-          })
-            .then(res => {
-              if (res.data.type == "ok") {
-                var list = res.data.message[0].quotation;
-                for (let i in list) {
-                  if (that.currency_id == list[i].currency_id) {
-                    var spread = parseFloat(list[i].spread).toFixed(4);
-                    var transactionFee = parseFloat(
-                      list[i].lever_trade_fee
-                    ).toFixed(4);
-                    var bond = parseFloat(
-                      localStorage.getItem("lastPrice")
-                    ).toFixed(4);
-                    var prices = parseFloat((bond * spread) / 100).toFixed(4);
-                    var pricesTotal = 0;
-                    var muitNum = 0;
-                    pricesTotal = parseFloat(bond + prices).toFixed(4);
-                    muitNum = parseFloat(that.buyInfo.buy_selected);
-                    var share = parseFloat(that.buySahre).toFixed(4);
-                    var shareNum = parseFloat(list[i].lever_share_num).toFixed(
-                      4
-                    );
-                    var totalPrice = parseFloat(
-                      pricesTotal * share * shareNum
-                    ).toFixed(4);
-                    var bondsValue = parseFloat(
-                      (totalPrice - 0) / (muitNum - 0)
-                    ).toFixed(4);
-                    var tradeFreeValue = parseFloat(
-                      (totalPrice * transactionFee) / 100
-                    ).toFixed(4);
-                    if (parseFloat(bond * share).toFixed(4) == "NaN") {
-                      that.totalPriceBuy = "0.0000";
-                    } else {
-                      that.totalPriceBuy = parseFloat(bond * share).toFixed(4);
-                    }
-                    if (tradeFreeValue == "NaN") {
-                      that.trandeFreeBuy = "0.0000";
-                    } else {
-                      that.trandeFreeBuy = tradeFreeValue;
-                    }
-                    if (bondsValue == "NaN") {
-                      that.bonsBuy = "0.0000";
-                    } else {
-                      that.bonsBuy = bondsValue;
-                    }
-                  }
-                }
-              }
-            })
-            .catch(error => {
-              console.log(error);
-            });
-          setTimeout(function() {
-            layer.close(i);
-          }, 1500);
+      if (that.selectedStatus != 0) {
+        console.log(12);
+        if (type == "sell" && that.sellInfo.sell_selected != "") {
+          // 价格
+          var bond = parseFloat(localStorage.getItem("lastPrice")).toFixed(4);
+          // 倍数
+          var muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
+          // 手数
+          var share = parseFloat(that.sellShare).toFixed(4);
+          that.pricesType(bond, type, share, muitNum);
+        } else if (type == "buy" && that.buyInfo.buy_selected != "") {
+          // 价格
+          var bond = parseFloat(localStorage.getItem("lastPrice")).toFixed(4);
+          // 倍数
+          var muitNum = parseFloat(that.buyInfo.buy_selected).toFixed(4);
+          // 手数
+          var share = parseFloat(that.buySahre).toFixed(4);
+          that.pricesType(bond, type, share, muitNum);
+        } else {
+          that.totalPriceBuy = 0.0;
+          that.trandeFreeBuy = 0.0;
+          that.bonsBuy = 0.0;
         }
       } else {
-        var i = layer.load();
-        this.$http({
-          url: "/api/" + "currency/quotation_new",
-          method: "get",
-          data: {},
-          headers: { Authorization: localStorage.getItem("token") }
-        })
-          .then(res => {
-            if (res.data.type == "ok") {
-              var list = res.data.message[0].quotation;
-              for (let i in list) {
-                if (that.currency_id == list[i].currency_id) {
-                  var spread = parseFloat(list[i].spread).toFixed(4);
-                  var transactionFee = parseFloat(
-                    list[i].lever_trade_fee
-                  ).toFixed(4);
-                  var bond = parseFloat(
-                    localStorage.getItem("lastPrice")
-                  ).toFixed(4);
-                  var prices = parseFloat((bond * spread) / 100).toFixed(4);
-                  var pricesTotal = 0;
-                  var muitNum = 0;
-                  pricesTotal = parseFloat(bond - prices).toFixed(4);
-                  muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
-                  var share = parseFloat(that.sellShare).toFixed(4);
-                  var shareNum = parseFloat(list[i].lever_share_num).toFixed(4);
-                  var totalPrice = parseFloat(
-                    pricesTotal * share * shareNum
-                  ).toFixed(4);
-                  var bondsValue = parseFloat(
-                    (totalPrice - 0) / (muitNum - 0)
-                  ).toFixed(4);
-                  var tradeFreeValue = parseFloat(
-                    (totalPrice * transactionFee) / 100
-                  ).toFixed(4);
-                  if (parseFloat(bond * share).toFixed(4) == "NaN") {
-                    that.totalPrice = "0.0000";
-                  } else {
-                    that.totalPrice = parseFloat(bond * share).toFixed(4);
-                  }
-                  if (tradeFreeValue == "NaN") {
-                    that.trandeFree = "0.0000";
-                  } else {
-                    that.trandeFree = tradeFreeValue;
-                  }
-                  if (bondsValue == "NaN") {
-                    that.bons = "0.0000";
-                  } else {
-                    that.bons = bondsValue;
-                  }
-                }
-              }
-            }
-          })
-          .catch(error => {
-            console.log(error);
-          });
-        setTimeout(function() {
-          layer.close(i);
-        }, 1500);
+        if (type == "sell" && that.sellInfo.sell_selected != "") {
+          if (that.sellInputValue != "") {
+            // 价格
+            var bond = that.inputPrice;
+            // 倍数
+            var muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
+            // 手数
+            var share = parseFloat(that.sellShare).toFixed(4);
+            that.pricesType(bond, type, share, muitNum);
+          }
+        } else if (type == "buy" && that.buyInfo.buy_selected != "") {
+          if (that.inputPrice != "") {
+            // 价格
+            var bond = that.inputPrice;
+            // 倍数
+            var muitNum = parseFloat(that.buyInfo.buy_selected).toFixed(4);
+            // 手数
+            var share = parseFloat(that.buySahre).toFixed(4);
+            that.pricesType(bond, type, share, muitNum);
+          }
+        } else {
+          that.totalPriceBuy = 0.0;
+          that.trandeFreeBuy = 0.0;
+          that.bonsBuy = 0.0;
+        }
       }
     },
     // 关闭买入卖出弹窗
@@ -750,7 +648,9 @@ export default {
           currency_id: that.currency_id,
           multiple: that.sellInfo.sell_selected,
           share: that.sellShare,
-          type: 2
+          type: 2,
+          status:that.selectedStatus,
+				  target_price:that.sellInputValue,
         };
       } else {
         data = {
@@ -758,7 +658,9 @@ export default {
           currency_id: that.currency_id,
           multiple: that.buyInfo.buy_selected,
           share: that.buySahre,
-          type: 1
+          type: 1,
+          status:that.selectedStatus,
+			  	target_price:that.inputPrice,
         };
       }
       var i = layer.load();
@@ -769,7 +671,6 @@ export default {
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
-          console.log(res);
           layer.close(i);
           // layer.msg(res.data.message)
           if (res.data.type == "ok") {
@@ -800,8 +701,40 @@ export default {
         });
     },
     // 选择交易类型
-    selectTypes(){
-      
+    selectTypes(types) {
+      let that = this;
+      that.selectedStatus = types;
+    },
+    // 手动输入价格
+    changePrice(type) {
+      let that = this;
+      if (that.selectedStatus == 0) {
+        if (type == "buy" && that.buyInfo.buy_selected != "") {
+          if (that.inputPrice != "") {
+            // 价格
+            var bond = that.inputPrice;
+            // 倍数
+            var muitNum = parseFloat(that.buyInfo.buy_selected).toFixed(4);
+            // 手数
+            var share = parseFloat(that.buySahre).toFixed(4);
+            that.pricesType(bond, type, share, muitNum);
+          }
+        } else if (type == "sell" && that.sellInfo.sell_selected != "") {
+          if (that.sellInputValue != "") {
+            // 价格
+            var bond = that.sellInputValue;
+            // 倍数
+            var muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
+            // 手数
+            var share = parseFloat(that.sellShare).toFixed(4);
+            that.pricesType(bond, type, share, muitNum);
+          }
+        } else {
+          that.totalPriceBuy = 0.0;
+          that.trandeFreeBuy = 0.0;
+          that.bonsBuy = 0.0;
+        }
+      }
     }
   },
   computed: {
@@ -816,29 +749,32 @@ export default {
 </script>
 
 <style scoped>
-.padds{
+.mb10 input {
+  margin-bottom: 30px;
+}
+.padds {
   margin: 0 15px 0 25px;
   padding: 0 10px;
 }
 .share-total {
   flex-wrap: wrap;
 }
-.control-price{
+.control-price {
   margin: 20px 0 0;
   color: #fff;
 }
-.control-price span{
+.control-price span {
   margin-right: 15px;
   padding-bottom: 10px;
   cursor: pointer;
 }
-.control-price .active{
+.control-price .active {
   border-bottom: 1px solid #7a98f7;
 }
-.control-price div{
+.control-price div {
   margin-top: 30px;
 }
-.control-price input{
+.control-price input {
   width: 60%;
   line-height: 30px;
   padding: 5px 10px;

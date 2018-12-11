@@ -1,9 +1,11 @@
 <template>
   <div class="wrap">
     <div class="tab-header">
-      <span :class="[{'active':status == 0}]" @click="tabClick(0)">交易中</span>
-      <span :class="[{'active':status == 1}]" @click="tabClick(1)">平仓中</span>
-      <span :class="[{'active':status == 2}]" @click="tabClick(2)">已平仓</span>
+      <span :class="[{'active':status == 0}]" @click="tabClick(0)">挂单中</span>
+      <span :class="[{'active':status == 1}]" @click="tabClick(1)">交易中</span>
+      <span :class="[{'active':status == 2}]" @click="tabClick(2)">平仓中</span>
+      <span :class="[{'active':status == 3}]" @click="tabClick(3)">已平仓</span>
+      <span :class="[{'active':status == 4}]" @click="tabClick(4)">已撤消</span>
     </div>
     <ul class="list_head ft14">
       <li class="flex" v-if="list_content.length">
@@ -15,9 +17,10 @@
         <span class="width1">可用保证金</span>
         <span class="width1">止损价</span>
         <span class="width2">开仓时间</span>
-        <span class="width2" v-if="status == 2">平仓时间</span>
+        <span class="width2" v-if="status == 3">平仓时间</span>
         <span class="width1">盈亏</span>
         <span class="width1">状态</span>
+        <span class="width1" v-if="status == 0 || status == 1">操作</span>
       </li>
     </ul>
     <ul class="list_content fColor1 ft12">
@@ -30,11 +33,15 @@
         <span class="width1">{{item.origin_caution_money || '0.00' | tofixedFour}}</span>
         <span class="width1">{{item.caution_money || '0.00' | tofixedFour}}</span>
         <span class="width2">{{item.time}}</span>
-        <span class="width2" v-if="status == 2">{{item.handle_time}}</span>
+        <span class="width2" v-if="status == 3">{{item.handle_time}}</span>
         <span
           :class="['red','width1',{'green':item.fact_profits > 0}]"
         >{{item.fact_profits || '0.00' | tofixedFour}}</span>
         <span class="width1">{{item.status_name}}</span>
+        <div class="width1 btns" v-if="status == 0 || status == 1">
+          <button type="button" v-if="status == 0">撤单</button>
+          <button type="button" v-if="status == 1" @click="closePosition(item.id)">平仓</button>
+        </div>
       </li>
     </ul>
     <div class="mores" @click="load_more">
@@ -52,8 +59,8 @@ export default {
       list_content: [],
       page: 1,
       more: "加载更多",
-      status:0,
-      
+      status: 0,
+      set:function(){},
     };
   },
   created() {
@@ -61,6 +68,11 @@ export default {
     that.legal_id = localStorage.getItem("legal_id");
     that.currency_id = localStorage.getItem("currency_id");
     that.init();
+    if(that.status == 0 || that.status == 1){
+      that.set = setInterval(function(){
+        that.polling();
+      },2000)
+    }
   },
   filters: {
     tofixed: function(val) {
@@ -91,14 +103,61 @@ export default {
           console.log(res);
           if (res.data.type == "ok") {
             that.more = "加载更多";
-            that.list_content = that.list_content.concat(
-              res.data.message.data
-            );
+            that.list_content = that.list_content.concat(res.data.message.data);
             if (res.data.message.data.length == 0) {
               that.more = "没有更多了...";
             }
             if (res.data.message.data.length == 0 && that.page == 1) {
               that.more = "暂无数据";
+            }
+          } else {
+            layer.msg(res.data.message);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+
+    // 轮询数据
+    polling(){
+      let that = this;
+      this.$http({
+        url: "/api/" + "lever/my_trade",
+        method: "post",
+        data: {
+          status: that.status,
+          legal_id: that.legal_id,
+          currency_id: that.currency_id,
+          page: 1
+        },
+        headers: { Authorization: localStorage.getItem("token") }
+      })
+        .then(res => {
+          console.log(res);
+          if (res.data.type == "ok") {
+            that.more = "加载更多";
+            if (res.data.message.data.length == 0) {
+              that.more = "暂无数据";
+              that.list_content = [];
+            }else{
+              var list = res.data.message.data;
+              for(let i in list){
+                that.list_content[i].type = list[i].type;
+                that.list_content[i].symbol = list[i].symbol;
+                that.list_content[i].share = list[i].share;
+                that.list_content[i].price = list[i].price;
+                that.list_content[i].update_price = list[i].update_price;
+                that.list_content[i].target_profit_price = list[i].target_profit_price;
+                that.list_content[i].stop_loss_price = list[i].stop_loss_price;
+                that.list_content[i].origin_caution_money = list[i].origin_caution_money;
+                that.list_content[i].caution_money = list[i].caution_money;
+                that.list_content[i].time = list[i].time;
+                that.list_content[i].fact_profits = list[i].fact_profits;
+                that.list_content[i].status_name = list[i].status_name;
+                that.list_content[i].id = list[i].id;
+
+              }
             }
           } else {
             layer.msg(res.data.message);
@@ -114,12 +173,50 @@ export default {
       this.init();
     },
     // 状态切换
-    tabClick(type){
+    tabClick(type) {
       let that = this;
       that.status = type;
       that.list_content = [];
       that.page = 1;
       that.init();
+      clearInterval(that.set);
+      if(type == 0 || type == 1){
+        that.set = setInterval(function(){
+        that.polling();
+      },2000)
+      }
+    },
+    // 平仓
+    closePosition(ids){
+      let that = this;
+      var i = layer.load();
+      this.$http({
+        url: "/api/" + "lever/close",
+        method: "post",
+        data: {
+          id: ids
+        },
+        headers: { Authorization: localStorage.getItem("token") }
+      })
+        .then(res => {
+          layer.close(i);
+          if (res.data.type == "ok") {
+            layer.msg(res.data.message);
+            location.reload();
+          } else {
+            layer.msg(res.data.message);
+          }
+        })
+        .catch(error => {
+          layer.close(i);
+          console.log(error);
+        });
+    }
+  },
+  destroyed(){
+    let that = this;
+    if(that.set){
+      clearInterval(that.set);
     }
   }
 };
@@ -132,15 +229,14 @@ export default {
   margin: 30px auto;
   padding: 30px;
 }
-.tab-header{
+.tab-header {
   margin-bottom: 30px;
   color: #c7cce6;
 }
-.tab-header span{
+.tab-header span {
   padding-bottom: 10px;
   margin-right: 20px;
   cursor: pointer;
-  
 }
 ul li {
   padding: 8px 0;
@@ -194,15 +290,15 @@ ul li div span {
   display: block;
   text-align: center;
 }
-.width1{
+.width1 {
   width: 9%;
   text-align: center;
 }
-.width2{
+.width2 {
   width: 13%;
   text-align: center;
 }
-.width3{
+.width3 {
   width: 20%;
   text-align: center;
 }
@@ -304,47 +400,46 @@ ul li div span {
   line-height: 33px;
   text-align: center;
 }
-.stopModal{
+.stopModal {
   margin: 20px 15px;
   text-align: center;
   padding-bottom: 20px;
-
 }
-.stopModal span{
+.stopModal span {
   padding: 6px 15px;
   border-radius: 4px;
 }
-.stopall{
+.stopall {
   border: 1px solid #638bd4;
   color: #638bd4;
   margin-right: 10px;
 }
-.alls{
+.alls {
   color: #fff;
   background-color: #638bd4;
 }
-.stopbuy{
+.stopbuy {
   border: 1px solid #0d8551;
   color: #0d8551;
   margin-right: 10px;
 }
-.buys{
+.buys {
   color: #fff;
   background-color: #0d8551;
 }
-.stopsell{
+.stopsell {
   border: 1px solid #cc4951;
   color: #cc4951;
 }
-.sells{
+.sells {
   color: #fff;
   background-color: #cc4951;
 }
-.stop-modal-btns{
+.stop-modal-btns {
   width: 100%;
   font-size: 0;
 }
-.stop-modal-btns button{
+.stop-modal-btns button {
   width: 50%;
   float: left;
   font-size: 14px;
@@ -354,7 +449,20 @@ ul li div span {
   outline: none;
   color: #fff;
 }
-.stop-modal-btns button:last-child{
+.stop-modal-btns button:last-child {
   background-color: #689cf1;
+}
+.btns button {
+  border-radius: 3px;
+  color: white;
+  background-color: #638bd4;
+  cursor: pointer;
+  min-height: 33px;
+  min-width: 80px;
+  font-size: 14px;
+  border: none;
+  padding: 0 5px;
+  line-height: 33px;
+  text-align: center;
 }
 </style>

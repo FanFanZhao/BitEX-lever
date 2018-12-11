@@ -121,19 +121,19 @@ export default {
       margin-top: 6px;
       .tv-box{
         width: calc(100% - 406px);
-        height: 500px;
+        height: 650px;
       }
       .exchange-box{
         width: 400px;
-        height: 500px;
+        height: 650px;
       }
       .tran-box{
         width: calc(100% - 606px);
-        height: 500px;
+        height: 650px;
       }
       .trade-box{
         width: 600px;
-        height: 500px;
+        height: 650px;
       }
     }
     
