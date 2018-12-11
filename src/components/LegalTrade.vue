@@ -117,6 +117,8 @@
 				money_type:'',
 				name01:'CNY',
 				more:true,
+				surplus_number:0,
+				user_legal_balance:0,
 				bgcolor:['#5d8cc2','#6d78a8','#a2b240','#61b88e','#e35744', '#a16c92','#66756e'],
 				interval:function(){}
 
@@ -229,6 +231,7 @@
 					this.money_type = '出售'
 				}
 				let _this = this;
+				_this.nums='',
 				_this.shows = true;
 				_this.ID = id;
 				_this.time = 60;
@@ -236,14 +239,6 @@
 				_this.prices = prices;
 				_this.minNum = min;
 				_this.maxNum = max;
-			    // var t1 = setInterval(function() {
-				// 	_this.time--;
-				// 	if (_this.time <= 0) {
-				// 		_this.shows = false;
-				// 		document.body.removeAttribute("class", "body");
-				// 		clearInterval(t1);//清除定时器
-				// 	}
-				// }, 1000)
 				_this.interval=setInterval(function() {
 					_this.time--;
 					if (_this.time <= 0) {
@@ -253,9 +248,27 @@
 						_this.time=60;
 					}
 				}, 1000)
+				_this.$http({
+					url: '/api/legal_deal_info',
+					method: "get",
+					params: {id:id},
+					headers: {
+						Authorization: localStorage.getItem("token")
+					}
+				}).then(res => {
+					console.log(res);
+					if (res.data.type == 'ok') {
+						_this.surplus_number=res.data.message.surplus_number;
+					    _this.user_legal_balance=res.data.message.user_legal_balance;
+					} else {
+
+					}
+				});
+
 			},
 			// 交易或数量切换
 			tabClassify(num) {
+				this.nums='';
 				if (num == 1) {
 					this.types = 'trade';
 					this.name01 = 'CNY';
@@ -266,7 +279,13 @@
 			},
 			// 全部卖出或买入
 			allMoney() {
-				this.nums = this.maxNum;
+			   if(this.type=='buy'){
+				   this.nums=this.user_legal_balance;
+			   }else{
+				   this.nums = this.maxNum;
+			   }
+			   
+				
 			},
 			// 下单
 			buyOrder() {
@@ -566,7 +585,7 @@
 					>.totals-num {
 						width: 100%;
 						height: 40px;
-						border: 1px solid #eee;
+						border: 1px solid #555869;
 						font-size: 0;
 
 						>input {
@@ -586,7 +605,7 @@
 							margin-top: 9px;
 							padding-left: 20px;
 							border: none;
-							border-left: 1px solid #e5e5e5;
+							border-left: 1px solid #555869;
 							color: #fff
 						}
 
