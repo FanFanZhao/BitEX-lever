@@ -280,7 +280,12 @@
 			// 全部卖出或买入
 			allMoney() {
 			   if(this.type=='buy'){
-				   this.nums=this.user_legal_balance;
+				   if(this.types=='trade'){
+                        this.nums=this.user_legal_balance*this.prices;
+				   }else{
+					    this.nums=this.user_legal_balance; 
+				   }
+				   
 			   }else{
 				   this.nums = this.maxNum;
 			   }
@@ -441,7 +446,7 @@
 
 			>.list-title {
 				padding: 10px 0;
-				border-bottom: 1px solid #d9d9d9;
+				border-bottom: 1px solid #303b4b;
 				>div {
 					flex: 1;
 				}
