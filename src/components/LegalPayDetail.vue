@@ -252,7 +252,7 @@ export default {
         margin-right: 30px;
         font-size: 14px;
       }
-      >div:first-child{
+      >.cancelBtn{
         background: #ccc;
         color: #333;
       }
