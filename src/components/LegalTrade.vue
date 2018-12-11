@@ -259,7 +259,7 @@
 					console.log(res);
 					if (res.data.type == 'ok') {
 						_this.surplus_number=res.data.message.surplus_number;
-					    _this.user_legal_balance=(res.data.message.user_legal_balance-0).toFixed(5);
+					    _this.user_legal_balance=(res.data.message.user_legal_balance-0).toFixed(3);
 					} else {
 
 					}
