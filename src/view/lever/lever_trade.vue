@@ -688,7 +688,12 @@ export default {
             // that.buy_sell(that.legal_id,that.currency_id)
             layer.msg(res.data.message);
             setTimeout(function() {
-              that.$router.push({ name: "leverTransactions" });
+              if(that.selectedStatus == 1){
+                that.$router.push({ name: "leverTransactions" });
+              }else{
+                that.$router.push({ name: "leverList" });
+              }
+              
             }, 500);
           } else {
             layer.msg(res.data.message);
