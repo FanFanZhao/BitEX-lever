@@ -2,7 +2,7 @@
   <div id="legal-shop-detail" class="white">
     <div class="top flex bgf8">
       <div class="top-t flex bod_rc">
-        <div class="logo ft18">{{info.name.charAt(0)}}</div>
+        <div class="logo ft18" v-if="info.name">{{(info.name).charAt(0)}}</div>
         <div>
           <div>{{info.name}}</div>
           <div>注册时间：{{info.create_time}}</div>
@@ -134,6 +134,10 @@
           <span>最小交易数量：</span>
           <input type="text" v-model="min_number">
         </div>
+        <div class="flex">
+          <span>最大交易数量：</span>
+          <input type="text" v-model="max_number">
+        </div>
         <div class="btn curPer" @click="fabu">发布</div>
       </div>
     </div>
@@ -163,6 +167,7 @@ export default {
       price:'',
       total_number:'',
       min_number:'',
+      max_number:'',
 
     };
   },
@@ -340,6 +345,7 @@ export default {
       var price = this.price;
       var total_number = this.total_number;
       var min_number = this.min_number;
+      var max_number = this.max_number;
       var currency_id = this.currency_id;
       if(way<0){
         return layer.msg('请先选择支付方式')
@@ -352,6 +358,12 @@ export default {
       }
       if(!min_number ||min_number<=0){
         return layer.msg('请先输入最小交易量')
+      }
+      if(!max_number ||max_number<=0){
+        return layer.msg('请先输入最大交易量')
+      }
+      if(max_number<min_number){
+        return layer.msg('最大交易量不能小于最小交易量')
       }
       console.log(type,way,price,total_number,min_number,currency_id)
       this.$http({

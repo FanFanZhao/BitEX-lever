@@ -16,8 +16,8 @@
     </div> -->
     
     <ul class="bgf8">
-      <li v-for="(item,index) in list" :key="index" class="bod_bc">
-        <div class="flex li-t">
+      <li v-for="(item,index) in list" :key="index" class="bod_bc bdb pdtb5">
+        <div class="flex li-t pdtb5">
           <div>
             <span v-if="item.type == 'sell'">购买</span>
             <span v-else>出售</span>
@@ -32,15 +32,15 @@
         </div>
         <div class="flex li-b">
           <div>
-            <div class="tc">时间</div>
+            <div class="tc ft14">时间</div>
             <div class="tc">{{item.create_time}}</div>
           </div>
           <div>
-            <div class="tc">数量</div>
+            <div class="tc ft14">数量</div>
             <div class="tc">{{item.number}}</div>
           </div>
           <div>
-            <div class="tc">交易总额（{{item.currency_name}})</div>
+            <div class="tc ft14">交易总额（{{item.currency_name}})</div>
             <div class="tc">{{item.deal_money}}</div>
           </div>
         </div>
