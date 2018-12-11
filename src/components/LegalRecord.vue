@@ -39,11 +39,11 @@
           </div>
           <div>
             <span>数量</span>
-            <span>{{item.number}}</span>
+            <span>{{item.number || '0.000' | toFixeds}}</span>
           </div>
           <div>
             <span>交易总额（{{item.currency_name}})</span>
-            <span>{{item.deal_money}}</span>
+            <span>{{item.deal_money || '0.000' | toFixeds}}</span>
           </div>
         </div>
       </li>
@@ -64,6 +64,12 @@ export default {
       filterPms: { type: "none", id: '', page: 1, isSure: "none" }
     };
   },
+  filters: {
+			toFixeds: function(value) {
+				value = Number(value);
+				return value.toFixed(3);
+			}
+		},
   created() {
     var token = window.localStorage.getItem("token") || "";
     if (token) {

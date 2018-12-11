@@ -2,16 +2,16 @@
   <div id="legal-pay" class="white">
     <div class="title bg-part">
       <span>请付款</span>
-      <span>￥{{msg.deal_money}}</span>
+      <span>￥{{msg.deal_money || '0.000' | toFixeds}}</span>
     </div>
     <div class="info bg-part">
       <div>
         <span>交易单价：</span>
-        <span>{{msg.price}}</span>
+        <span>{{msg.price || '0.000' | toFixeds}}</span>
       </div>
       <div>
         <span>交易数量：</span>
-        <span>{{msg.number}}{{msg.currency_name}}</span>
+        <span>{{msg.number || '0.000' | toFixeds}}{{msg.currency_name}}</span>
       </div>
       <div>
         <span>付款信息：</span>
@@ -87,6 +87,12 @@ export default {
       src:''
     };
   },
+   filters: {
+			toFixeds: function(value) {
+				value = Number(value);
+				return value.toFixed(3);
+			}
+		},
   created() {
     var token = window.localStorage.getItem("token") || "";
       // this.id = this.$route.query.id;
@@ -115,7 +121,7 @@ export default {
     },
     cancel(){
       this.$http({
-        url:'api/user_legal_pay_cancel',
+        url:'/api/user_legal_pay_cancel',
         method:'post',
         data:{id:this.id},
         headers:{Authorization:this.token}
@@ -140,7 +146,7 @@ export default {
 			formData.append("file", $("#file")[0].files[0]);
       var i = layer.load();
 			$.ajax({
-				url:'api/upload',
+				url:'/api/upload',
 				type: 'post',
 				data: formData,
 				processData: false,
@@ -161,7 +167,7 @@ export default {
     },
     confirm(){
       this.$http({
-        url:'api/user_legal_pay',
+        url:'/api/user_legal_pay',
         method:'post',
         data:{id:this.id,pay_voucher:this.src},
         headers:{Authorization:this.token}

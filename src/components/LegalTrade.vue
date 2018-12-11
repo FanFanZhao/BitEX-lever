@@ -32,9 +32,9 @@
 							<span class="light_blue bold">{{item.seller_name}}</span>
 						</div>
 					</div>
-					<div class="flex alcenter center">{{item.surplus_number}}  {{item.currency_name}}</div>
-					<div class="flex alcenter center">￥{{(item.limitation.min-0).toFixed(2)}}-￥{{(item.limitation.max-0).toFixed(2)}}CNY</div>
-					<div class="flex alcenter price ft16 bold center">{{item.price}}</div>
+					<div class="flex alcenter center">{{item.surplus_number || '0.000' | toFixeds}}  {{item.currency_name}}</div>
+					<div class="flex alcenter center">￥{{item.limitation.min || '0.000' | toFixeds}}-￥{{item.limitation.max || '0.000' | toFixeds}}CNY</div>
+					<div class="flex alcenter price ft16 bold center">{{item.price || '0.000' | toFixeds}}</div>
 					<!-- <div class="flex alcenter">{{item.way_name}}</div> -->
 					<div class="flex alcenter center">
 						<img v-if="item.way == 'ali_pay'" src="../assets/images/zfb_icon.png" /> 
@@ -59,7 +59,7 @@
 				<div class="content-list">
 					<p class="close tr curPer" @click="close()">X</p>
 					<p class="title">{{classify}}{{name}}</p>
-					<p class="price">单价{{prices}}</p>
+					<p class="price">单价{{prices || '0.000' | toFixeds}}</p>
 					<div class="trade">
 						<p :class="['trade-name',{'active':types == 'trade'}]" @click="tabClassify(1)">CNY交易</p>
 						<p :class="['trade-num',{'active':types == 'num'}]" @click="tabClassify(2)">{{classify}}数量</p>
@@ -71,11 +71,11 @@
 						<button class="all" type="button" v-else @click="allMoney();">全部卖出</button>
 						<span class="name">{{name01}}</span>
 					</div>
-					<div class="maxnum">限额{{minNum}}-{{maxNum}}</div>
+					<div class="maxnum">限额{{minNum || '0.000' | toFixeds}}-{{maxNum || '0.000' | toFixeds}}</div>
 					<div class="trade-totals">
 						<p class="total-price">交易总额</p>
-						<p class="prices" v-if=" types == 'trade' ">￥{{nums | toFixeds}}</p>
-						<p class="prices" v-else>￥{{nums * prices | toFixeds}}</p>
+						<p class="prices" v-if=" types == 'trade' ">￥{{nums || '0.000' | toFixeds}}</p>
+						<p class="prices" v-else>￥{{nums * prices || '0.000' | toFixeds}}</p>
 					</div>
 					<!-- <p class="tip">请在24小时内联系商家付款，超出24小时将自动取消</p> -->
 					<div class="btns">
@@ -133,7 +133,7 @@
 		filters: {
 			toFixeds: function(value) {
 				value = Number(value);
-				return value.toFixed(2);
+				return value.toFixed(3);
 			}
 		},
 		methods: {
@@ -178,6 +178,7 @@
 						if(res.data.message.data.length>0){
 							this.list =this.list.concat(res.data.message.data);
 							this.page=this.page+1;
+							this.more=true;
 						}else{
                             this.more=false
 						}
@@ -196,7 +197,7 @@
 			// 点击改变选中分类
 			changeClassify(ids, type, names) {
 				let _this = this;
-				console.log(type);
+				_this.list = [];
 				_this.id = ids;
 				if (type == 1) {
 					_this.type = 'sell';
