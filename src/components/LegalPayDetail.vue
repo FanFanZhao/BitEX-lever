@@ -161,7 +161,9 @@ export default {
       }).then(res => {
         // console.log(res);
         lay.msg(res.data.message);
-        
+        setTimeout(function(){
+          location.reload();
+        },500)
       }).then(() => {
         this.showCancel = false;
       })
@@ -176,7 +178,9 @@ export default {
       }).then(res => {
         // console.log(res);
         lay.msg(res.data.message);
-        
+        setTimeout(function(){
+          location.reload();
+        },500)
       }).then(() => {
         this.showConfirm = false;
       })
@@ -192,6 +196,9 @@ export default {
       }).then(res => {
         layer.msg(res.data.message);
         this.hasPay = false;
+        setTimeout(function(){
+          location.reload();
+        },500)
       })
     },
     evimgs(src){
