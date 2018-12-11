@@ -446,7 +446,7 @@
 
 			>.list-title {
 				padding: 10px 0;
-				border-bottom: 1px solid #d9d9d9;
+				border-bottom: 1px solid #303b4b;
 				>div {
 					flex: 1;
 				}
