@@ -18,7 +18,7 @@
           </div>
           <div>{{item.currency_name}}</div>
           <div>{{item.create_time}}</div>
-          <div>{{item.seller_balance}}</div>
+          <div>{{item.seller_balance || '0.000' | toFixeds}}</div>
           <div>
             <router-link :to="{path:'/legalShopDetail',query:{id:item.id}}">进入店铺</router-link>
           </div>
@@ -36,6 +36,12 @@ export default {
       page: 1
     };
   },
+  filters: {
+			toFixeds: function(value) {
+				value = Number(value);
+				return value.toFixed(3);
+			}
+		},
   created() {
     var token = window.localStorage.getItem("token") || "";
     if (token) {
