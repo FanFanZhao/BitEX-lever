@@ -2,7 +2,7 @@
   <div id="legal-shop-detail" class="white">
     <div class="top flex bgf8">
       <div class="top-t flex bod_rc">
-        <div class="logo">k</div>
+        <div class="logo ft18">{{info.name.charAt(0)}}</div>
         <div>
           <div>{{info.name}}</div>
           <div>注册时间：{{info.create_time}}</div>
@@ -69,22 +69,27 @@
           </div>
         </div>
       </div>
-      <div class="ul-head">
-        <div class="w10">币种</div>
+      <div class="ul-head tc bdb ">
+        <div class="w10 tl">币种</div>
         <div class="w15">数量</div>
         <div class="w25">限额</div>
-        <div class="w10">单价</div>
+        <div class="w15">单价</div>
         <div class="w10">支付方式</div>
-        <div>操作</div>
+        <div class="tr">操作</div>
       </div>
       <ul :class="[showWhich+'-box']" >
-        <li v-for="(item,index) in list" :key="index" :class="[item.type == 'buy'?'buy-item':'sell-item']" class="bod_bc">
-          <div class="w10">{{item.currency_name}}</div>
+        <li v-for="(item,index) in list" :key="index" :class="[item.type == 'buy'?'buy-item':'sell-item']" class="bod_bc tc bdb">
+          <div class="w10 tl">{{item.currency_name}}</div>
           <div class="w15">{{item.surplus_number}}</div>
           <div class="w25">{{(item.limitation.min-0).toFixed(4)}}-{{(item.limitation.max-0).toFixed(4)}}</div>
-          <div class="w10">{{item.price}}</div>
-          <div class="w10">{{item.way_name}}</div>
-          <div>
+          <div class="w15">{{item.price}}</div>
+          <div class="flex alcenter center w10">
+						<img v-if="item.way == 'ali_pay'" src="../assets/images/zfb_icon.png" /> 
+						<img v-if="item.way == 'we_chat'" src="../assets/images/wx_icon.png" />
+						<img v-if="item.way == 'bank'" src="../assets/images/bank_icon.png" />
+					</div>
+          <!-- <div class="w10">{{item.way_name}}</div> -->
+          <div class="tr">
             <router-link tag="span" :to="{path:'/shopLegalRecord',query:{id:item.id}}">查看订单</router-link>
             <span @click="changeOrder('back_send',item.id)" v-if="item.is_done!=1">撤回</span>
             <span @click="changeOrder('error_send',item.id)" v-if="item.is_done!=1">异常</span>
@@ -98,7 +103,7 @@
     <div class="submit-box" v-if="isShow">
       <div class="content">
         <p class="close" @click="close">X</p>
-        <div class="tab">
+        <div class="tab bdb">
           <div>请选择类型：</div>
          <!-- <div :class="{'now':true}">出售</div> -->
          <!-- <div>求购</div> -->
@@ -393,6 +398,7 @@ export default {
         border-radius: 50%;
         width: 50px;
         height: 50px;
+        line-height: 50px;
         background: #7a98f7;
         text-align: center;
       }
@@ -451,7 +457,7 @@ export default {
       }
     }
     > .ul-head {
-      height: 30px;
+      height: 50px;
       > div {
         // text-align: center;
         float: left;
@@ -563,7 +569,6 @@ export default {
       }
       > .tab {
         margin: 10px 0 20px;
-        border-bottom: 1px solid #1B2A3E;
         span {
           margin-right: 20px;
         }
