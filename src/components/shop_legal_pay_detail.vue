@@ -14,7 +14,7 @@
     <div class="info bg-part ft14 radius4">
       <div>
         <span>交易总额：</span>
-        <span>{{msg.deal_money}}</span>
+        <span>{{msg.deal_money || '0.000' | toFixeds}}</span>
       </div>
       <div class="column" v-if="msg.is_seller==0">
         <div>
@@ -41,11 +41,11 @@
       </div>
       <div>
         <span>单价：</span>
-        <span>{{msg.price}}</span>
+        <span>{{msg.price || '0.000' | toFixeds}}</span>
       </div>
       <div>
         <span>数量：</span>
-        <span>{{msg.number}}</span>
+        <span>{{msg.number || '0.000' | toFixeds}}</span>
       </div>
       <div>
         <span>下单时间：</span>
@@ -133,6 +133,12 @@ export default {
       src:''
     };
   },
+  filters: {
+			toFixeds: function(value) {
+				value = Number(value);
+				return value.toFixed(3);
+			}
+		},
   created() {
     var token = window.localStorage.getItem("token") || "";
       // this.id = this.$route.query.id;
@@ -312,7 +318,7 @@ export default {
         margin-right: 30px;
         font-size: 14px;
       }
-      >div:first-child{
+      >.cannelBtn{
         background: #ccc;
         color: #333;
       }

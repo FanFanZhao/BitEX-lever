@@ -80,9 +80,9 @@
       <ul :class="[showWhich+'-box']" >
         <li v-for="(item,index) in list" :key="index" :class="[item.type == 'buy'?'buy-item':'sell-item']" class="bod_bc tc bdb">
           <div class="w10 tl">{{item.currency_name}}</div>
-          <div class="w15">{{item.surplus_number}}</div>
-          <div class="w25">{{(item.limitation.min-0).toFixed(4)}}-{{(item.limitation.max-0).toFixed(4)}}</div>
-          <div class="w15">{{item.price}}</div>
+          <div class="w15">{{item.surplus_number || '0.000' | toFixeds}}</div>
+          <div class="w25">{{item.limitation.min || '0.000' | toFixeds}}-{{item.limitation.max || '0.000' | toFixeds}}</div>
+          <div class="w15">{{item.price || '0.000' | toFixeds}}</div>
           <div class="flex alcenter center w10">
 						<img v-if="item.way == 'ali_pay'" src="../assets/images/zfb_icon.png" /> 
 						<img v-if="item.way == 'we_chat'" src="../assets/images/wx_icon.png" />
@@ -171,6 +171,12 @@ export default {
 
     };
   },
+  filters: {
+			toFixeds: function(value) {
+				value = Number(value);
+				return value.toFixed(3);
+			}
+		},
   created() {
     this.token = window.localStorage.getItem("token") || "";
     if (this.token) {
@@ -445,6 +451,8 @@ export default {
       img {
         width: 16px;
         height: 16px;
+        position: relative;
+        top: 3px;
       }
     }
   }

@@ -37,11 +37,11 @@
           </div>
           <div>
             <div class="tc ft14">数量</div>
-            <div class="tc">{{item.number}}</div>
+            <div class="tc">{{item.number || '0.000' | toFixeds}}</div>
           </div>
           <div>
             <div class="tc ft14">交易总额（{{item.currency_name}})</div>
-            <div class="tc">{{item.deal_money}}</div>
+            <div class="tc">{{item.deal_money || '0.000' | toFixeds}}</div>
           </div>
         </div>
       </li>
@@ -62,6 +62,12 @@ export default {
       filterPms: { type: "none", id: '', page: 1, isSure: "none" }
     };
   },
+  filters: {
+			toFixeds: function(value) {
+				value = Number(value);
+				return value.toFixed(3);
+			}
+		},
   created() {
     var token = window.localStorage.getItem("token") || "";
     if (token) {
