@@ -39,7 +39,7 @@
         >{{item.fact_profits || '0.00' | tofixedFour}}</span>
         <span class="width1">{{item.status_name}}</span>
         <div class="width1 btns" v-if="status == 0 || status == 1">
-          <button type="button" v-if="status == 0">撤单</button>
+          <button type="button" v-if="status == 0" @click="cannelOrder(item.id)">撤单</button>
           <button type="button" v-if="status == 1" @click="closePosition(item.id)">平仓</button>
         </div>
       </li>
@@ -60,7 +60,7 @@ export default {
       page: 1,
       more: "加载更多",
       status: 0,
-      set:function(){},
+      set: function() {}
     };
   },
   created() {
@@ -68,10 +68,10 @@ export default {
     that.legal_id = localStorage.getItem("legal_id");
     that.currency_id = localStorage.getItem("currency_id");
     that.init();
-    if(that.status == 0 || that.status == 1){
-      that.set = setInterval(function(){
+    if (that.status == 0 || that.status == 1) {
+      that.set = setInterval(function() {
         that.polling();
-      },2000)
+      }, 2000);
     }
   },
   filters: {
@@ -120,7 +120,7 @@ export default {
     },
 
     // 轮询数据
-    polling(){
+    polling() {
       let that = this;
       this.$http({
         url: "/api/" + "lever/my_trade",
@@ -140,23 +140,24 @@ export default {
             if (res.data.message.data.length == 0) {
               that.more = "暂无数据";
               that.list_content = [];
-            }else{
+            } else {
               var list = res.data.message.data;
-              for(let i in list){
+              for (let i in list) {
                 that.list_content[i].type = list[i].type;
                 that.list_content[i].symbol = list[i].symbol;
                 that.list_content[i].share = list[i].share;
                 that.list_content[i].price = list[i].price;
                 that.list_content[i].update_price = list[i].update_price;
-                that.list_content[i].target_profit_price = list[i].target_profit_price;
+                that.list_content[i].target_profit_price =
+                  list[i].target_profit_price;
                 that.list_content[i].stop_loss_price = list[i].stop_loss_price;
-                that.list_content[i].origin_caution_money = list[i].origin_caution_money;
+                that.list_content[i].origin_caution_money =
+                  list[i].origin_caution_money;
                 that.list_content[i].caution_money = list[i].caution_money;
                 that.list_content[i].time = list[i].time;
                 that.list_content[i].fact_profits = list[i].fact_profits;
                 that.list_content[i].status_name = list[i].status_name;
                 that.list_content[i].id = list[i].id;
-
               }
             }
           } else {
@@ -180,42 +181,76 @@ export default {
       that.page = 1;
       that.init();
       clearInterval(that.set);
-      if(type == 0 || type == 1){
-        that.set = setInterval(function(){
-        that.polling();
-      },2000)
+      if (type == 0 || type == 1) {
+        that.set = setInterval(function() {
+          that.polling();
+        }, 2000);
       }
     },
     // 平仓
-    closePosition(ids){
+    closePosition(ids) {
       let that = this;
-      var i = layer.load();
-      this.$http({
-        url: "/api/" + "lever/close",
-        method: "post",
-        data: {
-          id: ids
-        },
-        headers: { Authorization: localStorage.getItem("token") }
-      })
-        .then(res => {
-          layer.close(i);
-          if (res.data.type == "ok") {
-            layer.msg(res.data.message);
-            location.reload();
-          } else {
-            layer.msg(res.data.message);
-          }
-        })
-        .catch(error => {
-          layer.close(i);
-          console.log(error);
-        });
+      layer.confirm("确定平仓？", function() {
+        var i = layer.load();
+        that.$http({
+            url: "/api/" + "lever/close",
+            method: "post",
+            data: {
+              id: ids
+            },
+            headers: { Authorization: localStorage.getItem("token") }
+          })
+          .then(res => {
+            layer.close(i);
+            if (res.data.type == "ok") {
+              layer.msg(res.data.message);
+              setTimeout(function() {
+                that.tabClick(that.status);
+              }, 200);
+            } else {
+              layer.msg(res.data.message);
+            }
+          })
+          .catch(error => {
+            layer.close(i);
+            console.log(error);
+          });
+      });
+    },
+    // 撤单
+    cannelOrder(ids) {
+      let that = this;
+      layer.confirm("确定撤消订单吗？", function() {
+        var i = layer.load();
+        that.$http({
+            url: "/api/" + "lever/cancel",
+            method: "post",
+            data: {
+              id: ids
+            },
+            headers: { Authorization: localStorage.getItem("token") }
+          })
+          .then(res => {
+            layer.close(i);
+            if (res.data.type == "ok") {
+              layer.msg(res.data.message);
+              setTimeout(function() {
+                that.tabClick(that.status);
+              }, 200);
+            } else {
+              layer.msg(res.data.message);
+            }
+          })
+          .catch(error => {
+            layer.close(i);
+            console.log(error);
+          });
+      });
     }
   },
-  destroyed(){
+  destroyed() {
     let that = this;
-    if(that.set){
+    if (that.set) {
       clearInterval(that.set);
     }
   }
@@ -240,6 +275,7 @@ export default {
 }
 ul li {
   padding: 8px 0;
+  line-height: 33px;
 }
 ul li span {
   display: inline-block;

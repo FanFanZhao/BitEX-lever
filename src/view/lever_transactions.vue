@@ -218,7 +218,9 @@ export default {
     },
 
     pingcang(id) {
-      this.$http({
+      let that = this;
+      layer.confirm('确定平仓？',function(){
+        that.$http({
         url: "/api/" + "lever/close",
         method: "post",
         data: {
@@ -237,6 +239,7 @@ export default {
         .catch(error => {
           console.log(error);
         });
+      })
     },
     load_more() {
       this.page++;
