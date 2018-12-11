@@ -287,7 +287,7 @@
 				   }
 				   
 			   }else{
-				   this.nums = this.maxNum;
+				   this.nums = (this.maxNum-0).toFixed(3);
 			   }
 			   
 				
