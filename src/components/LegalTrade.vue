@@ -27,7 +27,7 @@
 			<ul class="list">
 				<li v-for="(item,index) in list" :key="index" class="bdb flex bod_bc ft14 tc">
 					<div class="flex alcenter">
-						<img :src="item.currency_logo" alt="" class="head">
+						<div class="head" :style="{background:item.bgcolor}">{{item.seller_name.charAt(0)}}</div>
 						<div class="flex column">
 							<span class="light_blue bold">{{item.seller_name}}</span>
 						</div>
@@ -38,7 +38,7 @@
 					<!-- <div class="flex alcenter">{{item.way_name}}</div> -->
 					<div class="flex alcenter center">
 						<img v-if="item.way == 'ali_pay'" src="../assets/images/zfb_icon.png" /> 
-						 <img v-if="item.way == 'we_chat'" src="../assets/images/wx_icon.png" />
+						<img v-if="item.way == 'we_chat'" src="../assets/images/wx_icon.png" />
 						<img v-if="item.way == 'bank'" src="../assets/images/bank_icon.png" />
 					</div>
 					<div class="flex alcenter end"  @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id,item.type)">
@@ -117,6 +117,7 @@
 				money_type:'',
 				name01:'CNY',
 				more:true,
+				bgcolor:['#5d8cc2','#6d78a8','#a2b240','#61b88e','#e35744', '#a16c92','#66756e'],
 				interval:function(){}
 
 			};
@@ -175,8 +176,12 @@
 				}).then(res => {
 					if (res.data.type == 'ok') {
 						layer.close(i);
-						if(res.data.message.data.length>0){
-							this.list =this.list.concat(res.data.message.data);
+						let list =res.data.message.data;
+						if(list.length>0){
+							for(var j=0; j< list.length; j++) {
+								list[j].bgcolor = this.bgcolor[(Math.floor(Math.random() * 6 + 1)-1)];
+							}
+							this.list =this.list.concat(list);
 							this.page=this.page+1;
 						}else{
                             this.more=false
@@ -442,6 +447,7 @@
 							height: 36px;
 							border-radius: 50%;
 							margin-right: 10px;
+							// background: #638BD4;
 						}
 
 						>span {
