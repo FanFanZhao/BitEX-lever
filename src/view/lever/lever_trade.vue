@@ -513,7 +513,7 @@ export default {
                 var prices = parseFloat((parseFloat(bond * 1) * spread) / 100).toFixed(4);
                 var pricesTotal = 0;
                 if (type == "sell") {
-                  pricesTotal = parseFloat(parseFloat(bond * 1) - prices).toFixed(4);
+                  pricesTotal = parseFloat(parseFloat(bond * 1) - (prices - 0)).toFixed(4);
                 } else {
                   pricesTotal = parseFloat(parseFloat(bond * 1) + (prices - 0)).toFixed(4);
                 }
@@ -812,9 +812,6 @@ export default {
             var muitNum = parseFloat(that.buyInfo.buy_selected).toFixed(4);
             // 手数
             var share = parseFloat(that.buySahre).toFixed(4);
-            console.log(muitNum);
-            console.log(bond);
-            console.log(share);
             that.pricesType(bond, type, share, muitNum);
           }else{
             that.totalPriceBuy = 0.0000;
