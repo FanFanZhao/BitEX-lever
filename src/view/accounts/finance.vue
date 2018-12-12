@@ -673,7 +673,7 @@ input {
       justify-content: space-between;
       font-size: 12px;
       color: #728daf;
-      border-top: 1px solid #181b2a;
+      border-top: 1px solid #2e394c;
     }
   }
 }
