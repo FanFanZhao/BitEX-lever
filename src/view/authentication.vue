@@ -17,19 +17,19 @@
         <div class="idimg flex center mt40">
           <div>
             <img :src="src1" alt>
-            <input type="file" id="file" accept="image/*" name="file" @change="file1">
+            <input type="file" accept="image/*" name="file" @change="file1">
           </div>
           <div>
             <img :src="src2" alt>
-            <input type="file" id="file" accept="image/*" name="file" @change="file2">
+            <input type="file" accept="image/*" name="file" @change="file2">
           </div>
           <div>
             <img :src="src3" alt>
-            <input type="file" id="file" accept="image/*" name="file" @change="file3">
+            <input type="file" accept="image/*" name="file" @change="file3">
           </div>
         </div>
         <div class="updata tc">
-          <input type="button" value="提交" @click="updata">
+          <input type="button" value="提交" @click="updata" class="curPer">
         </div>
       </div>
       <div v-show="review_status==1">
@@ -149,9 +149,11 @@ export default {
       })
         .then(res => {
           layer.msg(res.data.message);
-          setTimeout(function(){
-            that.$router.push("/");
-          },500);
+          if(res.data.type=='ok'){
+            setTimeout(function(){
+              that.$router.push("/");
+            },500);
+          }
         })
         .catch(error => {});
     },
