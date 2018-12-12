@@ -18,6 +18,8 @@
         <span class="width1">止损价</span>
         <span class="width2">开仓时间</span>
         <span class="width2" v-if="status == 3">平仓时间</span>
+        <span class="width1">手续费</span>
+        <span class="width1">隔夜费</span>
         <span class="width1">盈亏</span>
         <span class="width1">状态</span>
         <span class="width1" v-if="status == 0 || status == 1">操作</span>
@@ -32,8 +34,10 @@
         <span class="width1">{{item.stop_loss_price || '0.00' | tofixedFour}}</span>
         <span class="width1">{{item.origin_caution_money || '0.00' | tofixedFour}}</span>
         <span class="width1">{{item.caution_money || '0.00' | tofixedFour}}</span>
-        <span class="width2">{{item.time}}</span>
+        <span class="width2">{{item.transaction_time}}</span>
         <span class="width2" v-if="status == 3">{{item.handle_time}}</span>
+        <span class="width1">{{item.trade_fee || '0.00' | tofixedFour}}</span>
+        <span class="width1">{{item.overnight_money || '0.00' | tofixedFour}}</span>
         <span
           :class="['red','width1',{'green':item.profits > 0}]"
         >{{item.profits || '0.00' | tofixedFour}}</span>
@@ -152,10 +156,12 @@ export default {
                 that.list_content[i].stop_loss_price = list[i].stop_loss_price;
                 that.list_content[i].origin_caution_money =list[i].origin_caution_money;
                 that.list_content[i].caution_money = list[i].caution_money;
-                that.list_content[i].time = list[i].time;
+                that.list_content[i].transaction_time = list[i].transaction_time;
                 that.list_content[i].profits = list[i].profits;
                 that.list_content[i].status_name = list[i].status_name;
                 that.list_content[i].id = list[i].id;
+                that.list_content[i].trade_fee = list[i].trade_fee;
+                that.list_content[i].overnight_money = list[i].overnight_money;
               }
             }
           } else {

@@ -356,6 +356,14 @@ export default {
           return;
         }
       }
+      if(that.buySahre < that.minShare){
+        layer.msg("输入的手数不能低于" + that.minShare);
+          return;
+      }
+      if(that.buySahre > that.maxShare){
+        layer.msg("输入的手数不能高于" + that.maxShare);
+          return;
+      }
 
       that.comfirmShow = true;
       that.buyType = 1;
@@ -371,6 +379,14 @@ export default {
           layer.msg("请输入价格");
           return;
         }
+      }
+      if(that.sellShare < that.minShare){
+        layer.msg("输入的手数不能低于" + that.minShare);
+          return;
+      }
+      if(that.sellShare > that.maxShare){
+        layer.msg("输入的手数不能高于" + that.maxShare);
+          return;
       }
       that.comfirmShow = true;
       that.buyType = 2;
@@ -587,6 +603,12 @@ export default {
     changeValue(type) {
       let that = this;
       let textValue = /^[1-9]*[0-9][0-9]*$/;
+      that.totalPriceBuy = 0.0000;
+      that.trandeFreeBuy = 0.0000;
+      that.bonsBuy = 0.0000;
+      that.totalPrice = 0.0000;
+      that.trandeFree = 0.0000;
+      that.bons = 0.0000;
       if(type == 'sell'){
         that.types = '-1';
         if(that.sellShare != ''){
@@ -604,6 +626,8 @@ export default {
               }
             }
           }
+        }else{
+           return;
         }
       }else{
         that.type = '-1';
@@ -622,6 +646,8 @@ export default {
               }
             }
           }
+        }else{
+           return;
         }
       }
       if (that.selectedStatus != 0) {
@@ -780,6 +806,10 @@ export default {
             // 手数
             var share = parseFloat(that.buySahre).toFixed(4);
             that.pricesType(bond, type, share, muitNum);
+          }else{
+            that.totalPriceBuy = 0.0000;
+            that.trandeFreeBuy = 0.0000;
+            that.bonsBuy = 0.0000;
           }
         } else if (type == "sell" && that.sellInfo.sell_selected != "") {
           if (that.sellInputValue != "") {
@@ -790,11 +820,18 @@ export default {
             // 手数
             var share = parseFloat(that.sellShare).toFixed(4);
             that.pricesType(bond, type, share, muitNum);
+          }else{
+            that.totalPrice = 0.0000;
+            that.trandeFree = 0.0000;
+            that.bons = 0.0000;
           }
         } else {
-          that.totalPriceBuy = 0.0;
-          that.trandeFreeBuy = 0.0;
-          that.bonsBuy = 0.0;
+          that.totalPrice = 0.0000;
+          that.trandeFree = 0.0000;
+          that.bons = 0.0000;
+          that.totalPriceBuy = 0.0000;
+          that.trandeFreeBuy = 0.0000;
+          that.bonsBuy = 0.0000;
         }
       }
     }
