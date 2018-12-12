@@ -10,9 +10,6 @@
         <li  class="base"><router-link to="/leverdealCenter">杠杆交易</router-link></li>
         <li  class="base" v-if="isShow"><router-link to="/myLegalShops">我的商铺</router-link></li>
         <li  class="base"><router-link to="/finance">我的资产</router-link></li>
-
-        
-
         <!-- <li class="base downapp" @click="showapp">APP下载
           <div class="appcode tc" v-show="appshow">
             <span></span>
@@ -150,12 +147,12 @@ export default {
           title: "交易日志",
           page: "transferLog"
         },
-        // {
-        //   src1: require("@/assets/images/z0.png"),
-        //   src2: require("@/assets/images/z1.png"),
-        //   title: '安全设置',
-        //   page:'userSetting',
-        // },
+        {
+          src1: require("@/assets/images/z0.png"),
+          src2: require("@/assets/images/z1.png"),
+          title: '安全设置',
+          page:'userSetting',
+        },
         {
           src1: require("@/assets/images/icon_mine.png"),
           src2: require("@/assets/images/icon_mine_s.png"),
