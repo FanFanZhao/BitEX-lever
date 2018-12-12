@@ -49,6 +49,7 @@
               >{{item.value}}倍</option>
             </select>
           </div>
+          <div class="shareNum" v-if="shareNum">1手等于{{shareNum}}{{currency_name}}</div>
           <div class="mt40 input-item clear">
             <label>手数：</label>
             <div class="flex share-total">
@@ -128,6 +129,7 @@
               >{{item.value}}倍</option>
             </select>
           </div>
+          <div class="shareNum" v-if="shareNum">1手等于{{shareNum}}{{currency_name}}</div>
           <div class="mt40 input-item clear">
             <label>手数：</label>
             <div class="flex share-total">
@@ -302,7 +304,8 @@ export default {
       selectedStatus: 1,
       sellInputValue: "",
       minShare:1,
-      maxShare:0
+      maxShare:0,
+      shareNum:''
     };
   },
   created() {
@@ -464,7 +467,7 @@ export default {
         if (values == "sell" && that.sellInfo.sell_selected != "") {
           if (that.sellInputValue != "") {
             // 价格
-            var bond = that.sellInputValue;
+            var bond = parseFloat(that.sellInputValue).toFixed(4);
             // 倍数
             var muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
             // 手数
@@ -474,7 +477,7 @@ export default {
         } else if (values == "buy" && that.buyInfo.buy_selected != "") {
           if (that.inputPrice != "") {
             // 价格
-            var bond = that.inputPrice;
+            var bond = parseFloat(that.inputPrice).toFixed(4);
             // 倍数
             var muitNum = parseFloat(that.buyInfo.buy_selected).toFixed(4);
             // 手数
@@ -489,6 +492,9 @@ export default {
       }
     },
     pricesType(bond, type, share, muitNum) {
+      console.log(bond);
+      console.log(share);
+      console.log(muitNum);
       let that = this;
       var i = layer.load();
       this.$http({
@@ -503,19 +509,18 @@ export default {
             for (let i in list) {
               if (that.currency_id == list[i].currency_id) {
                 var spread = parseFloat(list[i].spread).toFixed(4);
-                var transactionFee = parseFloat(
-                  list[i].lever_trade_fee
-                ).toFixed(4);
-                var prices = parseFloat((bond * spread) / 100).toFixed(4);
+                var transactionFee = parseFloat(list[i].lever_trade_fee).toFixed(4);
+                var prices = parseFloat((parseFloat(bond * 1) * spread) / 100).toFixed(4);
                 var pricesTotal = 0;
                 if (type == "sell") {
-                  pricesTotal = parseFloat(bond - prices).toFixed(4);
+                  pricesTotal = parseFloat(parseFloat(bond * 1) - prices).toFixed(4);
                 } else {
-                  pricesTotal = parseFloat(bond + prices).toFixed(4);
+                  pricesTotal = parseFloat(parseFloat(bond * 1) + (prices - 0)).toFixed(4);
                 }
                 muitNum = parseFloat(muitNum).toFixed(4);
                 share = parseFloat(share).toFixed(4);
                 var shareNum = parseFloat(list[i].lever_share_num).toFixed(4);
+                that.shareNum = shareNum;
                 var totalPrice = parseFloat(
                   pricesTotal * share * shareNum
                 ).toFixed(4);
@@ -564,6 +569,7 @@ export default {
           var muitNum = parseFloat(that.buyInfo.buy_selected).toFixed(4);
           // 手数
           var share = parseFloat(that.buySahre).toFixed(4);
+          console.log(muitNum);
           that.pricesType(bond, type, share, muitNum);
         } else {
           that.totalPriceBuy = 0.0;
@@ -574,7 +580,7 @@ export default {
         if (type == "sell" && that.sellShare != "") {
           if (that.sellInputValue != "") {
             // 价格
-            var bond = that.sellInputValue;
+            var bond = parseFloat(that.sellInputValue).toFixed(4);
             // 倍数
             var muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
             // 手数
@@ -584,11 +590,12 @@ export default {
         } else if (type == "buy" && that.sellShare != "") {
           if (that.inputPrice != "") {
             // 价格
-            var bond = that.inputPrice;
+            var bond = parseFloat(that.inputPrice).toFixed(4);
             // 倍数
             var muitNum = parseFloat(that.buyInfo.buy_selected).toFixed(4);
             // 手数
             var share = parseFloat(that.buySahre).toFixed(4);
+            console.log(muitNum)
             that.pricesType(bond, type, share, muitNum);
           }
         } else {
@@ -682,7 +689,7 @@ export default {
            that.types = '';
           if (that.sellInputValue != "") {
             // 价格
-            var bond = that.sellInputValue;
+            var bond = parseFloat(that.sellInputValue).toFixed(4);
             // 倍数
             var muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
             // 手数
@@ -693,7 +700,7 @@ export default {
            that.type = '';
           if (that.inputPrice != "") {
             // 价格
-            var bond = that.inputPrice;
+            var bond = parseFloat(that.inputPrice).toFixed(4);
             // 倍数
             var muitNum = parseFloat(that.buyInfo.buy_selected).toFixed(4);
             // 手数
@@ -800,11 +807,14 @@ export default {
         if (type == "buy" && that.buyInfo.buy_selected != "") {
           if (that.inputPrice != "") {
             // 价格
-            var bond = that.inputPrice;
+            var bond = parseFloat(that.inputPrice).toFixed(4);
             // 倍数
             var muitNum = parseFloat(that.buyInfo.buy_selected).toFixed(4);
             // 手数
             var share = parseFloat(that.buySahre).toFixed(4);
+            console.log(muitNum);
+            console.log(bond);
+            console.log(share);
             that.pricesType(bond, type, share, muitNum);
           }else{
             that.totalPriceBuy = 0.0000;
@@ -814,7 +824,7 @@ export default {
         } else if (type == "sell" && that.sellInfo.sell_selected != "") {
           if (that.sellInputValue != "") {
             // 价格
-            var bond = that.sellInputValue;
+            var bond = parseFloat(that.sellInputValue).toFixed(4);
             // 倍数
             var muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
             // 手数
@@ -848,6 +858,11 @@ export default {
 </script>
 
 <style scoped>
+.shareNum{
+  color: #637085;
+  position: relative;
+  top: 15px;
+}
 .mb10 input {
   margin-bottom: 30px;
 }
