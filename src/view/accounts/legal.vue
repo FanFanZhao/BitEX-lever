@@ -5,7 +5,7 @@
         </div>
         <ul class="list">
             <!-- <li v-for="(item,index) in list" :key="index" v-if="item.is_legal == 1 && item.is_lever == 1" @click="go_legalAccount(item.currency)"> -->
-            <li v-for="(item,index) in list" :key="index" v-if="item.is_legal == 1 && item.is_lever == 1">
+            <li class="curPer" v-for="(item,index) in list" :key="index" v-if="item.is_legal == 1 && item.is_lever == 1" @click="go_legalAccount(item.currency)">
                 <p class="legal_name">{{item.currency_name}}</p>
                 <div class="balance_detail">
                     <div class="use_balance flex1">
@@ -77,9 +77,8 @@ export default {
         },
         go_legalAccount(currency_id){
              this.$router.push({
-                path:'/legalAccount',
                 name:'legalAccount',
-                params:{
+                query:{
                   currency_id:currency_id
                 }
             })
