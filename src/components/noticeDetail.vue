@@ -4,7 +4,7 @@
         <div class="account-wrap">
             <div class="account">
                 <div>
-                    <div class="back-nav fColor1 ft20"> 网站公告
+                    <div class="back-nav fColor1 ft20"> 
                         <span class="fr fColor2 curPer" @click="goBefore">&lt;&lt;返回</span>
                     </div>
                     <div class="nav-after"></div>
