@@ -87,14 +87,14 @@ export default {
       let that = this;
       if (that.type == 1) {
         that.type = 2;
-        that.name = "C2C账户";
+        that.name = "法币账户";
         that.leverName = "杠杆账户";
         that.totalMoney = that.tradeMoney;
         console.log(1);
       } else {
         that.type = 1;
         that.name = "杠杆账户";
-        that.leverName = "C2C账户";
+        that.leverName = "法币账户";
         that.totalMoney = that.leverMoney;
       }
       console.log(that.type);

@@ -75,6 +75,7 @@
               <span>
                 可用：
                 <span class="use_num">{{balance || '0.00' | toFixeds}}</span>
+                {{coinname}}
                 <span>
                   <!-- 限额：
                   <span>1500.00</span> -->
