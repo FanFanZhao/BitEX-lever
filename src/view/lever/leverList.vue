@@ -35,8 +35,8 @@
         <span class="width2">{{item.time}}</span>
         <span class="width2" v-if="status == 3">{{item.handle_time}}</span>
         <span
-          :class="['red','width1',{'green':item.fact_profits > 0}]"
-        >{{item.fact_profits || '0.00' | tofixedFour}}</span>
+          :class="['red','width1',{'green':item.profits > 0}]"
+        >{{item.profits || '0.00' | tofixedFour}}</span>
         <span class="width1">{{item.status_name}}</span>
         <div class="width1 btns" v-if="status == 0 || status == 1">
           <button type="button" v-if="status == 0" @click="cannelOrder(item.id)">撤单</button>
@@ -148,14 +148,12 @@ export default {
                 that.list_content[i].share = list[i].share;
                 that.list_content[i].price = list[i].price;
                 that.list_content[i].update_price = list[i].update_price;
-                that.list_content[i].target_profit_price =
-                  list[i].target_profit_price;
+                that.list_content[i].target_profit_price =list[i].target_profit_price;
                 that.list_content[i].stop_loss_price = list[i].stop_loss_price;
-                that.list_content[i].origin_caution_money =
-                  list[i].origin_caution_money;
+                that.list_content[i].origin_caution_money =list[i].origin_caution_money;
                 that.list_content[i].caution_money = list[i].caution_money;
                 that.list_content[i].time = list[i].time;
-                that.list_content[i].fact_profits = list[i].fact_profits;
+                that.list_content[i].profits = list[i].profits;
                 that.list_content[i].status_name = list[i].status_name;
                 that.list_content[i].id = list[i].id;
               }

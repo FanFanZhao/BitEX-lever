@@ -76,9 +76,9 @@
                 可用：
                 <span class="use_num">{{balance || '0.00' | toFixeds}}</span>
                 <span>
-                  限额：
-                  <span>1500.00</span>
-                  <span class="advance">提升额度</span>
+                  <!-- 限额：
+                  <span>1500.00</span> -->
+                  <!-- <span class="advance">提升额度</span> -->
                 </span>
               </span>
             </p>

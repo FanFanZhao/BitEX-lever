@@ -367,7 +367,7 @@ export default {
         return;
       }
       if (that.selectedStatus == 0) {
-        if (that.inputPrice == "") {
+        if (that.sellInputValue == "") {
           layer.msg("请输入价格");
           return;
         }
@@ -448,7 +448,7 @@ export default {
         if (values == "sell" && that.sellInfo.sell_selected != "") {
           if (that.sellInputValue != "") {
             // 价格
-            var bond = that.inputPrice;
+            var bond = that.sellInputValue;
             // 倍数
             var muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
             // 手数
@@ -558,7 +558,7 @@ export default {
         if (type == "sell" && that.sellShare != "") {
           if (that.sellInputValue != "") {
             // 价格
-            var bond = that.inputPrice;
+            var bond = that.sellInputValue;
             // 倍数
             var muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
             // 手数
@@ -588,6 +588,7 @@ export default {
       let that = this;
       let textValue = /^[1-9]*[0-9][0-9]*$/;
       if(type == 'sell'){
+        that.types = '-1';
         if(that.sellShare != ''){
           if(!textValue.test(that.sellShare)){
             layer.msg("请输入整数");
@@ -605,6 +606,7 @@ export default {
           }
         }
       }else{
+        that.type = '-1';
         if(that.buySahre != ''){
           if(!textValue.test(that.buySahre)){
             layer.msg("请输入整数");
@@ -624,6 +626,7 @@ export default {
       }
       if (that.selectedStatus != 0) {
         if (type == "sell" && that.sellInfo.sell_selected != "") {
+          that.types = '';
           // 价格
           var bond = parseFloat(localStorage.getItem("lastPrice")).toFixed(4);
           // 倍数
@@ -632,6 +635,7 @@ export default {
           var share = parseFloat(that.sellShare).toFixed(4);
           that.pricesType(bond, type, share, muitNum);
         } else if (type == "buy" && that.buyInfo.buy_selected != "") {
+           that.type = '';
           // 价格
           var bond = parseFloat(localStorage.getItem("lastPrice")).toFixed(4);
           // 倍数
@@ -640,15 +644,19 @@ export default {
           var share = parseFloat(that.buySahre).toFixed(4);
           that.pricesType(bond, type, share, muitNum);
         } else {
-          that.totalPriceBuy = 0.0;
-          that.trandeFreeBuy = 0.0;
-          that.bonsBuy = 0.0;
+          that.totalPriceBuy = 0.0000;
+          that.trandeFreeBuy = 0.0000;
+          that.bonsBuy = 0.0000;
+          that.totalPrice = 0.0000;
+          that.trandeFree = 0.0000;
+          that.bons = 0.0000;
         }
       } else {
         if (type == "sell" && that.sellInfo.sell_selected != "") {
+           that.types = '';
           if (that.sellInputValue != "") {
             // 价格
-            var bond = that.inputPrice;
+            var bond = that.sellInputValue;
             // 倍数
             var muitNum = parseFloat(that.sellInfo.sell_selected).toFixed(4);
             // 手数
@@ -656,6 +664,7 @@ export default {
             that.pricesType(bond, type, share, muitNum);
           }
         } else if (type == "buy" && that.buyInfo.buy_selected != "") {
+           that.type = '';
           if (that.inputPrice != "") {
             // 价格
             var bond = that.inputPrice;
@@ -666,9 +675,12 @@ export default {
             that.pricesType(bond, type, share, muitNum);
           }
         } else {
-          that.totalPriceBuy = 0.0;
-          that.trandeFreeBuy = 0.0;
-          that.bonsBuy = 0.0;
+          that.totalPriceBuy = 0.0000;
+          that.trandeFreeBuy = 0.0000;
+          that.bonsBuy = 0.0000;
+          that.totalPrice = 0.0000;
+          that.trandeFree = 0.0000;
+          that.bons = 0.0000;
         }
       }
     },
