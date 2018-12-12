@@ -353,17 +353,16 @@
 						callback && callback(res)
 					} else {
 						layer.msg(res.data.message)
-						if (res.data.type == '997') {
+						if(res.data.type=='997'){
 							setTimeout(() => {
-								_this.$router.push("/components/userSetting");
-							}, 500);
+								_this.$router.push("/userSetting");
+							}, 1500);  
 						}
-						if (res.data.type == '998') {
+						if(res.data.type=='998'){
 							setTimeout(() => {
-								_this.$router.push('/components/authentication');
-							}, 500);
+								_this.$router.push("/authentication");
+							}, 1500);  
 						}
-
 					}
 				});
 			},
