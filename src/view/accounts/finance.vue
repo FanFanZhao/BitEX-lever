@@ -90,13 +90,11 @@
               <div class="left_inp_wrap flex1">
                 <p class="fColor2 ft12 mb15">
                   <span>手续费</span>
-                  <span>
-                    范围：
-                    <span>{{ratenum}}</span>
-                  </span>
+                    <span>{{ratenum}}%</span>
                 </p>
                 <label class="range_lab flex alcenter between">
-                  <input class="fColor1" type="text" v-model="rate">
+                  <!-- <input class="fColor1" type="text" v-model="rate"> -->
+                  <span>{{number * ratenum /100 | toFixeds}}</span>
                   <span>{{coinname}}</span>
                 </label>
               </div>
@@ -105,7 +103,8 @@
                   <span class="fColor2 ft12">到账数量</span>
                 </p>
                 <label class="get_lab flex alcenter between">
-                  <input class="fColor1" disabled v-model="reachnum" type="number">
+                  <span>{{number - number * ratenum /100 | toFixeds}}</span>
+                  <!-- <input class="fColor1" disabled v-model="reachnum" type="number"> -->
                   <span>{{coinname}}</span>
                 </label>
               </div>
@@ -354,7 +353,7 @@ export default {
             that.min_number =
               "最小提币数量" + parseFloat(res.message.min_number).toFixed(2);
             that.minnumber = res.message.min_number;
-            that.ratenum = res.message.rate + "-" + res.message.rate;
+            that.ratenum = res.message.rate;
             that.reachnum = 0.0;
             that.rate = res.message.rate;
           } else {

@@ -32,7 +32,7 @@
 					</div> -->
 					<div class="account_login fColor1 fl" @mouseover="mine_over" @mouseout="mine_out"  v-if="address.length>0">
 						<img class="icon_img" src="@/assets/images/account.png" alt="">
-						<span>{{account_number}}</span>
+						<span>{{account_number | hideFour}}</span>
             <!-- <span v-if="extension_code.length>0">(邀请码：{{extension_code}})</span> -->
 						<img src="@/assets/images/arrow0.png" alt="">
 					</div>
@@ -104,6 +104,7 @@ export default {
         // { title: "我的资产", page: "homeContent" },
         {title:"安全设置",page:"userSetting"}
       ],
+      
       accountList: [
         // {
         //   src1: require("@/assets/images/m0.png"),
@@ -186,6 +187,12 @@ export default {
         }
 	  ]
     };
+  },
+  filters: {
+    hideFour: function(value) {
+      value = value.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+      return value;
+    }
   },
   created() {
 
