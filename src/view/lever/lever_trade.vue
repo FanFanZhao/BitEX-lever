@@ -760,6 +760,12 @@ export default {
     selectTypes(types) {
       let that = this;
       that.selectedStatus = types;
+      that.totalPriceBuy = 0.0000;
+      that.trandeFreeBuy = 0.0000;
+      that.bonsBuy = 0.0000;
+      that.totalPrice = 0.0000;
+      that.trandeFree = 0.0000;
+      that.bons = 0.0000;
     },
     // 手动输入价格
     changePrice(type) {
