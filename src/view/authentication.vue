@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="updata tc">
-          <input type="button" value="提交" @click="updata">
+          <input type="button" value="提交" @click="updata" class="curPer">
         </div>
       </div>
       <div v-show="review_status==1">
@@ -149,9 +149,11 @@ export default {
       })
         .then(res => {
           layer.msg(res.data.message);
-          setTimeout(function(){
-            that.$router.push("/");
-          },500);
+          if(res.data.type=='ok'){
+            setTimeout(function(){
+              that.$router.push("/");
+            },500);
+          }
         })
         .catch(error => {});
     },
