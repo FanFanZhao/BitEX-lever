@@ -16,14 +16,14 @@
             </div>
         </div>
         <ul >
-            <li ><img  src="@/assets/images/success.png" >
+            <!-- <li ><img  src="@/assets/images/success.png" >
                 <span  class="ml20">我的邀请码</span>
                 <p  class="fl">
                     <span class="fColor1">{{extension_code}}</span>
                 </p>
                 <span  class="fr base ml25 mouseDefault"></span>
                 <span  class="fr base mouseDefault" id="copy" @click="copy">复制邀请码</span>
-            </li>
+            </li> -->
             <li ><img  :src="psrc" >
                 <span  class="ml20">绑定手机</span>
                 <p  class="fl">

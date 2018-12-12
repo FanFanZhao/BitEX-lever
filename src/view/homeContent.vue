@@ -80,11 +80,11 @@
         </div> -->
         <div class="md">
           <div>
-            <div class="">
+            <!-- <div class="">
               <span>安全有保障</span>
               <span>资金托管</span>
             </div>
-            <router-link to="/components/register" tag="div" class="btn curPer">立即加入</router-link>
+            <router-link to="/components/register" tag="div" class="btn curPer">立即加入</router-link> -->
             <div>
               <img src="https://ztstatic.oss-cn-hangzhou.aliyuncs.com/zg72/img/home-zg-pic-$.d1d0840.jpg" alt="">
             </div>
