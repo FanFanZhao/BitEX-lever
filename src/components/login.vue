@@ -124,7 +124,7 @@ import indexFooter from '@/view/indexFooter'
 </script>
 
 <style scoped>
-	.content-wrap{background: url(../../static/imgs/bg_login.png) center bottom 316px repeat-x,-webkit-linear-gradient(top,#21263f,#262a42);}
+	.content-wrap{background: url(../assets/images/bg_login.png) center bottom 316px repeat-x,-webkit-linear-gradient(top,#21263f,#262a42);}
 	.account{width: 1200px;margin: 0 auto;padding-top: 93px;overflow: hidden;min-height: 880px;}
 	.main{position: relative;padding: 0 0 60px 30px;}
 	.main_title{font-size: 36px;color: #c7cce6;}

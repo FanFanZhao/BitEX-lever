@@ -1,19 +1,20 @@
 <template>
   <div id="legal-record" class="white">
     <div class="title bgf8">订单记录</div>
-    <!-- <div class="filter-box">
-      <div>
+    <div class="filter-box">
+      <!-- <div>
         <span>交易类型：</span>
         <span :class="{'select':filterPms.type == 'sell'}" @click="filterPms.type = 'sell';getList()">购买</span>
         <span :class="{'select':filterPms.type  == 'buy'}" @click="filterPms.type  = 'buy';getList()">出售</span>
-      </div>
+      </div> -->
       <div>
         <span>订单状态：</span>
         <span :class="{'select':filterPms.isSure == 0}" @click="filterPms.isSure = 0;getList()">未完成</span>
         <span :class="{'select':filterPms.isSure == 1}" @click="filterPms.isSure = 1;getList()">已完成</span>
         <span :class="{'select':filterPms.isSure == 2}" @click="filterPms.isSure = 2;getList()">已取消</span>
+        <span :class="{'select':filterPms.isSure == 3}" @click="filterPms.isSure = 3;getList()">已付款</span>
       </div>
-    </div> -->
+    </div>
     
     <ul class="bgf8">
       <li v-for="(item,index) in list" :key="index" class="bod_bc bdb pdtb5">

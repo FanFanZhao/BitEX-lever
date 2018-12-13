@@ -154,10 +154,12 @@
               <router-link to="/forgetPwd" tag="dd">找回密码</router-link> -->
             </dl>
             <dl>
-              <!-- <dt>app下载</dt>
-              <dd></dd> -->
+              <dt>联系我们</dt>
+              <dd>客服QQ：3044274988</dd>
+              <dd>联系邮箱：dfhsijiang1258@gmail.com</dd>
             </dl>
           </div>
+          <p>©2014-2018 BitEX.com,All Rights Reserved</p>
         </footer>
     </div>
 </template>
@@ -467,10 +469,12 @@ export default {
   }
 }
 footer{
+  width: 100%;
   background: rgb(20,20,63);
   padding: 30px 0;
+  text-align: center;
   .content{
-    width: 1500px;
+    width: 600px;
     margin: 0 auto;
     justify-content: space-between;
     dl{
@@ -479,25 +483,24 @@ footer{
         font-size: 16px;
         color: #fff;
         margin-bottom: 20px;
+        text-align: left;
       }
       dd{
         font-size: 14px;
         color: #8b89c8;
         line-height: 24px;
+        text-align: left;
         cursor: pointer;
         &:hover{
           color: #fff;
         }
       }
     }
-    dl:last-child{
-      dd{
-        background: url('../assets/images/qrcode.png') no-repeat;
-        width: 100px;
-        height: 100px;
-        background-size: 100%;
-      }
-    }
+  }
+  p{
+    margin-top: 20px;
+    color: #fff;
+    font-size: 13px;
   }
 }
 .md {
