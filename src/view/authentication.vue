@@ -51,7 +51,7 @@ export default {
       src1: "../../static/imgs/addimg.png",
       src2: "../../static/imgs/addimg.png",
       src3: "../../static/imgs/addimg.png",
-      review_status: ""
+      review_status: 3
     };
   },
   created() {
