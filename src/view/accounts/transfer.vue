@@ -11,7 +11,7 @@
 
       <div class="num">
         <p>划转数量</p>
-        <input type="text" placeholder="请输入划转数量" v-model="inputValue">
+        <input type="text" placeholder="请输入最低100的划转数量" v-model="inputValue">
         <p>可用余额：{{totalMoney || '0.00' | toFixeds}}USDT</p>
       </div>
       <button type="button" class="comfirm-btn" @click="comfirm()">确认划转</button>
@@ -104,6 +104,9 @@ export default {
       var that = this;
       if(that.inputValue == ''){
         layer.msg("请输入划转数量");
+        return false;
+      }else if(that.inputValue < 100){
+        layer.msg("输入的划转数量不能低于100");
         return false;
       }
       var i = layer.load()
