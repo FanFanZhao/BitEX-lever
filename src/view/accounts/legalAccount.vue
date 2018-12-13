@@ -4,11 +4,11 @@
         <div class="legalAccount_msg flex between plr10">
           <div>
               <p class="ft12 msg_title">可用</p>
-              <p>{{legal_balance}}</p>
+              <p>{{legal_balance | toFixeds}}</p>
           </div>
           <div>
               <p class="ft12 msg_title">冻结</p>
-              <p>{{lock_legal_balance}}</p>
+              <p>{{lock_legal_balance | toFixeds}}</p>
           </div>
           <div>
               <p class="ft12 msg_title">折合（CNY）</p>
@@ -27,7 +27,7 @@
            </p>
            <ul class="log_list">
               <li class="flex arround ft12 flex around" v-for="(item,index) in list">
-                  <span>{{item.value}}</span>
+                  <span>{{item.value | toFixeds}}</span>
                   <span class="tc">{{item.info}}</span>
                   <span class="tr">{{item.created_time}}</span>
               </li>

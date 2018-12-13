@@ -799,6 +799,10 @@ export default {
       that.totalPrice = 0.0000;
       that.trandeFree = 0.0000;
       that.bons = 0.0000;
+      that.buyInfo.buy_selected = '';
+      that.sellInfo.sell_selected = '';
+      that.inputPrice = '';
+      that.sellInputValue = '';
     },
     // 手动输入价格
     changePrice(type) {
