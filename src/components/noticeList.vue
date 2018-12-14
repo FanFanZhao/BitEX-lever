@@ -1,10 +1,10 @@
 <template>
     <div class="notice">
-        <!-- <indexHeader></indexHeader> -->
+        <indexHeader></indexHeader>
         <div class="account-wrap">
-            <div class="account" style="width:auto">
+            <div class="account">
                 <div>
-                    <div class="back-nav fColor1 ft20 clear" style="padding:0 20px"> 公告
+                    <div class="back-nav fColor1 ft20 clear" style="padding:10px 20px 0"> 帮助中心
                         
                     </div>
                     
@@ -49,31 +49,14 @@ export default {
     };
   },
   created() {
-    // this.$http({
-    //   url: '/api/' + "news/list",
-    //   method: "get",
-    //   data: {}
-    // })
-    //   .then(res => {
-    //     res = res.data;
-    //     if (res.type === "ok") {
-    //       console.log(res.message.list)
-    //       this.newList = res.message.list;
-    //     } else {
-    //       layer.msg(res.message);
-    //     }
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
   },
   methods: {
     getNotice(){
       this.$http({
         url:'/api/' + 'news/list',
         method:'post',
+        data:{c_id:'11'}, 
       }).then(res => {
-        // console.log(res);
         this.newList=res.data.message.list
         
       })
@@ -100,11 +83,9 @@ export default {
 <style lang="scss" scoped>
 .notice {
   .account-wrap {
-    // background: url(../assets/images/account_center_bg.jpg) no-repeat;
-    // background-size: cover;
     .account {
       // width: 1500px;
-      margin: 0 auto;
+      margin: 40px auto;
       // padding-top: 30px;
       overflow: hidden;
       // min-height: 880px;
@@ -135,7 +116,7 @@ export default {
             > div {
               > div {
                 height: 36px;
-                line-height: 18px;
+                line-height: 36px;
               }
               span{
                   color: #61688a;

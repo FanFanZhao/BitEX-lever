@@ -155,11 +155,9 @@ export default {
         headers: { Authorization: this.token }
       }).then(res => {
         layer.close(i);
-        // console.log(res);
         if (res.data.type == "ok") {
           var oldlist = this.info.lists.data;
           var newlist = res.data.message.lists.data;
-          // this.info =Object.assign({}, res.data.message);
           this.page += 1;
 
           if (more) {

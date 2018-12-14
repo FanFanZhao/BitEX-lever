@@ -12,7 +12,7 @@
                     <span class="flex1 tc">{{item.created_time}}</span>
                     <span class="flex1 tc">{{item.account}}</span>
                     <span class="flex1 tc">{{item.info}}</span>
-                    <span class="flex1 tc">{{item.value}}</span>
+                    <span class="flex1 tc">{{item.value | toFixeds}}</span>
                 </li>
                 <p class="tc more" @click="getMore">{{more}}</p>
             </div>
@@ -30,6 +30,12 @@ export default {
             log_list:[]
         }
     },
+    filters: {
+    toFixeds: function(value) {
+      value = Number(value);
+      return value.toFixed(2);
+    }
+  },
     created(){
 
     },

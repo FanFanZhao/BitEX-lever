@@ -175,7 +175,6 @@ export default {
           layer.close(i);
           if (res.data.type == "ok") {
             let listdata = res.data.message.data;
-            console.log(listdata);
             if (listdata.length != 0) {
               this.list = this.list.concat(listdata);
               this.page += 1;
@@ -194,15 +193,12 @@ export default {
       getDetail(id) {
         var i=layer.load();
         var that =this;
-        console.log(this)
         this.$http({
           url: "/api/c2c_deal?id=" + id,
           headers: { Authorization: this.token }
         }).then(res => {
-          console.log(res);
           layer.close(i);
           if (res.data.type == "ok") {
-            console.log(res.data.message);
             this.detail=res.data.message;
             this.showDetail = true;
           }
@@ -229,7 +225,6 @@ export default {
         headers: { Authorization: this.token }
       }).then(res => {
         layer.close(i);
-        console.log(res);
         if (res.data.type == "ok") {
           layer.msg(res.data.message);
           that.page=1;
@@ -261,7 +256,6 @@ export default {
         headers: { Authorization: this.token }
       }).then(res => {
         layer.close(i);
-        console.log(res);
         if (res.data.type == "ok") {
           layer.msg(res.data.message);
           that.page=1;
@@ -293,7 +287,6 @@ export default {
         headers: { Authorization: this.token }
       }).then(res => {
         layer.close(i);
-        console.log(res);
         if (res.data.type == "ok") {
           layer.msg(res.data.message);
           that.page=1;

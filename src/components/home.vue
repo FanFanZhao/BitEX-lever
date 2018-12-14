@@ -20,15 +20,12 @@ export default {
        },
     components:{indexHeader,homeContent,indexFooter},
     created(){
-        // console.log('homeContent');
-        // console.log(this.$http);
         this.$http({
 					url: '/api/' + 'currency/quotation_new',
 					method:'get',
                     data:{},
                     headers: {'Authorization':  localStorage.getItem('token')}, 
 				}).then(res=>{
-                    // console.log(res);
                     if(res.data.type == 'ok'){
                       this.tabList = res.data.message;
                       var msg = res.data.message;

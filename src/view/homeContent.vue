@@ -255,7 +255,6 @@ export default {
     },
     connect() {
       var that = this;
-      //console.log("socket");
       that.$socket.emit("login", localStorage.getItem("user_id"));
       that.$socket.on("daymarket", msg => {
         if (msg.type == 'daymarket') {
@@ -315,7 +314,6 @@ export default {
           // this.nowCoin = this.quotation[0].name;
           var data = res.data.message;
           this.quotation=data.find((item) => item.name == 'USDT').quotation;
-          console.log(this.quotation)
         }
       });
     },
@@ -352,7 +350,6 @@ export default {
       var that = this;
       this.$http.post("/api/news/list",{"c_id":5}).then(res => {
         if (res.data.type == "ok") {
-             console.log(res);
              var list = res.data.message.list;
              if (list.length > 2) {
             that.noticeList = list;
@@ -390,7 +387,6 @@ export default {
       var that = this;
       this.$http.post("/api/news/list",{"c_id":9}).then(res => {
         if (res.data.type == "ok") {
-             console.log(res);
              var list = res.data.message.list;
              if (list.length > 2) {
             that.footFrist = list;
@@ -406,7 +402,6 @@ export default {
       var that = this;
       this.$http.post("/api/news/list",{"c_id":10}).then(res => {
         if (res.data.type == "ok") {
-             console.log(res);
              var list = res.data.message.list;
              if (list.length > 2) {
             that.footSecond = list;

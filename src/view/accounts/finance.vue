@@ -29,7 +29,11 @@
         <p class="flex1 tc">操作</p>
       </div>
       <ul class="content_ul">
-        <li v-for="(item,index) in asset_list" v-if="item.is_legal == 1 && item.is_lever == 1" :key="index">
+        <li
+          v-for="(item,index) in asset_list"
+          v-if="item.is_legal == 1 && item.is_lever == 1"
+          :key="index"
+        >
           <div class="content_li flex alcenter between">
             <p class="flex1 tc">{{item.currency_name}}</p>
             <p class="flex1 tc">{{item.lever_balance || '0.00' | toFixeds}}</p>
@@ -78,7 +82,7 @@
                 {{coinname}}
                 <span>
                   <!-- 限额：
-                  <span>1500.00</span> -->
+                  <span>1500.00</span>-->
                   <!-- <span class="advance">提升额度</span> -->
                 </span>
               </span>
@@ -91,7 +95,7 @@
               <div class="left_inp_wrap flex1">
                 <p class="fColor2 ft12 mb15">
                   <span>手续费</span>
-                    <span>{{ratenum}}%</span>
+                  <span>{{ratenum}}%</span>
                 </p>
                 <label class="range_lab flex alcenter between">
                   <!-- <input class="fColor1" type="text" v-model="rate"> -->
@@ -135,7 +139,7 @@
                 <span>时间</span>
               </div>
               <ul class="rec-list">
-                <li v-for="(reItem,reIndex) in recData[index]" :key="reIndex">
+                <li v-for="(reItem,reIndex) in recData" :key="reIndex">
                   <span>{{reItem.value || '0.00' | toFixeds}}</span>
                   <span>{{reItem.info}}</span>
                   <span>{{reItem.created_time}}</span>
@@ -222,19 +226,15 @@ export default {
       asset_list: [],
       tip_list: [
         "请勿向上述地址充值任何非USDT资产，否则资产将不可找回。",
-        "USDT充币仅支持simple send的方法，使用其他方法（send all）的充币暂时无法上账，请您谅解。",
-        "请勿向上述地址充值任何非USDT资产，否则资产将不可找回。",
         "USDT充币仅支持simple send的方法，使用其他方法（send all）的充币暂时无法上账，请您谅解。"
       ],
       tip_list01: [
-        "请勿向上述地址充值任何非USDT资产，否则资产将不可找回。",
-        "USDT充币仅支持simple send的方法，使用其他方法（send all）的充币暂时无法上账，请您谅解。",
         "请勿向上述地址充值任何非USDT资产，否则资产将不可找回。",
         "USDT充币仅支持simple send的方法，使用其他方法（send all）的充币暂时无法上账，请您谅解。"
       ],
       page: 1,
       more: "加载更多",
-      balanceList: ["c2c账户", "杠杆账户"],
+      balanceList: ["法币账户", "杠杆账户"],
       transferData: {
         modalShow: false,
         transferName: "",
@@ -286,7 +286,6 @@ export default {
         headers: { Authorization: that.token }
       })
         .then(res => {
-          console.log(res);
           if (res.data.type == "ok") {
             that.excharge_address = res.data.message;
             // 生成二维码
@@ -322,6 +321,7 @@ export default {
     //记录
     rec(index, currency) {
       this.currency = currency;
+      this.recData = [];
       if (this.flag) {
         this.flag = false;
         this.active = "a";
@@ -332,6 +332,16 @@ export default {
         this.active02 = index;
         this.active = "a";
         this.active01 = "a";
+        this.$http({
+          url: "/api/wallet/legal_log",
+          method: "post",
+          data: { type: "0", currency: currency, page: 1 },
+          headers: { Authorization: this.token }
+        }).then(res => {
+          if (res.data.type == "ok") {
+            this.recData = res.data.message.list;
+          }
+        });
       }
     },
     getNum(currency) {
@@ -358,7 +368,6 @@ export default {
             that.reachnum = 0.0;
             that.rate = res.message.rate;
           } else {
-            console.log(res.message);
           }
         }
       });
@@ -380,7 +389,6 @@ export default {
         return;
       }
       if (number - 0 < min_number) {
-        console.log(number, min_number);
         return layer.alert("输入的提币数量小于最小值");
       }
       // if(rate=='' || rate>=1){
@@ -459,19 +467,18 @@ export default {
           } else {
             return;
           }
-          this.asset_list.forEach((item, index) => {
-            this.$http({
-              url: "/api/wallet/legal_log",
-              method: "post",
-              data: { type: "0", currency: item.currency, page: this.page },
-              headers: { Authorization: this.token }
-            }).then(res => {
-              console.log(res);
-              if (res.data.type == "ok") {
-                this.recData[index] = res.data.message.list;
-              }
-            });
-          });
+          // this.asset_list.forEach((item, index) => {
+          //   this.$http({
+          //     url: "/api/wallet/legal_log",
+          //     method: "post",
+          //     data: { type: "0", currency: item.currency, page: this.page },
+          //     headers: { Authorization: this.token }
+          //   }).then(res => {
+          //     if (res.data.type == "ok") {
+          //       this.recData[index] = res.data.message.list;
+          //     }
+          //   });
+          // });
         })
         .catch(error => {
           console.log(error);
@@ -492,7 +499,12 @@ export default {
           for (let i in datas) {
             if (that.currency == datas[i].currency) {
               that.active02 = i;
-              that.recData[i] = that.recData[i].concat(res.data.message.list);
+              if(res.data.message.list.length > 0){
+                that.recData= that.recData.concat(res.data.message.list);
+              }else{
+                that.more="没有更多数据了";
+              }
+              
             }
           }
         }

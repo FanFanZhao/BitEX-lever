@@ -129,8 +129,6 @@ export default {
         data:{address_id:id},
         headers: { Authorization: this.token }
       }).then(res => {
-        // console.log(res);
-       
         if(res.data.type == 'ok'){
             this.list.splice(index,1)
              layer.msg(res.data.message);

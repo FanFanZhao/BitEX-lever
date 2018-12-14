@@ -60,9 +60,7 @@ import indexFooter from '@/view/indexFooter'
                     data:{},  
                     headers: {'Authorization':  localStorage.getItem('token')},    
                 }).then(res=>{
-                    // console.log(res);
                     if(res.data.type == 'ok'){
-                    console.log(res)
                         localStorage.setItem('user_id',res.data.message.id);
                         // localStorage.setItem('email',res.data.message.email);
                         localStorage.setItem('extension_code',res.data.message.extension_code);
@@ -95,9 +93,7 @@ import indexFooter from '@/view/indexFooter'
                         type:1
 					}
 				}).then(res=>{
-                    layer.close(i);
-                    // console.log(res);
-                    
+                    layer.close(i);  
 					res = res.data;
 					if(res.type  === 'ok'){
 						localStorage.setItem('token',res.message);
@@ -124,7 +120,7 @@ import indexFooter from '@/view/indexFooter'
 </script>
 
 <style scoped>
-	.content-wrap{background: url(../assets/images/bg_login.png) center bottom 316px repeat-x,-webkit-linear-gradient(top,#21263f,#262a42);}
+	.content-wrap{background: url(../../static/imgs/bg_login.png) center bottom 316px repeat-x,-webkit-linear-gradient(top,#21263f,#262a42);}
 	.account{width: 1200px;margin: 0 auto;padding-top: 93px;overflow: hidden;min-height: 880px;}
 	.main{position: relative;padding: 0 0 60px 30px;}
 	.main_title{font-size: 36px;color: #c7cce6;}

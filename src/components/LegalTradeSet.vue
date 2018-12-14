@@ -73,7 +73,6 @@ export default {
           },
           headers: { Authorization: localStorage.getItem("token") }
         }).then(res => {
-          console.log(res);
           layer.msg(res.data.message);
           if (res.data.type == "ok") {
             this.$router.go(-1)

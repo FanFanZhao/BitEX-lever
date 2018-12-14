@@ -125,8 +125,6 @@
 			};
 		},
 		created() {
-			// console.log(window.location);
-
 			let token = window.localStorage.getItem("token") || "";
 			if (token) {
 				this.token = token;
@@ -224,7 +222,6 @@
 			// },
 			// 出售或者购买按钮
 			buySell(prices, min, max,id,type) {
-				console.log(type)
 				if(type == 'sell'){
 					this.money_type = '购买'
 				}else if(type == 'buy'){
@@ -256,7 +253,6 @@
 						Authorization: localStorage.getItem("token")
 					}
 				}).then(res => {
-					console.log(res);
 					if (res.data.type == 'ok') {
 						_this.surplus_number=res.data.message.surplus_number;
 					    _this.user_legal_balance=(res.data.message.user_legal_balance-0).toFixed(3);
@@ -311,7 +307,6 @@
 					};
 					_this.buyHttp('/api/do_legal_deal', datas, function(res) {
 						if(res.data.type == 'ok'){
-							console.log(res)
 							if(res.data.message.data.type == 'sell'){
 								layer.msg(res.data.message.msg)
 								setTimeout(function() {
@@ -347,7 +342,6 @@
 						Authorization: localStorage.getItem("token")
 					}
 				}).then(res => {
-					console.log(res);
 					if (res.data.type == 'ok') {
 						// layer.msg(res.data.message)
 						callback && callback(res)

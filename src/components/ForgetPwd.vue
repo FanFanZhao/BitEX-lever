@@ -121,8 +121,6 @@ export default {
         layer.tips("请输入账号!", "#account");
         return;
       } else if (this.phoneCode == "") {
-        // console.log('请输入验证码');
-
         layer.tips("请输入验证码!", "#pwd");
         return;
       } else if (isEmail) {
@@ -171,7 +169,6 @@ export default {
           method: "post",
           data: data
         }).then(res => {
-          //   console.log(res);
           layer.msg(res.data.message);
           if (res.data.type == "ok") {
             this.$router.push("/components/login");

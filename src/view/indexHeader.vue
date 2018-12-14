@@ -10,12 +10,13 @@
         <li  class="base"><router-link to="/leverdealCenter">杠杆交易</router-link></li>
         <li  class="base" v-if="isShow"><router-link to="/myLegalShops">我的商铺</router-link></li>
         <li  class="base"><router-link to="/finance">我的资产</router-link></li>
-        <!-- <li class="base downapp" @click="showapp">APP下载
+        <li  class="base"><router-link to="/noticeList">帮助中心</router-link></li>
+        <li class="base downapp" @click="showapp">APP下载
           <div class="appcode tc" v-show="appshow">
             <span></span>
             <p><img src="@/assets/images/qrcode.png" alt=""></p>
           </div>
-        </li> -->
+        </li>
 			</ul>
 			<div class="fr">
 				<div class="account-box fl positionR curPer flex">
@@ -102,7 +103,7 @@ export default {
         // { title: "安全设置", page: "userSetting" },
         { title: "杠杆交易", page: "leverdealCenter" },
         // { title: "我的资产", page: "homeContent" },
-        {title:"安全设置",page:"userSetting"}
+        {title:"收款设置",page:"userSetting"}
       ],
       
       accountList: [
@@ -151,7 +152,7 @@ export default {
         {
           src1: require("@/assets/images/z0.png"),
           src2: require("@/assets/images/z1.png"),
-          title: '安全设置',
+          title: '收款设置',
           page:'userSetting',
         },
         {

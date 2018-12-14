@@ -235,7 +235,6 @@ export default {
       }).then(res => {
         layer.close(i);
         if (res.data.type == "ok") {
-          console.log(res);
           layer.msg(res.data.message);
         } else {
           layer.msg(res.data.message);
@@ -252,7 +251,6 @@ export default {
         headers: { Authorization: this.token }
       }).then(res => {
         layer.close(i);
-        console.log(res);
         if (res.data.type == "ok") {
           that.modalShow = true;
           that.payContent = res.data.message;

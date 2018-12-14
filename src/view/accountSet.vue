@@ -138,7 +138,6 @@ export default {
                     }else if(this.bar==100){
                         this.lever='强';
                     }
-                    console.log(this.bar)
                     this.widthBar='width:'+this.bar+'%';
                 }
                 }).catch(error=>{

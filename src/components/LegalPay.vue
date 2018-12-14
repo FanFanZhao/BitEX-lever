@@ -113,7 +113,6 @@ export default {
         headers: { Authorization: this.token }
       }).then(res => {
         layer.close(i);
-        console.log(res);
         if (res.data.type == "ok") {
           this.msg = res.data.message;
         }
@@ -126,8 +125,6 @@ export default {
         data:{id:this.id},
         headers:{Authorization:this.token}
       }).then(res => {
-        
-        // console.log(res);
         layer.msg(res.data.message);
         if(res.data.type == 'ok'){
           setTimeout(() => {
@@ -153,7 +150,6 @@ export default {
 				contentType: false,
 				success: function (msg) {
           layer.close(i);
-          console.log(msg)
 					if(msg.type == 'ok'){
             that.src=msg.message;
             if(that.src){

@@ -55,7 +55,6 @@ export default {
         url: "/api/my_seller",
         headers: { Authorization: this.token }
       }).then(res => {
-        console.log(res);
         if (res.data.type == "ok") {
           var list = res.data.message.data;
           if (list.length) {

@@ -59,12 +59,9 @@ export default {
           if (res.data.type == "ok") {
             let list = res.data.message.legal_wallet.balance;
             let lists = res.data.message.lever_wallet.balance;
-            console.log(list);
-            console.log(lists);
             for (let i = 0; i < list.length; i++) {
               if (list[i].currency_name == "USDT") {
                 that.tradeMoney = list[i].legal_balance;
-                console.log(that.tradeMoney);
                 that.totalMoney = that.tradeMoney;
                 that.currencyId = list[i].currency;
               }
@@ -90,14 +87,12 @@ export default {
         that.name = "法币账户";
         that.leverName = "杠杆账户";
         that.totalMoney = that.tradeMoney;
-        console.log(1);
       } else {
         that.type = 1;
         that.name = "杠杆账户";
         that.leverName = "法币账户";
         that.totalMoney = that.leverMoney;
       }
-      console.log(that.type);
     },
     // 确认互转
     comfirm(){

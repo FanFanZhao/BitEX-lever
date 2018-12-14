@@ -112,7 +112,6 @@ export default {
           method: "get",
           headers: { Authorization: this.token }
         }).then(res => {
-         console.log(res);
           if (res.data.type == "ok") {
             this.coinList = res.data.message.legal;
             this.legal_id=res.data.message.legal[0].id;
@@ -134,7 +133,6 @@ export default {
           layer.close(i);
           if (res.data.type == "ok") {
             let listdata = res.data.message.data;
-            console.log(listdata);
             if (listdata.length != 0) {
               for(var j=0; j< listdata.length; j++) {
                 listdata[j].bgcolor = this.bgcolor[(Math.floor(Math.random() * 6 + 1)-1)];
@@ -174,7 +172,6 @@ export default {
         }).then(res => {
           layer.close(i);
           if (res.data.type == "ok") {
-            console.log(res);
             layer.msg(res.data.message.msg);
             that.page=1;
             that.getList();

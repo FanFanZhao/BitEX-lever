@@ -190,7 +190,6 @@ export default {
     changeType(index,type){
       this.current=index;
       this.type=type;
-      console.log(this.type)
     },
     // 获取默认数据
     getSellerInfo(more) {
@@ -208,7 +207,6 @@ export default {
         headers: { Authorization: this.token }
       }).then(res => {
         layer.close(i);
-        // console.log(res);
         if (res.data.type == "ok") {
           this.info = Object.assign({}, res.data.message);
           var result=(res.data.message.done/res.data.message.total*100).toFixed(2);
@@ -371,7 +369,6 @@ export default {
       if(max_number<min_number){
         return layer.msg('最大交易量不能小于最小交易量')
       }
-      console.log(type,way,price,total_number,min_number,currency_id)
       this.$http({
         url: "/api/" + 'legal_send',
         method: "post",

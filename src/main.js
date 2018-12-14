@@ -17,8 +17,14 @@ import store from './store'
 Vue.use(VueAwesomeSwiper)
 // Vue.prototype.$echarts = echarts 
 window.eventBus = new Vue()
-
-Vue.use(VueSocketio, 'http://lever.mobile369.com:2130');
+if(localStorage.getItem('socketPort')){
+	Vue.use(VueSocketio, 'http://lever.mobile369.com:' + localStorage.getItem('socketPort'));
+}else{
+	Axios.get('/api/env.json').then(res=>{
+		localStorage.setItem('socketPort',res.data.socket_io_port);
+		Vue.use(VueSocketio, 'http://lever.mobile369.com:' + res.data.socket_io_port);
+	})
+}
 // Vue.use(VueSocketio, 'http://ice.adminchao.com:2120');
 
 // Vue.use(VueSocketio, 'http://t.fuwuqian.cn:2120');
@@ -38,7 +44,6 @@ Axios.interceptors.request.use(function (config) {
 	return Promise.reject(error)
 })
 Axios.interceptors.response.use(function(response){
-	console.log(response)
 	if(response.data.type == '999'){
 		layer.msg('登录过时，请重新登录');
 		localStorage.clear();

@@ -216,7 +216,6 @@ export default {
         method: "get",
         headers: { Authorization: this.token }
       }).then(res => {
-        //////consolelog(res);
         if (res.data.type == "ok") {
           this.currency_list = res.data.message.legal;
           this.currency_name = res.data.message.legal[0].name;
@@ -258,7 +257,6 @@ export default {
         headers: { Authorization: this.token }
       })
         .then(res => {
-          console.log(res);
           if(res.data.type == 'ok'){
             layer.msg(res.data.message);
             setTimeout(function(){
@@ -313,7 +311,6 @@ export default {
         headers: { Authorization: this.token }
       })
         .then(res => {
-          console.log(res);
           if(res.data.type == 'ok'){
             layer.msg(res.data.message);
             setTimeout(function(){
