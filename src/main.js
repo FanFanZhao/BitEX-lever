@@ -18,11 +18,11 @@ Vue.use(VueAwesomeSwiper)
 // Vue.prototype.$echarts = echarts 
 window.eventBus = new Vue()
 if(localStorage.getItem('socketPort')){
-	Vue.use(VueSocketio, 'http://lever.mobile369.com:' + localStorage.getItem('socketPort'));
+	Vue.use(VueSocketio, 'http://www.bitex.ren:' + localStorage.getItem('socketPort'));
 }else{
 	Axios.get('/api/env.json').then(res=>{
 		localStorage.setItem('socketPort',res.data.socket_io_port);
-		Vue.use(VueSocketio, 'http://lever.mobile369.com:' + res.data.socket_io_port);
+		Vue.use(VueSocketio, 'http://www.bitex.ren:' + res.data.socket_io_port);
 	})
 }
 // Vue.use(VueSocketio, 'http://ice.adminchao.com:2120');
