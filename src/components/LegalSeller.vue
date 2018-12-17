@@ -79,7 +79,9 @@
     </div>
     <div class="buy-sell-box" v-if="showDetail">
       <div class="content">
-
+        <div class="close">
+          <span class="fr" @click="close">X</span>
+        </div>
         <div class="flex">
           <span>{{detail.type == 'buy'?'出售':'购买'}}</span><span>{{detail.currency_name}}</span>
         </div>
@@ -147,6 +149,10 @@ export default {
     }
   },
   methods: {
+    close(){
+      this.showDetail=false;
+      clearInterval(this.timer);
+    },
     getSellerInfo(more) {
       this.showWhich = "none";
       if (!more) {
@@ -385,6 +391,11 @@ export default {
       padding: 20px 30px 26px 30px;
       background: #262a42;
       line-height: 30px;
+      .close{
+        height: 25px;
+        line-height: 25px;
+        cursor: pointer;
+      }
       > div:first-child {
         font-weight: 600;
       }
@@ -396,7 +407,7 @@ export default {
       }
       > .tab {
         margin: 10px 0 20px;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid #303b4b;
         span {
           margin-right: 20px;
         }
@@ -410,7 +421,7 @@ export default {
         display: flex;
         border-radius: 2px;
         justify-content: space-between;
-        border: 1px solid #ccc;
+        border: 1px solid #303b4b;
         padding: 3px 16px;
         input{
           background: transparent;
@@ -421,7 +432,7 @@ export default {
           margin-left: 10px;
         }
         .all {
-          border-left: 1px solid #ccc;
+          border-left: 1px solid #303b4b;
           font-weight: 600;
           cursor: pointer;
         }
