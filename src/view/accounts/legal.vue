@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="top">
-            <p>法币账户  总资产折合：{{totle}}CNY</p>
+            <p>法币账户  总资产折合：{{totle || '0.00' | toFixeds}}CNY</p>
         </div>
         <ul class="list">
             <!-- <li v-for="(item,index) in list" :key="index" v-if="item.is_legal == 1 && item.is_lever == 1" @click="go_legalAccount(item.currency)"> -->
