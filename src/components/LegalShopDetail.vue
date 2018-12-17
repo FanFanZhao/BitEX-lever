@@ -387,6 +387,8 @@ export default {
           this.isShow=false
           this.getSellerInfo();
           this.getList();
+        }else{
+          layer.msg(res.data.message);
         }
       });
     }
