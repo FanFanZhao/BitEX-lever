@@ -1,8 +1,8 @@
 <template>
-  <div id="legal-seller">
+  <div id="legal-seller" class="white">
     <div class="top flex bgf8">
       <div class="top-t flex bod_rc">
-        <div class="logo">k</div>
+        <div class="logo ft18" v-if="info.name">{{(info.name).charAt(0)}}</div>
         <div>
           <div>{{info.name}}</div>
           <div>注册时间：{{info.create_time}}</div>
@@ -256,6 +256,7 @@ export default {
         border-radius: 50%;
         width: 50px;
         height: 50px;
+        line-height: 50px;
         background: #7a98f7;
         text-align: center;
       }
