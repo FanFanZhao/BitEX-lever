@@ -65,9 +65,9 @@
       <ul :class="[showWhich+'-box']">
         <li v-for="(item,index) in info.lists.data" :key="index" :class="[item.type == 'buy'?'buy-item':'sell-item']" class="bod_bc">
           <div>{{item.currency_name}}</div>
-          <div>{{item.surplus_number}}</div>
-          <div>{{item.limitation.min}}-{{item.limitation.max}}</div>
-          <div>{{item.price}}</div>
+          <div>{{item.surplus_number | toFixeds}}</div>
+          <div>{{item.limitation.min | toFixeds}}-{{item.limitation.max | toFixeds}}</div>
+          <div>{{item.price | toFixeds}}</div>
           <div>{{item.way_name}}</div>
           <div>
             <span v-if="item.type == 'buy'" @click="setDetail(item)">出售</span>
@@ -86,13 +86,13 @@
           <span>{{detail.type == 'buy'?'出售':'购买'}}</span><span>{{detail.currency_name}}</span>
         </div>
         <div class="flex">
-          <span>单价：</span><span>{{detail.price}}</span>
+          <span>单价：</span><span>{{detail.price | toFixeds}}</span>
         </div>
         <div class="flex">
-          <span>限额：</span><span>{{detail.limitation.min}}-{{detail.limitation.max}}</span>
+          <span>限额：</span><span>{{detail.limitation.min | toFixeds}}-{{detail.limitation.max | toFixeds}}</span>
         </div>
         <div class="flex">
-          <span>数量：</span><span>{{detail.surplus_number}}</span>
+          <span>数量：</span><span>{{detail.surplus_number | toFixeds}}</span>
         </div>
         <div class="tab">
           <span :class="{'selected':detail.which == 'money'}" @click="detail.which = 'money'">CNY交易</span>
@@ -134,6 +134,12 @@ export default {
       timer: ""
     };
   },
+  filters: {
+			toFixeds: function(value) {
+				value = Number(value);
+				return value.toFixed(3);
+			}
+		},
   created() {
     this.token = window.localStorage.getItem("token") || "";
     if (this.token) {
@@ -284,6 +290,8 @@ export default {
       img {
         width: 16px;
         height: 16px;
+        position: relative;
+        top: 3px;
       }
     }
   }
