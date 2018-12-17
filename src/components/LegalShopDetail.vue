@@ -350,8 +350,8 @@ export default {
       var way = this.way;
       var price = this.price;
       var total_number = this.total_number;
-      var min_number = this.min_number;
-      var max_number = this.max_number;
+      var min_number = this.min_number-0;
+      var max_number = this.max_number-0;
       var currency_id = this.currency_id;
       if(way<0){
         return layer.msg('请先选择支付方式')
