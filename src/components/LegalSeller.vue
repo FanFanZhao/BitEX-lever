@@ -209,6 +209,7 @@ export default {
           layer.msg('不能超出最大数量');return;
         }
       }
+      var i=layer.load();
       this.$http({
         url: "/api/do_legal_deal",
         method: "post",
@@ -216,6 +217,7 @@ export default {
         headers:{Authorization:this.token}
       }).then(res => {
         this.showDetail = false;
+        layer.close(i);
         if(res.data.type == 'ok'){
           var message = res.data.message;
           layer.msg(message.msg)
@@ -364,7 +366,7 @@ export default {
       border-radius: 2px;
       width: 440px;
       padding: 20px 30px 26px 30px;
-      background: #fff;
+      background: #262a42;
       line-height: 30px;
       > div:first-child {
         font-weight: 600;
@@ -393,6 +395,10 @@ export default {
         justify-content: space-between;
         border: 1px solid #ccc;
         padding: 3px 16px;
+        input{
+          background: transparent;
+          color: #fff;
+        }
         span {
           padding-left: 10px;
           margin-left: 10px;
