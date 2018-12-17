@@ -241,7 +241,8 @@ export default {
         transferBalance: "",
         start: "",
         end: ""
-      }
+      },
+      status:''
     };
   },
   components: {
@@ -263,19 +264,24 @@ export default {
     },
     //充币
     excharge(index, currency) {
-      this.currency = currency;
-      if (this.flag) {
-        this.flag = false;
-        this.active = "a";
-        this.active01 = "a";
-        this.active02 = "a";
-      } else {
-        this.flag = true;
-        this.active = index;
-        this.active01 = "a";
-        this.active02 = "a";
+      if(this.status == 1){
+        this.currency = currency;
+        if (this.flag) {
+          this.flag = false;
+          this.active = "a";
+          this.active01 = "a";
+          this.active02 = "a";
+        } else {
+          this.flag = true;
+          this.active = index;
+          this.active01 = "a";
+          this.active02 = "a";
+        }
+        this.sendData(currency);
+      }else{
+        layer.alert('该功能暂未开放')
       }
-      this.sendData(currency);
+      
     },
     sendData(currency) {
       var that = this;
@@ -304,19 +310,24 @@ export default {
     },
     //提币
     withdraw(index, currency) {
-      this.currency = currency;
-      if (this.flag) {
-        this.flag = false;
-        this.active = "a";
-        this.active01 = "a";
-        this.active02 = "a";
-      } else {
-        this.flag = true;
-        this.active01 = index;
-        this.active = "a";
-        this.active02 = "a";
+      if(this.status == 1){
+        this.currency = currency;
+        if (this.flag) {
+          this.flag = false;
+          this.active = "a";
+          this.active01 = "a";
+          this.active02 = "a";
+        } else {
+          this.flag = true;
+          this.active01 = index;
+          this.active = "a";
+          this.active02 = "a";
+        }
+        this.getNum(currency);
+      }else{
+        layer.alert("该功能暂未开放");
       }
-      this.getNum(currency);
+      
     },
     //记录
     rec(index, currency) {
@@ -463,7 +474,8 @@ export default {
         .then(res => {
           if (res.data.type == "ok") {
             that.asset_list = res.data.message.lever_wallet.balance;
-            this.totle = res.data.message.lever_wallet.totle;
+            that.totle = res.data.message.lever_wallet.totle;
+            that.status = res.data.message.is_open_CTbi;
           } else {
             return;
           }

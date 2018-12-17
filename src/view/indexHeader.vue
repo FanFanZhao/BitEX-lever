@@ -12,9 +12,19 @@
         <li  class="base"><router-link to="/finance">我的资产</router-link></li>
         <li  class="base"><router-link to="/noticeList">帮助中心</router-link></li>
         <li class="base downapp" @click="showapp">APP下载
-          <div class="appcode tc" v-show="appshow">
+          <div class="appcode tl" v-show="appshow">
             <span></span>
-            <p><img src="@/assets/images/qrcode.png" alt=""></p>
+            <div class="app-left">
+              <p class="code"><img src="@/assets/images/qrcode.png" alt=""></p>
+              <p class="texts">扫码下载</p>
+            </div>
+            <div class="app-right">
+              <a href="http://www.bitex.ren/download/bitex.exe">
+                <b><img src="../assets/images/windows.png" alt=""></b>
+                <p class="texts"> <img src="../assets/images/down.png" alt=""> 点击下载</p>
+              </a>
+            </div>
+            
           </div>
         </li>
 			</ul>
@@ -486,26 +496,79 @@ export default {
 }
 .downapp{
   position: relative;
-  div{
+  .appcode{
     position: absolute;
-    top: 15px;
+    top: 50px;
     z-index: 10;
-    left: 0;
+    left: -80px;
+    width: 260px;
+    background-color: #fff;
+    height: 140px;
+    border-radius: 4px;
     span{
-      display: inline-block;
-      width: 0;
-      height: 0;
-      border-width: 10px;
-      border-style: solid;
-      border-color:  transparent transparent #fff  transparent ;
+        position: absolute;
+        top: -20px;
+        left: 130px;
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-width: 10px;
+        border-style: solid;
+        border-color:  transparent transparent #fff  transparent ;
     }
-    p{
+    .app-left{
+      width: 110px;
+      float: left;
+      text-align: center;
       position: relative;
-      top: -25px;
+      .code{
+        position: relative;
+        top: 5px;
+        left: 10px;
+        img{
+          width: 100px;
+          height: 100px;
+        }
+        p:last-child{
+          position: absolute;
+          bottom: 0;
+        }
+      }
+    }
+    .app-right{
+      float: right;
+      width: 110px;
+      text-align: center;
+      margin-right: 10px;
+      padding-right: 10px;
+      margin-top:5px;
+      p{
+        top: -10px;
+        img{
+          width: 20px;
+          position: relative;
+          top: 4px;
+          margin-top: 0;
+        }
+      }
       img{
+        width: 40px;
+        margin-top: 30px;
+      }
+      b{
+        display: block;
         width: 100px;
         height: 100px;
+        border: 1px solid #f7f6f6;
+        text-align: center;
+        top: 0;
+        border-radius: 4px;
       }
+    }
+    .texts{
+      position: relative;
+      top: -30px;
+      color: #333;
     }
     
   }
