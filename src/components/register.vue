@@ -192,11 +192,11 @@ export default {
       } else if (e.target.disabled) {
         return;
       } else if (isMb) {
-        var reg = /^1[345678]\d{9}$/;
-        if (!reg.test(this.account)) {
-          layer.msg("您输入的手机号不符合规则");
-          return;
-        }
+        var reg = /^1[3456789]\d{9}$/;
+        // if (!reg.test(this.account)) {
+        //   // layer.msg("您输入的手机号不符合规则");
+        //   // return;
+        // }
       } else if (!isMb) {
         var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
         if (!emreg.test(this.account)) {
