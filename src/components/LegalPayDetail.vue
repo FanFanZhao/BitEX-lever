@@ -129,7 +129,6 @@ export default {
         headers:{Authorization:this.token}
       }).then(res => {
         layer.close(i);
-        console.log(res);
         if(res.data.type == 'ok'){
           this.msg = res.data.message;
         }
@@ -145,7 +144,6 @@ export default {
         headers: { Authorization: this.token }
       }).then(res => {
         layer.close(i);
-        console.log(res);
         if (res.data.type == "ok") {
           this.msg = res.data.message;
         }
@@ -159,7 +157,6 @@ export default {
         data:{id:this.id},
         headers:{Authorization:this.token}
       }).then(res => {
-        // console.log(res);
         lay.msg(res.data.message);
         setTimeout(function(){
           location.reload();
@@ -176,7 +173,6 @@ export default {
         data:{id:this.id},
         headers:{Authorization:this.token}
       }).then(res => {
-        // console.log(res);
         lay.msg(res.data.message);
         setTimeout(function(){
           location.reload();
@@ -187,7 +183,6 @@ export default {
     },
     // 确认对方已付款
     hadPay(){
-      console.log(123465)
       this.$http({
         url:'/api/legal_deal_user_sure',
         method:'post',
@@ -202,7 +197,6 @@ export default {
       })
     },
     evimgs(src){
-      console.log(src)
       return layer.open({
         type: 1 //Page层类型
         ,area: ['375px', '500px']

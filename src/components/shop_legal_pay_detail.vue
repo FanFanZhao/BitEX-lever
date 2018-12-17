@@ -157,7 +157,6 @@ export default {
         headers:{Authorization:this.token}
       }).then(res => {
         layer.close(i);
-        console.log(res);
         if(res.data.type == 'ok'){
           this.msg = res.data.message;
           this.user= res.data.message.user_cash_info;
@@ -174,7 +173,6 @@ export default {
         headers: { Authorization: this.token }
       }).then(res => {
         layer.close(i);
-        console.log(res);
         if (res.data.type == "ok") {
           this.msg = res.data.message;
         }
@@ -187,7 +185,6 @@ export default {
         data:{id:this.id},
         headers:{Authorization:this.token}
       }).then(res => {
-        // console.log(res);
         layer.msg(res.data.message);
         this.showCancel = false;
         location.reload();
@@ -202,7 +199,6 @@ export default {
         data:{id:this.id},
         headers:{Authorization:this.token}
       }).then(res => {
-        // console.log(res);
         layer.msg(res.data.message);
         location.reload();
       }).then(() => {
@@ -222,7 +218,6 @@ export default {
 				contentType: false,
 				success: function (msg) {
           layer.close(i);
-          console.log(msg)
 					if(msg.type == 'ok'){
             that.src=msg.message;
             if(that.src){
@@ -242,7 +237,6 @@ export default {
         data:{id:this.id,pay_voucher:this.src},
         headers:{Authorization:this.token}
       }).then(res => {
-        // console.log(res);
         layer.msg(res.data.message);
         setTimeout(function(){
           location.reload();
@@ -253,7 +247,6 @@ export default {
       })
     },
     evimgs(src){
-      console.log(src)
       return layer.open({
         type: 1 //Page层类型
         ,area: ['375px', '500px']

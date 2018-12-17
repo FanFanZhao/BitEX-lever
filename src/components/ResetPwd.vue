@@ -43,8 +43,6 @@ import indexFooter from '@/view/indexFooter'
             }
         },
 		created (){
-            console.log(this.$utils);
-            
 			this.account_number = this.$route.params.user_string || ''
 		},
         methods:{

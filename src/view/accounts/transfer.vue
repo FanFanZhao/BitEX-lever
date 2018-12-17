@@ -38,8 +38,8 @@ export default {
       tradeMoney: "",
       type: 2,
       token: localStorage.getItem("token"),
-      inputValue:'',
-      currencyId:''
+      inputValue: "",
+      currencyId: ""
     };
   },
   components: {
@@ -59,12 +59,9 @@ export default {
           if (res.data.type == "ok") {
             let list = res.data.message.legal_wallet.balance;
             let lists = res.data.message.lever_wallet.balance;
-            console.log(list);
-            console.log(lists);
             for (let i = 0; i < list.length; i++) {
               if (list[i].currency_name == "USDT") {
                 that.tradeMoney = list[i].legal_balance;
-                console.log(that.tradeMoney);
                 that.totalMoney = that.tradeMoney;
                 that.currencyId = list[i].currency;
               }
@@ -90,56 +87,56 @@ export default {
         that.name = "法币账户";
         that.leverName = "杠杆账户";
         that.totalMoney = that.tradeMoney;
-        console.log(1);
       } else {
         that.type = 1;
         that.name = "杠杆账户";
         that.leverName = "法币账户";
         that.totalMoney = that.leverMoney;
       }
-      console.log(that.type);
     },
     // 确认互转
-    comfirm(){
+    comfirm() {
       var that = this;
-      if(that.inputValue == ''){
+      if (that.inputValue == "") {
         layer.msg("请输入划转数量");
         return false;
-      }else if(that.inputValue < 100){
+      } else if (that.inputValue < 100) {
         layer.msg("输入的划转数量不能低于100");
         return false;
       }
-      var i = layer.load()
-      this.$http({
-        url: "/api/" + "wallet/change",
-        method: "post",
-        data: {
-          number:that.inputValue,
-          currency_id:that.currencyId,
-          type:that.type
-        },
-        headers: { Authorization: that.token }
-      })
-        .then(res => {
-          if (res.data.type == "ok") {
-             layer.close(i);
-             layer.msg(res.data.message);
-             setTimeout(function(){
-               that.$router.push({name:'transferRecord'})
-             },500)
-          } else {
-            layer.msg(res.data.message)
-            layer.close(i);
-            return;
-          }
+      layer.confirm("是否确认划转？", function(index) {
+        layer.close(index);
+        var i = layer.load();
+        that.$http({
+          url: "/api/" + "wallet/change",
+          method: "post",
+          data: {
+            number: that.inputValue,
+            currency_id: that.currencyId,
+            type: that.type
+          },
+          headers: { Authorization: that.token }
         })
-        .catch(error => {
-          console.log(error);
-        });
-      
+          .then(res => {
+            if (res.data.type == "ok") {
+              layer.close(i);
+              layer.msg(res.data.message);
+              setTimeout(function() {
+                that.$router.push({ name: "transferRecord" });
+              }, 500);
+            } else {
+              layer.msg(res.data.message);
+              layer.close(i);
+              return;
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      });
     },
-    link(){
-      this.$router.push({name:'transferRecord'})
+    link() {
+      this.$router.push({ name: "transferRecord" });
     }
   },
   created() {
@@ -153,12 +150,11 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.record{
+.record {
   position: absolute;
   right: 0;
   top: 100px;
   cursor: pointer;
-
 }
 .content {
   width: 600px;

@@ -59,7 +59,6 @@ export default {
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
-          console.log(res);
           if (res.data.type == "ok") {
             this.more = "加载更多";
             this.list_content = this.list_content.concat(

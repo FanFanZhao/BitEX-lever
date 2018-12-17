@@ -220,7 +220,7 @@ export default new Router({
 			component: register
 		},
 		{
-			path:'/components/noticeList',
+			path:'/noticeList',
 			name:'noticeList',
 			component:noticeList
 		},

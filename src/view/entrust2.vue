@@ -140,7 +140,6 @@ export default {
                         }
                     }).then(res=>{
                         res = res.data;
-                        console.log(res)
                         if(res.type  === 'ok'){
                             layer.msg(res.message)
                             // that.getdata();

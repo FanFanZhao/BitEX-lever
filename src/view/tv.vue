@@ -55,16 +55,16 @@
 		beforeDestroy(){
 
 		},
-
+    
 		methods: {
 			connect(real) { //封装推送数据
 				var that=this;
 				console.log('socket')
 				that.$socket.emit("login", localStorage.getItem('user_id'));
 				that.$socket.on("kline", msg => {
-                    // console.log(msg)
+          console.log(msg)
 					let obj={}                    
-					if(that.symbol==msg.token){						 
+					if(that.symbol==msg.symbol){						 
 						obj.open=Number(msg.open)
 						obj.low=Number(msg.low)
 						obj.high=Number(msg.high)
@@ -74,8 +74,6 @@
 						real(obj)
 
 					}
-
-
 				})
 			},
 

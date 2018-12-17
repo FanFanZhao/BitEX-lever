@@ -37,7 +37,6 @@
 		created(){
 			let name = this.$route.name;
 			this.curActive = this.array.findIndex( val => val.page === name || (val.children && val.children.includes(name)));
-			console.log(name);
 			if(name == 'c2cDetail'){
          this.curActive = 1;
 			}

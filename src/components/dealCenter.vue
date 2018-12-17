@@ -82,9 +82,6 @@ export default {
   },
   created() {
     this.address = localStorage.getItem("address") || "";
-    
-  
-    // console.log(this.address)
   },
   methods:{
     
@@ -92,7 +89,6 @@ export default {
   mounted(){
     // console.log('wejdewhbewjdbewjdhbcwj')
     // if(this.load==1){
-    //   console.log(1111)
     //   window.location.reload();
     //   this.load=2;
     // }

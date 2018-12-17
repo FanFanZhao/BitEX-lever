@@ -144,7 +144,6 @@ export default {
     getBuyList() {
       let i = layer.load();
       let that = this;
-      console.log(that.id);
       that.$http({
         url: "/api/c2c/seller_trade?type=" + that.types + "&page=" + that.page+"&currency_id="+that.id,
         method: "get",

@@ -83,8 +83,6 @@ export default {
         },
         getRecord(){
             if(this.address !=""){
-               
-                console.log(this.way,this.address)
                 this.$http({
                     url: '/api/' + 'acceptor/my_deal?'+'address='+this.address+'&type='+this.way,
                     method:'get',
