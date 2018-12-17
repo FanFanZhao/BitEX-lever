@@ -377,7 +377,8 @@ export default {
           way: this.way,
           price :this.price,
           total_number:this.total_number,
-          min_number:this.min_number,
+          min_number:min_number,
+          max_number:max_number,
           currency_id :this.currency_id
          },
         headers: { Authorization: this.token },
