@@ -109,7 +109,7 @@
         <div class="tip">请在24小时内联系商家付款，超出24小时将自动取消</div>
         <div class="btns flex">
           <div class="cancel" @click="cancel">
-            <span ref="remainTime">60</span><span>秒后自动取消</span></div>
+            <span ref="remainTime">{{times}}</span><span>秒后自动取消</span></div>
           <div class="ok" @click="buySell('buy')" v-if="detail.type == 'sell'">下单</div>
           <div class="ok" @click="buySell('sell')" v-if="detail.type == 'buy'">下单</div>
         </div>
@@ -129,7 +129,8 @@ export default {
       showWhich: "none",
       showDetail: false,
       detail: { money: "", num: "" },
-      timer: ""
+      timer: "",
+      times:60
     };
   },
   filters: {
@@ -185,7 +186,8 @@ export default {
       var that = this;
       that.timer = setInterval(function() {
         time--;
-        that.$refs.remainTime.innerHTML = time;
+        that.times = time;
+        // that.$refs.remainTime.innerHTML = time;
         if (time == 0) {
           that.showDetail = false;
           clearInterval(that.timer);
@@ -224,14 +226,21 @@ export default {
       }).then(res => {
         this.showDetail = false;
         layer.close(i);
+        console.log(res);
         if(res.data.type == 'ok'){
           var message = res.data.message;
-          layer.msg(message.msg)
+          layer.msg(message.message)
           if(this.detail.type == 'sell'){
-            this.$router.push({path:'/legalPay',query:{id:msg.data.id}})
+            setTimeout(function(){
+              this.$router.push({path:'/legalPay',query:{id:msg.data.id}})
+            },500)
           } else {
-            this.$router.push({path:'/components/payCannel',query:{id:msg.data.id}})
+            setTimeout(function(){
+              this.$router.push({path:'/components/payCannel',query:{id:msg.data.id}})
+            },500)
           }
+        }else{
+          layer.msg(res.data.message)
         }
         
       })
