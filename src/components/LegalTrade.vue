@@ -324,11 +324,20 @@
 					}
 				});
 				} else {
-					if (_this.types == 'trade') {
-						layer.msg('请输入欲购买数量');
-					} else {
-						layer.msg('请输入要出售数量');
+					if(_this.type == 'sell'){
+						if (_this.types == 'trade') {
+							layer.msg('请输入欲购买总额');
+						} else {
+							layer.msg('请输入要购买数量');
+						}
+					}else{
+						if (_this.types == 'trade') {
+							layer.msg('请输入欲出售总额');
+						} else {
+							layer.msg('请输入要出售数量');
+						}
 					}
+					
 				}
 			},
 			// 请求

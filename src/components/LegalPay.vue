@@ -33,10 +33,15 @@
         <span>参考号：</span>
         <span>{{msg.id}}</span>
       </div>
+      <div v-if="msg.bank_address">
+        <span>商家支行：</span>
+        <span>{{msg.bank_address}}</span>
+      </div>
       <div>
         <span>商家账户：</span>
         <router-link :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span" style="color:#638bd4">{{msg.seller_name}}</router-link>
       </div>
+      
       <div class="btns">
         <div class="btn" @click="showCancel = true">取消订单</div>
         <div class="btn" @click="showConfirm = true">我已付款，点击确认</div>
