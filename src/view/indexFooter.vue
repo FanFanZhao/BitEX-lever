@@ -20,7 +20,7 @@
               <dd>联系邮箱：dfhsijiang1258@gmail.com</dd>
             </dl>
           </div>
-          <p>©2014-2018 BitEX.com,All Rights Reserved</p>
+          <p>©2014-2018 BitEX.ren,All Rights Reserved</p>
         </footer>
 </template>
 <script>
