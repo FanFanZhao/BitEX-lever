@@ -31,11 +31,11 @@
       </div>
     </div>
     <div class="md flex bgf8">
-      <div>
+      <!-- <div>
         <span>邮箱认证</span>
         <img v-if="info.prove_email == 1" src="../assets/images/success.png" alt="">
         <img v-else src="../assets/images/icon_error.png" alt="">
-      </div>
+      </div> -->
       <div>
         <span>手机</span>
         <img v-if="info.prove_mobile == 1" src="../assets/images/success.png" alt="">
