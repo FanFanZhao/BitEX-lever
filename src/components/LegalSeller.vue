@@ -82,14 +82,11 @@
         <div class="close">
           <span class="fr" @click="close">X</span>
         </div>
-        <div class="flex">
+        <div class="tc">
           <span>{{detail.type == 'buy'?'出售':'购买'}}</span><span>{{detail.currency_name}}</span>
         </div>
         <div class="flex">
           <span>单价：</span><span>{{detail.price | toFixeds}}</span>
-        </div>
-        <div class="flex">
-          <span>限额：</span><span>{{detail.limitation.min | toFixeds}}-{{detail.limitation.max | toFixeds}}</span>
         </div>
         <div class="flex">
           <span>数量：</span><span>{{detail.surplus_number | toFixeds}}</span>
@@ -107,6 +104,9 @@
           <input type="number" :placeholder="'请输入欲'+detail.type == 'buy'?'出售':'购买'+'数量'" v-model="detail.num">
           <span>{{detail.currency_name}}</span>
           <span class="all" @click="detail.num = detail.surplus_number">全部{{detail.type == 'buy'?'卖出':'买入'}}</span>
+        </div>
+        <div class="flex mt10">
+          <span style="width:auto">限额：</span><span>{{detail.limitation.min | toFixeds}}-{{detail.limitation.max | toFixeds}}</span>
         </div>
         <div class="tip">请在24小时内联系商家付款，超出24小时将自动取消</div>
         <div class="btns flex">
@@ -378,14 +378,27 @@ export default {
     }
   }
   > .buy-sell-box {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 100;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      overflow: hidden;
     > .content {
-      margin: 100px auto 0;
+      position: relative;
       border-radius: 2px;
       width: 440px;
       padding: 20px 30px 26px 30px;
@@ -395,6 +408,9 @@ export default {
         height: 25px;
         line-height: 25px;
         cursor: pointer;
+        position: absolute;
+        top: 5px;
+        right: 10px;
       }
       > div:first-child {
         font-weight: 600;
@@ -406,22 +422,22 @@ export default {
         }
       }
       > .tab {
-        margin: 10px 0 20px;
-        border-bottom: 1px solid #303b4b;
+        margin: 5px 0 20px;
         span {
           margin-right: 20px;
         }
         cursor: pointer;
         > .selected {
-          font-weight: bold;
-          color: #7a98f7;
+          color: #638bd4;
+          padding: 5px 0;
+          border-bottom: 1px solid #638bd4
         }
       }
       > .inp {
         display: flex;
         border-radius: 2px;
         justify-content: space-between;
-        border: 1px solid #303b4b;
+        border: 1px solid #555869;
         padding: 3px 16px;
         input{
           background: transparent;
@@ -432,8 +448,7 @@ export default {
           margin-left: 10px;
         }
         .all {
-          border-left: 1px solid #303b4b;
-          font-weight: 600;
+          border-left: 1px solid #555869;
           cursor: pointer;
         }
       }
