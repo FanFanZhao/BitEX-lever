@@ -25,7 +25,7 @@
 				<div class="tr">操作</div>
 			</div>
 			<ul class="list">
-				<li v-for="(item,index) in list" :key="index" class="bdb flex bod_bc ft14 tc">
+				<li v-for="(item,index) in list" :key="index" class="bdb flex bod_bc ft14 tc" v-if="item.is_shelves==1">
 					<div class="flex alcenter">
 						<div class="head" :style="{background:item.bgcolor}">{{item.seller_name.charAt(0)}}</div>
 						<div class="flex column">

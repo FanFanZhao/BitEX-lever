@@ -63,7 +63,7 @@
         <div>操作</div>
       </div>
       <ul :class="[showWhich+'-box']">
-        <li v-for="(item,index) in info.lists.data" :key="index" :class="[item.type == 'buy'?'buy-item':'sell-item']" class="bod_bc">
+        <li v-for="(item,index) in info.lists.data" :key="index" :class="[item.type == 'buy'?'buy-item':'sell-item']" class="bod_bc" v-if="item.is_shelves == 1">
           <div>{{item.currency_name}}</div>
           <div>{{item.surplus_number | toFixeds}}</div>
           <div>{{item.limitation.min | toFixeds}}-{{item.limitation.max | toFixeds}}</div>
