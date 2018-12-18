@@ -286,7 +286,7 @@
 					}
 				   
 			   }else{
-				    if(this.types=='trade'){
+				    if(this.types=='num'){
                         this.nums = (this.surplus_number-0).toFixed(3); 
 				    }else{
 					    this.nums = (this.maxNum-0).toFixed(3); 
