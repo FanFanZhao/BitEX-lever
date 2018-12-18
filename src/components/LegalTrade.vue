@@ -41,7 +41,7 @@
 						<img v-if="item.way == 'we_chat'" src="../assets/images/wx_icon.png" />
 						<img v-if="item.way == 'bank'" src="../assets/images/bank_icon.png" />
 					</div>
-					<div class="flex alcenter end"  @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id,item.type)">
+					<div class="flex alcenter end"  @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id,item.type,item.surplus_number)">
 						<button class="curPer">{{classify}}{{name}}</button>
 					</div>
 				</li>
@@ -107,11 +107,13 @@
 				prices: 0,
 				minNum: 0,
 				maxNum: 0,
+				max:0,
 				names: 'CNY',
 				time: '60',
 				shows: false,
 				types: 'trade',
 				nums: '',
+				surplus_number:0,
 				totalNums: '0.00',
 				ID:'',
 				money_type:'',
@@ -221,7 +223,7 @@
 			// 	_this.getList(_this.type, _this.id, pageNum);
 			// },
 			// 出售或者购买按钮
-			buySell(prices, min, max,id,type) {
+			buySell(prices, min, max,id,type,surplus_number) {
 				if(type == 'sell'){
 					this.money_type = '购买'
 				}else if(type == 'buy'){
@@ -236,6 +238,7 @@
 				_this.prices = prices;
 				_this.minNum = min;
 				_this.maxNum = max;
+				_this.surplus_number = surplus_number;
 				_this.interval=setInterval(function() {
 					_this.time--;
 					if (_this.time <= 0) {
@@ -275,15 +278,19 @@
 			},
 			// 全部卖出或买入
 			allMoney() {
-			   if(this.type=='buy'){
-				   if(this.types=='trade'){
-                        this.nums=this.user_legal_balance*this.prices;
-				   }else{
-					    this.nums=this.user_legal_balance; 
-				   }
+			   if(this.type=='buy'){//出售
+					if(this.types=='trade'){//cny交易
+							this.nums=(this.user_legal_balance*this.prices).toFixed(3);
+					}else{
+							this.nums=(this.user_legal_balance-0).toFixed(3); 
+					}
 				   
 			   }else{
-				   this.nums = (this.maxNum-0).toFixed(3);
+				    if(this.types=='trade'){
+                        this.nums = (this.surplus_number-0).toFixed(3); 
+				    }else{
+					    this.nums = (this.maxNum-0).toFixed(3); 
+				    }
 			   }
 			   
 				
