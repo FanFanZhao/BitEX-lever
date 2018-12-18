@@ -22,7 +22,7 @@
           <div>完成单</div>
         </div>
         <div>
-          <div>100%</div>
+          <div>{{rate}}</div>
           <div>完成率</div>
         </div>
       </div>
@@ -132,7 +132,8 @@ export default {
       showDetail: false,
       detail: { money: "", num: "" },
       timer: "",
-      times:60
+      times:60,
+      rate:'--'
     };
   },
   filters: {
@@ -172,7 +173,7 @@ export default {
           var oldlist = this.info.lists.data;
           var newlist = res.data.message.lists.data;
           this.page += 1;
-
+          
           if (more) {
             if (newlist.length) {
               this.info.lists.data = newlist.concat(oldlist);
@@ -181,6 +182,8 @@ export default {
             }
           } else {
             this.info = Object.assign({}, res.data.message);
+            var result=(res.data.message.done/res.data.message.total*100).toFixed(2);
+            this.rate=(result=='NaN'?'0.00':result+'%');
           }
         }
       });
