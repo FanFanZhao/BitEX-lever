@@ -39,8 +39,8 @@
       </div>
       <div>
         <span>商家账户：</span>
-        <span>{{msg.seller_name}}</span>
-        <!-- <router-link :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span" style="color:#638bd4">{{msg.seller_name}}</router-link> -->
+        <!-- <span>{{msg.seller_name}}</span> -->
+        <router-link :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span" style="color:#638bd4;cursor: pointer;">{{msg.seller_name}}</router-link>
       </div>
       
       <div class="btns">
