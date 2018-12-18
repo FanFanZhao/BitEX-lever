@@ -186,10 +186,23 @@ export default {
       });
     },
     setDetail(item) {
+      console.log(item);
       this.detail = Object.assign({ which: "money", money: "", num: "" }, item);
       this.showDetail = true;
       var time = 60;
       var that = this;
+      this.$http({
+        url: "/api/legal_deal_info",
+        params: {
+          id: that.sellerId,
+        },
+        headers: { Authorization: that.token }
+      }).then(res => {
+        layer.close(i);
+        if (res.data.type == "ok") {
+          console.log(res);
+        }
+      });
       that.timer = setInterval(function() {
         time--;
         that.times = time;
