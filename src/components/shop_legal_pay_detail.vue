@@ -47,6 +47,10 @@
         <span>数量：</span>
         <span>{{msg.number || '0.000' | toFixeds}}</span>
       </div>
+      <div v-if="msg.type=='sell'">
+        <span>姓名：</span>
+        <span>{{user.real_name}}</span>
+      </div>
       <div>
         <span>下单时间：</span>
         <span>{{msg.format_create_time}}</span>

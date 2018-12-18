@@ -16,7 +16,7 @@
         <span>{{msg.deal_money || '0.000' | toFixeds}}</span>
       </div>
       <div>
-        <span>{{msg.is_seller=='0'?'卖家':'买家'}}</span>
+        <span>{{msg.is_seller=='0'?'卖家':'买家'}}：</span>
         <span>{{msg.seller_name}}</span>
       </div>
       <!-- <div class="curPer">
@@ -31,6 +31,10 @@
         <span>数量：</span>
         <span>{{msg.number || '0.000' | toFixeds}}</span>
       </div>
+      <!-- <div v-if="msg.type=='sell'">
+        <span>姓名：</span>
+        <span>{{user.real_name}}</span>
+      </div> -->
       <div>
         <span>联系方式：</span>
         <span>{{msg.seller_phone}}</span>
