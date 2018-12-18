@@ -92,18 +92,31 @@
           <span>数量：</span><span>{{detail.surplus_number | toFixeds}}</span>
         </div>
         <div class="tab">
-          <span :class="{'selected':detail.which == 'money'}" @click="detail.which = 'money'">CNY交易</span>
-          <span :class="{'selected':detail.which == 'number'}" @click="detail.which = 'number'">{{detail.type == 'buy'?'卖出':'买入'}}数量</span>
+          <span :class="{'selected':detail.which == 'money'}" @click="detail.which = 'money',detail.money = '',totalPrice = '0.000'">CNY交易</span>
+          <span :class="{'selected':detail.which == 'number'}" @click="detail.which = 'number', detail.money = '',totalPrice = '0.000'">{{detail.type == 'buy'?'卖出':'买入'}}数量</span>
         </div>
         <div class="inp" v-if="detail.which == 'money'">
-          <input type="number" :placeholder="'请输入欲'+detail.type == 'buy'?'出售':'购买'+'法币总额'" v-model="detail.money">
+          <input type="number" v-if="detail.type == 'buy'" placeholder="请输入欲出售法币总额" v-model="detail.money">
+          <input type="number" v-else placeholder="请输入欲购买法币总额" v-model="detail.money">
           <span>CNY</span>
-          <span class="all" @click="detail.money = detail.limitation.max">全部{{detail.type == 'buy'?'卖出':'买入'}}</span>
+          <!-- <span class="all" @click="detail.money = detail.limitation.max">全部{{detail.type == 'buy'?'卖出':'买入'}}</span> -->
+          <span class="all" @click="allData('money')">全部{{detail.type == 'buy'?'卖出':'买入'}}</span>
+          
         </div>
         <div class="inp" v-if="detail.which == 'number'">
-          <input type="number" :placeholder="'请输入欲'+detail.type == 'buy'?'出售':'购买'+'数量'" v-model="detail.num">
+          <input type="number" v-if="detail.type == 'buy'" placeholder="请输入欲出售数量" v-model="detail.num">
+          <input type="number" v-else placeholder="请输入欲购买数量" v-model="detail.num">
           <span>{{detail.currency_name}}</span>
-          <span class="all" @click="detail.num = detail.surplus_number">全部{{detail.type == 'buy'?'卖出':'买入'}}</span>
+          <!-- <span class="all" @click="detail.num = detail.surplus_number">全部{{detail.type == 'buy'?'卖出':'买入'}}</span> -->
+          <span class="all" @click="allData('num')">全部{{detail.type == 'buy'?'卖出':'买入'}}</span>
+        </div>
+        <div v-if="detail.which == 'money'">
+            <span>交易总额：</span>
+            <span>￥{{detail.money || '0.000' | toFixeds}}</span>
+        </div>
+        <div v-if="detail.which == 'number'">
+            <span>交易总额：</span>
+            <span>￥{{detail.num * detail.price || '0.000' | toFixeds}}</span>
         </div>
         <div class="flex mt10">
           <span style="width:auto">限额：</span><span>{{detail.limitation.min | toFixeds}}-{{detail.limitation.max | toFixeds}}</span>
@@ -133,6 +146,9 @@ export default {
       detail: { money: "", num: "" },
       timer: "",
       times:60,
+      userBalance:'',
+      allType:'',
+      totalPrice:'0.000',
       rate:'--'
     };
   },
@@ -197,13 +213,14 @@ export default {
       this.$http({
         url: "/api/legal_deal_info",
         params: {
-          id: that.sellerId,
+          id: item.id,
         },
         headers: { Authorization: that.token }
       }).then(res => {
-        layer.close(i);
         if (res.data.type == "ok") {
           console.log(res);
+          that.userBalance = res.data.message.user_legal_balance;
+          that.allType =res.data.message.type; 
         }
       });
       that.timer = setInterval(function() {
@@ -270,6 +287,27 @@ export default {
     cancel() {
       clearInterval(this.timer);
       this.showDetail = false;
+    },
+    // 全部
+    allData(options){
+      let that = this;
+      if(that.allType == 'buy'){
+        if(options == 'money'){
+          that.detail.money = ((that.userBalance - 0) * (that.detail.price - 0) - 0).toFixed(3);
+          that.totalPrice = that.detail.money;
+        }else{
+          that.detail.num = (that.userBalance - 0).toFixed(3);
+          that.totalPrice = ((that.userBalance - 0) * (that.detail.price - 0) - 0).toFixed(3);
+        }
+      }else{
+        if(options == 'money'){
+          that.detail.money = (that.detail.limitation.max - 0).toFixed(3);
+          that.totalPrice = that.detail.money;
+        }else{
+          that.detail.num = (that.detail.surplus_number - 0).toFixed(3);
+          that.totalPrice = ((that.detail.surplus_number - 0) * (that.detail.price - 0) - 0).toFixed(3);
+        }
+      }
     }
   }
 };
