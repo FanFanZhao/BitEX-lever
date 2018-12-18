@@ -110,6 +110,9 @@
           <!-- <span class="all" @click="detail.num = detail.surplus_number">全部{{detail.type == 'buy'?'卖出':'买入'}}</span> -->
           <span class="all" @click="allData('num')">全部{{detail.type == 'buy'?'卖出':'买入'}}</span>
         </div>
+        <div class="flex mt10">
+          <span style="width:auto">限额：</span><span>{{detail.limitation.min | toFixeds}}-{{detail.limitation.max | toFixeds}}</span>
+        </div>
         <div v-if="detail.which == 'money'">
             <span>交易总额：</span>
             <span>￥{{detail.money || '0.000' | toFixeds}}</span>
@@ -117,9 +120,6 @@
         <div v-if="detail.which == 'number'">
             <span>交易总额：</span>
             <span>￥{{detail.num * detail.price || '0.000' | toFixeds}}</span>
-        </div>
-        <div class="flex mt10">
-          <span style="width:auto">限额：</span><span>{{detail.limitation.min | toFixeds}}-{{detail.limitation.max | toFixeds}}</span>
         </div>
         <div class="tip">请在24小时内联系商家付款，超出24小时将自动取消</div>
         <div class="btns flex">
@@ -234,6 +234,7 @@ export default {
       }, 1000);
     },
     buySell() {
+      let that = this;
       // this.detail = Object.assign({which:'money'},item)
       // var value = this.detail.which == 'money'?detail.money:detail.num;
       var value = "";
@@ -260,22 +261,22 @@ export default {
       this.$http({
         url: "/api/do_legal_deal",
         method: "post",
-        data: { means: this.detail.which, value: value, id: this.detail.id },
-        headers:{Authorization:this.token}
+        data: { means: that.detail.which, value: value, id: that.detail.id },
+        headers:{Authorization:that.token}
       }).then(res => {
-        this.showDetail = false;
+        that.showDetail = false;
         layer.close(i);
         console.log(res);
         if(res.data.type == 'ok'){
-          var message = res.data.message;
-          layer.msg(message.message)
-          if(this.detail.type == 'sell'){
+          var msg = res.data.message;
+          layer.msg(msg.msg)
+          if(that.detail.type == 'sell'){
             setTimeout(function(){
-              this.$router.push({path:'/legalPay',query:{id:msg.data.id}})
+              that.$router.push({path:'/legalPay',query:{id:msg.data.id}})
             },500)
           } else {
             setTimeout(function(){
-              this.$router.push({path:'/components/payCannel',query:{id:msg.data.id}})
+              that.$router.push({path:'/components/payCannel',query:{id:msg.data.id}})
             },500)
           }
         }else{
