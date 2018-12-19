@@ -7,8 +7,8 @@
       </div>
       <div class="exchange_title ft12 clear tc">
         <span>方向</span>
-        <span>价格({{currency_name}})</span>
-        <span>数量({{legal_name}})</span>
+        <span>价格</span>
+        <span>数量</span>
       </div>
       <ul class="list-item ft12 tc">
         <li class="curPer" v-for="(out,index) in outlist" :key="out.id" @click="price(out.price)">
@@ -65,13 +65,8 @@ export default {
     that.legal_name = localStorage.getItem("legal_name");
     that.currency_name = localStorage.getItem("currency_name");
     that.buy_sell(that.legal_id, that.currency_id);
-    that.buySell = setInterval(function(){
-      that.buy_sell(that.legal_id, that.currency_id);
-    },3000)
-    that.connect(
-      this.legal_id,
-      this.currency_id
-    );
+    that.connect(that.legal_id, that.currency_id);
+    that.upPrice(that.legal_id, that.currency_id)
     
   },
   methods: {
@@ -115,8 +110,9 @@ export default {
     connect(legal_id, currency_id) {
       var that = this;
       that.$socket.emit("login", localStorage.getItem("user_id"));
-      that.$socket.on("transaction", msg => {
-        if (msg.type == "transaction") {
+      that.$socket.on("lever_data", msg => {
+        console.log(JSON.parse(msg.in))
+        if (msg.type == "lever_data") {
           //组件间传值
           var newPrice = {
             newprice: msg.last_price,
@@ -128,16 +124,29 @@ export default {
           setTimeout(() => {
             eventBus.$emit("toNew01", newPrice);
           }, 1000);
-          that.newData = msg.last_price;
           var inData = JSON.parse(msg.in);
           var outData = JSON.parse(msg.out);
-          if (msg.currency_id == legal_id && msg.legal_id == currency_id) {
+          if (msg.currency_id == currency_id && msg.legal_id == legal_id) {
             that.inlist = inData;
-            that.outlist = outData;
+            that.outlist = outData.reverse();
           }
         }
       });
-    }
+    },
+    // 更新最新价
+    upPrice(legal_id, currency_id) {
+      var that = this;
+      that.$socket.emit("login", localStorage.getItem("user_id"));
+      that.$socket.on("kline", msg => {
+        if (msg.type == "kline") {
+          if (msg.currency_id == currency_id && msg.legal_id == legal_id) {
+            that.newData = msg.close;
+            window.localStorage.setItem('lastPrice',that.newData);
+          }
+        }
+      });
+    },
+
   },
   destroyed(){
     let that = this;

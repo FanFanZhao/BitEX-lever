@@ -63,7 +63,7 @@ export default {
       var reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = function(e) {
-        that.src1 = e.target.result;
+        // that.src1 = e.target.result;
       };
       var formData = new FormData();
       formData.append("file", event.target.files[0]);
@@ -74,7 +74,13 @@ export default {
         processData: false,
         contentType: false,
         success: function(msg) {
-          that.src1 = msg.message;
+          console.log(msg)
+          if(msg.type == 'ok'){
+            that.src1 = msg.message;
+          }else{
+            layer.msg(msg.message)
+          }
+          
         }
       });
     },
@@ -83,7 +89,7 @@ export default {
       var reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = function(e) {
-        that.src2 = e.target.result;
+        // that.src2 = e.target.result;
       };
       var formData = new FormData();
       formData.append("file", event.target.files[0]);
@@ -94,7 +100,12 @@ export default {
         processData: false,
         contentType: false,
         success: function(msg) {
-          that.src2 = msg.message;
+          if(msg.type == 'ok'){
+             that.src2 = msg.message;
+          }else{
+            layer.msg(msg.message)
+          }
+         
         }
       });
     },
@@ -103,7 +114,7 @@ export default {
       var reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = function(e) {
-        that.src3 = e.target.result;
+        // that.src3 = e.target.result;
       };
       var formData = new FormData();
       formData.append("file", event.target.files[0]);
@@ -114,7 +125,12 @@ export default {
         processData: false,
         contentType: false,
         success: function(msg) {
-          that.src3 = msg.message;
+          if(msg.type == 'ok'){
+            that.src3 = msg.message;
+          }else{
+            layer.msg(msg.message)
+          }
+          
         }
       });
     },

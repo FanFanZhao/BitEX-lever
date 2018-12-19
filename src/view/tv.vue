@@ -38,7 +38,6 @@
 		},
 		watch: {
 			listenState:function(a, b) {  //监听交易对
-				console.log(a)
                 if(a!=b&&b!=''){
 					this.widget.setSymbol(a,localStorage.getItem('tim'),function onReadyCallback(){}) //切换币种
 				// this.$store.state.symbol=b
@@ -59,10 +58,8 @@
 		methods: {
 			connect(real) { //封装推送数据
 				var that=this;
-				console.log('socket')
 				that.$socket.emit("login", localStorage.getItem('user_id'));
 				that.$socket.on("kline", msg => {
-          console.log(msg)
 					let obj={}                    
 					if(that.symbol==msg.symbol){						 
 						obj.open=Number(msg.open)

@@ -32,7 +32,7 @@
         :class="index==index2?'active_p':''"
         :key="index"
         @click="quota_shift(index,item.legal_id,item.legal_name,item.currency_name,item.currency_id,item.change,item.lever_share_num)"
-      >
+        v-if="item.is_display == 1" >
         <p>
           <span>{{item.currency_name}}</span>
           <span>{{item.now_price}}</span>
