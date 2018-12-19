@@ -111,7 +111,6 @@ export default {
       var that = this;
       that.$socket.emit("login", localStorage.getItem("user_id"));
       that.$socket.on("lever_data", msg => {
-        console.log(JSON.parse(msg.in))
         if (msg.type == "lever_data") {
           //组件间传值
           var newPrice = {
