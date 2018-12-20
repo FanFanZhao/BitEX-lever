@@ -100,12 +100,10 @@ export default {
         // 加载更多
         getMore(){
             this.page = ++this.page;
-            console.log(this.page)
             this.getData();
         },
         // 撤销
         revoke(indexs,id){
-            console.log(indexs)
             var that =this;
             var id = id;
             var indexs = indexs;
@@ -127,7 +125,6 @@ export default {
                     // console.log(res)
                         layer.close(i)
                         if(res.data.type  =='ok'){
-                            console.log(indexs)
                             that.inList.splice(indexs,1);
                             // eventBus.$emit('tocel','celbuy');
                             layer.msg(res.data.message)
@@ -179,7 +176,6 @@ export default {
     mounted(){
         var that = this;
         eventBus.$on('buyTrade', function (data) {
-            console.log(data);
             if(data){
             that.getData();
             }

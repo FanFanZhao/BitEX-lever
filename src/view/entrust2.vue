@@ -109,7 +109,6 @@ export default {
            this.url=url;
            this.page=1;
            this.more="加载更多"
-        //    this.getdata();
         },
         wayChoose(index,type){
             var that=this;
@@ -117,13 +116,10 @@ export default {
             this.type = type;
             this.more="加载更多";
             this.isChoosed=index;
-            // this.getdata();
         },
         getMore(){
             this.page = ++this.page;
             this.loading=true;
-            // console.log(this.page)
-            // this.getdata();
         },
         revoke(id){
             var that=this;
@@ -156,7 +152,6 @@ export default {
             var type= this.type;
             var url = this.url;
             var page = this.page;
-            // console.log(type,url,page)
             this.$http({
             url: '/api/' + 'transaction/' +url,
             method:'post',
@@ -169,7 +164,6 @@ export default {
                 res = res.data;
                 this.loading=false;
                 if(url=="entrust"){
-                //    console.log(res.message.data);
                    if(page==1){
                        this.enList = res.message.data;
                    }else{
@@ -186,7 +180,6 @@ export default {
                        this.enList[i].typeInfo=this.type;
                    } 
                 }else{
-                //    console.log(res.message.data.data);
                    if(page==1){
                       this.hisList=res.message.data.data; 
                    }else{
@@ -197,7 +190,6 @@ export default {
                        }else{
                           this.hisList= this.hisList.concat(newHist);
                        }
-                    //   console.log(this.hisList)
                    }
                    for(var i in this.hisList){
                        this.hisList[i].typeInfo=this.type;

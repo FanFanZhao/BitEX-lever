@@ -205,7 +205,6 @@ export default {
       });
     },
     setDetail(item) {
-      console.log(item);
       this.detail = Object.assign({ which: "money", money: "", num: "" }, item);
       this.showDetail = true;
       var time = 60;
@@ -218,7 +217,6 @@ export default {
         headers: { Authorization: that.token }
       }).then(res => {
         if (res.data.type == "ok") {
-          console.log(res);
           that.userBalance = res.data.message.user_legal_balance;
           that.allType =res.data.message.type; 
         }
@@ -266,7 +264,6 @@ export default {
       }).then(res => {
         that.showDetail = false;
         layer.close(i);
-        console.log(res);
         if(res.data.type == 'ok'){
           var msg = res.data.message;
           layer.msg(msg.msg)

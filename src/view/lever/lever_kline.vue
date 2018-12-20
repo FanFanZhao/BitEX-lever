@@ -44,7 +44,6 @@
               _that.Kline.debug=true;
               _that.Kline.showTrade=false;
               _that.Kline.onResize=function(width, height) {
-                  console.log("chart resized=" + width + " " + height);
               }
             // var kline = new Kline({
             //   element: "#kline_container",

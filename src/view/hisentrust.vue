@@ -71,7 +71,6 @@ export default {
   },
   wacth() {
     eventBus.$on("buyTrade", function(data) {
-      console.log(data);
       if (data) {
         that.getData();
       }
@@ -81,11 +80,9 @@ export default {
     // 类型切换
     wayChoose(index, url) {
       var that = this;
-      console.log(url);
       that.comList = "";
       that.page = 1;
       that.url = url;
-      console.log(that.url);
       if (url == "transaction_in") {
         that.type = "in";
       } else {
@@ -98,7 +95,6 @@ export default {
     // 加载更多
     getMore() {
       this.page = ++this.page;
-      console.log(this.page);
       this.getData();
     },
     getData(more) {
@@ -148,7 +144,6 @@ export default {
   mounted() {
     var that = this;
     eventBus.$on("buyTrade", function(data) {
-      console.log(data);
       if (data) {
         that.getData();
       }

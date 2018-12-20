@@ -251,7 +251,6 @@ export default {
       }
     });
     this.bus.$on("nav_name", name => {
-      console.log(name);
       this.current = this.tabList.findIndex(
         val =>
           val.page === name || (val.children && val.children.includes(name))

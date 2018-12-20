@@ -2499,7 +2499,7 @@ Chart.prototype.setCurrentMoneyType = function (moneyType) {
     this.updateDataAndDisplay();
 };
 Chart.prototype.setCurrentPeriod = function (period) {
-    console.log(period,2499)
+    // console.log(period,2499)
     this._range = KlineIns.periodMap[period];
     this.updateDataAndDisplay();
     KlineIns.onRangeChange(this._range);

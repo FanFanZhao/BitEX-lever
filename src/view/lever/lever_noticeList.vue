@@ -82,7 +82,6 @@ export default {
       this.$router.back(-1);
     },
     getMore() {
-      console.log(123);
     },
     goDetail(id) {
       var id = id;

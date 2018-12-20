@@ -69,8 +69,6 @@ export default {
   created(){
     this.address = localStorage.getItem('address') || '';
     this.current=this.$route.query.current;
-    // console.log(this.current)
-    // this.bus.$emit('nav_name','aceite');
   },
   methods:{
         changeWay(index,way){

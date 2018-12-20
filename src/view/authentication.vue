@@ -74,7 +74,6 @@ export default {
         processData: false,
         contentType: false,
         success: function(msg) {
-          console.log(msg)
           if(msg.type == 'ok'){
             that.src1 = msg.message;
           }else{

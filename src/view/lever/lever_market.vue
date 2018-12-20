@@ -73,18 +73,14 @@
                     this.index2= window.localStorage.getItem('index02');
                     this.index1=window.localStorage.getItem('index01')
                 }
-                console.log(this.index1,this.index2)
-                
         },
         mounted(){
             var that =this;
             eventBus.$on('toNew01', function (data) {
-               console.log(data);
                if(data){
                     var newprice=data.newprice;
                     var cname=data.istoken;
                     var newup=data.newup;
-                    console.log(newup) 
                     if(newup>=0){
                         newup="+"+Number(newup*100).toFixed(2)+'%';
                         $("span[data-name='"+cname+"']").next().css('color','#55a067')
@@ -103,7 +99,6 @@
                 this.index1=index;
                 this.index2=null; 
                $('.currency_p p').removeClass('active_p')
-               console.log(this.index1)
                this.isShow=index;
                this.ids = 'a';
                this.currency_name = currency;
@@ -201,14 +196,12 @@
 										socket.emit('login', data.message.id);
 										// 后端推送来消息时
 										socket.on('daymarket', function(msg) {
-											console.log(msg);
 											if (msg.type == 'daymarket') {
 												if (that.selectId && (that.selectId == msg.legal_id)) {
 													// now_price
 													let lists = that.detailList.quotation;
 													for(i in lists){
 														if(lists[i].currency_id == msg.currency_id){
-															console.log(that.detailList.quotation)
 															that.detailList.quotation[i].volume=msg.volume;
 															that.detailList.quotation[i].now_price=msg.now_price;
 															that.detailList.quotation[i].change=msg.change;

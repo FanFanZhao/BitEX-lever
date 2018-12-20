@@ -76,7 +76,6 @@ export default {
         headers: {'Authorization':  localStorage.getItem('token')},    
       }).then(res => {
         if (res.data.type == "ok") {
-          console.log(res.data.message);
           this.lastPrice = res.data.message.last_price;
         }
       });

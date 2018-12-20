@@ -52,18 +52,14 @@ export default {
   mounted: function() {
     var that = this;
     eventBus.$on("toExchange0", function(data0) {
-      console.log(data0);
       that.currency_id = data0.currency_id,
       that.legal_id = data0.legal_id;
       that.currency_name = data0.currency_name;
       that.legal_name = data0.leg_name;
-      // console.log(that.currency_name);
-      // console.log(that.legal_name);
         that.buy_sell(that.legal_id,that.currency_id);
         // that.connect(that.legal_id,that.currency_id);
     });
     eventBus.$on("toExchange", function(data) {
-      console.log(data);
       that.currency_id = data.currency_id,
       that.legal_id = data.legal_id;
       that.currency_name = data.currency_name;
@@ -83,7 +79,6 @@ export default {
     connect(legal_id,currency_id) {
       this.$socket.emit("login", localStorage.getItem('user_id'));
       this.$socket.on("transaction", msg => {
-        console.log(msg);
         if (msg.type == "transaction") {
         
         this.newData = msg.last_price;
@@ -117,13 +112,10 @@ export default {
                     },  
                       headers: {'Authorization':  localStorage.getItem('token')},    
                 }).then(res=>{
-                    // console.log(res ,222)
-                    // layer.close(i);
                     if(res.data.type=="ok"){
                     this.inlist = res.data.message.in;
                     this.outlist = res.data.message.out;
                     this.newData = res.data.message.last_price;
-                    // console.log(this.newData)
                         this.buyInfo.buyPrice=0;
                         this.buyInfo.buyNum=0;
                     }else{
@@ -137,7 +129,6 @@ export default {
       var that=this;
       that.$socket.emit("login", localStorage.getItem('user_id'));
       that.$socket.on("transaction", msg => {
-        console.log(msg);
         if (msg.type == "transaction") {
         
         that.newData = msg.last_price;

@@ -174,7 +174,6 @@ export default {
         data:{id:this.id,pay_voucher:this.src},
         headers:{Authorization:this.token}
       }).then(res => {
-        // console.log(res);
         layer.msg(res.data.message);
         if(res.data.type == 'ok'){
           setTimeout(() => {

@@ -71,7 +71,6 @@
 		},
 		created(){
 			let name = this.$route.name;
-			console.log(name)
 			this.curActive = this.array.findIndex( val => val.page === name || (val.children && val.children.includes(name))) ;
 		},
 		mounted(){

@@ -291,8 +291,7 @@ export default {
       data.password = this.pwd;
       data.re_password = this.repwd;
       data.extension_code = this.invite;
-      //console.log(data);return;
-      
+    
       this.$http({
         url: "/api/" + "user/register",
         data: data,

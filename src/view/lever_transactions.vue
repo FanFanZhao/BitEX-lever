@@ -171,7 +171,6 @@ export default {
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
-          console.log(res);
           if (res.data.type == "ok") {
             this.more = "加载更多";
             this.list_content = this.list_content.concat(
@@ -205,7 +204,6 @@ export default {
           that.riskRate = msg.hazard_rate;
           that.totalPro = msg.profits_all;
           that.profitsPrice = msg.profits;
-          console.log(datas);
           for (let i in datas) {
             that.list_content[i].type = datas[i].type;
             that.list_content[i].symbol = datas[i].symbol;
@@ -519,7 +517,6 @@ export default {
     },
     comfirmModal() {
       let that = this;
-      console.log(that.selectType);
       let num = 0;
       if (that.selectType == "all") {
         num = 0;

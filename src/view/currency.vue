@@ -24,9 +24,7 @@ export default {
     },
     methods:{
         getData(){
-            var id = window.localStorage.getItem('legal_id_cur');
-            // console.log(id);
-            
+            var id = window.localStorage.getItem('legal_id_cur'); 
             if(id != null){
 
                 this.$http({

@@ -114,7 +114,6 @@ export default {
                 data:{},  
                 headers: {'Authorization':  localStorage.getItem('token')},    
             }).then(res=>{
-                // console.log(res);
                 if(res.data.type == 'ok'){
                     if(res.data.message.phone!=null){
                         this.account=res.data.message.phone;

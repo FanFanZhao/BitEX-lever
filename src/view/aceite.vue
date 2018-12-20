@@ -68,7 +68,6 @@ export default {
                     url:'/api/' + 'acceptor/list',
                     method:'get'
                 }).then(res=>{
-                    // console.log(res.data.message)
                     layer.close(i)
                     if(res.data.type=='ok'){
                         this.aceiteList=res.data.message
@@ -82,8 +81,6 @@ export default {
            
         },
         goto(id,index){
-            // console.log(id,index);
-            // return;
             this.$router.push({name:'rechargeMoney',query:{id,current:index}})
         },
         goRecord(index){

@@ -50,8 +50,7 @@ export default {
                     data:{limit:this.limit,page:this.page},  
                     headers: {'Authorization':  localStorage.getItem('token')},    
                 }).then(res=>{
-                     console.log(res)
-                    console.log(res.data.message.data)
+
                     if(res.data.type=="ok"){
                         this.log_list = this.log_list.concat(res.data.message.data);
                         if(res.data.message.data.length == 0){

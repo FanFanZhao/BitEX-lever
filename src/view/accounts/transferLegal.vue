@@ -65,7 +65,6 @@ export default {
             data.number = this.number;
             data.type = this.types[0] == '交易账户'?2:1;
             data.currency_id = this.coins[this.coinIndex].currency;
-            // console.log(data);return;
             
             this.$http({
                 url:'/api/wallet/change',
@@ -74,15 +73,9 @@ export default {
                 headers: { 'Authorization': this.token }
             }).then(res => {
                 if(res.data.type == 'ok'){
-                        // layer.msg(res.data.message)
-
                     setTimeout(() => {
                         this.$router.push({path:'/legalAccount',name:'legalAccount',params:{currency_id:this.coins[this.coinIndex].currency}})
                     },2000)
-            
-                    
-                    
-                    // this.$router.push({path:'/legalAccount'})
                 }
             })
         }

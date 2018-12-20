@@ -78,7 +78,6 @@ export default {
           that.tabList = res.data.message;
           var msg = res.data.message;
           var arr_quota = [];
-          console.log(that.tabList);
           let index = 0;
           let indexs = 0;
           if (!localStorage.getItem("index1")) {
@@ -98,7 +97,6 @@ export default {
           that.dataList = res.data.message;
           that.shareNum = res.data.message[index].quotation[that.index2].lever_share_num;
           window.localStorage.setItem("shareNum", that.shareNum);
-          console.log(that.shareNum);
           //默认法币id和name
           if (!localStorage.getItem("legal_id") &&!localStorage.getItem("currency_id") &&!localStorage.getItem("legal_name") &&!localStorage.getItem("currency_name")) {
             that.currency_name = msg[index].quotation[indexs].currency_name;
@@ -182,7 +180,6 @@ export default {
       //    this.currency_name = currency;
       //    this.currency_id = currency_id;
       this.marketList = this.dataList[index].quotation;
-      console.log(this.marketList);
     },
     getSymbols(callback) {
       if (this.address.length <= 0) {
@@ -239,7 +236,6 @@ export default {
       that.$socket.emit("login", localStorage.getItem("user_id"));
       that.$socket.on("daymarket", msg => {
         if (msg.type == "daymarket") {
-          console.log(msg);
           if (that.selectedId && that.selectedId == msg.legal_id) { 
             let lists = that.marketList;
             for (let i in lists) {

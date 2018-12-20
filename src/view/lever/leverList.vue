@@ -108,7 +108,6 @@ export default {
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
-          console.log(res);
           layer.close(i)
           that.flag = true;
           if (res.data.type == "ok") {
@@ -142,7 +141,6 @@ export default {
       that.$socket.emit("login", localStorage.getItem("user_id"));
       that.$socket.on("lever_trade", msg => {
         if (msg.type == "lever_trade") {
-          console.log(msg);
           if (that.status == 0) {
             var datas = JSON.parse(msg.trades_entrust);
             that.list_content = datas;

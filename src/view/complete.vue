@@ -70,8 +70,6 @@ export default {
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
-          // console.log(res ,222)
-          // layer.close(i);
           if (res.data.type == "ok") {
             let comp = res.data.message.complete;
             this.deList = comp;
@@ -90,7 +88,6 @@ export default {
       var that = this;
       that.$socket.emit("login", localStorage.getItem("user_id"));
       that.$socket.on("deal_list", function(msg) {
-        // console.log(msg);
         
         if (msg.type == "deal_list") {
           
@@ -105,7 +102,6 @@ export default {
               that.deList = newlist;
           }
         }
-        // console.log(msg);
       });
     }
   },

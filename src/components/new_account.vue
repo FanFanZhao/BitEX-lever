@@ -30,10 +30,7 @@
             left,
         },
         mounted(){
-            // this.bus.$on('nav_name',cur=>{
-            //     console.log(this.array.findIndex())
-            //     this.currentIndex= this.array.findIndex();
-            // })
+           
         }
     }
 </script>

@@ -122,12 +122,10 @@
         mounted(){
             var that =this;
             eventBus.$on('toNew', function (data) {
-               console.log(data);
                if(data){
                     var newprice=data.newprice;
                     var cname=data.istoken;
                     var newup=(data.newup).toFixed(2);
-                    console.log(newup) 
                     if(newup>=0){
                         newup="+"+newup+'%';
                         $("span[data-name='"+cname+"']").next().css('color','#55a067')

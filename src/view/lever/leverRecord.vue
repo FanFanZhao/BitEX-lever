@@ -46,7 +46,6 @@ export default {
           currency: id
         }
       }).then(res => {
-        console.log(res);
         if (res.data.type == "ok") {
           let msg = res.data.message;
           if (msg.list.length) {

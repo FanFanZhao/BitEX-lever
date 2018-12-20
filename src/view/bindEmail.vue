@@ -99,8 +99,6 @@ export default {
         layer.tips("请输入邮箱!", "#account");
         return;
       } else if (this.phoneCode == "") {
-        // console.log('请输入验证码');
-
         layer.tips("请输入验证码!", "#pwd");
         return;
       } 

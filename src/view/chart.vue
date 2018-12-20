@@ -46,7 +46,6 @@
                 }
                 });
                 data = data;
-                // console.log(data)
                 var ohlc = [],
                 volume = [],
                 dataLength = data.length,

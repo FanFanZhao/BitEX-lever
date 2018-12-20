@@ -124,14 +124,14 @@ Kline.prototype = {
     setIntervalTime: function (intervalTime) {
         this.intervalTime = intervalTime;
         if (this.debug) {
-            console.log('DEBUG: interval time changed to ' + intervalTime);
+            // console.log('DEBUG: interval time changed to ' + intervalTime);
         }
     },
 
     connect: function () {
         if (this.type != 'socket') {
             if (this.debug) {
-                console.log('DEBUG: this is for socket type');
+                // console.log('DEBUG: this is for socket type');
             }
             return;
         }
@@ -142,7 +142,7 @@ Kline.prototype = {
     disconnect: function () {
         if (this.type != 'socket') {
             if (this.debug) {
-                console.log('DEBUG: this is for socket type');
+                // console.log('DEBUG: this is for socket type');
             }
             return;
         }
@@ -151,7 +151,7 @@ Kline.prototype = {
             KlineIns.socketConnected = false;
         }
         if (this.debug) {
-            console.log('DEBUG: socket disconnected');
+            // console.log('DEBUG: socket disconnected');
         }
     },
 
@@ -162,7 +162,7 @@ Kline.prototype = {
 
     onResize: function (width, height) {
         if (this.debug) {
-            console.log("DEBUG: chart resized to width: " + width + " height: " + height);
+            // console.log("DEBUG: chart resized to width: " + width + " height: " + height);
         }
     },
 
@@ -9108,7 +9108,7 @@ function parseRequestParam(str) {
 function requestOverSocket() {
     if (!KlineIns.socketConnected) {
         if (KlineIns.debug) {
-            console.log("DEBUG: socket is not coonnected")
+            // console.log("DEBUG: socket is not coonnected")
         }
         return;
     }
@@ -9117,7 +9117,7 @@ function requestOverSocket() {
         return;
     }
     if (KlineIns.debug) {
-        console.log("DEBUG: socket client is not ready yet ...");
+        // console.log("DEBUG: socket client is not ready yet ...");
     }
     KlineIns.timer = setTimeout(function () {
         RequestData(true);
@@ -9128,7 +9128,6 @@ function ndata(num){
     return Date.parse(date);
 }
 var __that=this;
-console.log(__that)
 function requestOverHttp() {
     if (KlineIns.debug) {
         console.log("DEBUG: " + KlineIns.requestParam);
@@ -9146,7 +9145,6 @@ function requestOverHttp() {
                 this.symbol = KlineIns.symbol;
             },
             success: function (res) {
-                console.log(res)
                 // console.log(res.message.quotation)
                 var datas=res.message.quotation.reverse();
                 var dateses=[];
@@ -9155,7 +9153,6 @@ function requestOverHttp() {
                     dataList.push((datas[i].e_time*1000),Number(datas[i].start_price),Number(datas[i].highest),Number(datas[i].minimum),Number(datas[i].end_price),Number(datas[i].sum))
                     dateses.push(dataList)
                 }
-                console.log(dateses)
                 if (KlineIns.G_HTTP_REQUEST) {
                     requestSuccessHandler(dateses);
                 }

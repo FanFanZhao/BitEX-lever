@@ -63,7 +63,6 @@ export default {
         var that = this;
         that.complete(this.legal_id,this.currency_id);
         eventBus.$on('to_leverExchange',function(data){
-            console.log(data)
             if(data){
                 that.complete(localStorage.getItem('legal_id'),localStorage.getItem('currency_id'));
             }
@@ -84,7 +83,6 @@ export default {
                         },  
                         headers: {'Authorization':  localStorage.getItem('token')},    
                     }).then(res=>{
-                        console.log(res)
                         // layer.close(i);
                         if(res.data.type == "ok"){
                            this.deList = res.data.message.my_transaction;

@@ -67,13 +67,7 @@ export default {
 
     },
     mounted(){
-        // var tags=this.$refs.con.getElementsByTagName('p');
-        // console.log(tags)
-        // for(var i=0;i<tags.length;i++){
-        //     console.log(tags)
-        //     console.log(tags[i])
-        //     tags[i].style.background='transparent'
-        // }
+       
     },
     methods:{
         goBefore(){

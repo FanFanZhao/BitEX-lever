@@ -52,7 +52,6 @@ export default {
       var that = this;
       this.$http.post("/api/news/list",{"c_id":9}).then(res => {
         if (res.data.type == "ok") {
-             console.log(res);
              var list = res.data.message.list;
              if (list.length > 2) {
             that.footFrist = list;
@@ -68,7 +67,6 @@ export default {
       var that = this;
       this.$http.post("/api/news/list",{"c_id":10}).then(res => {
         if (res.data.type == "ok") {
-             console.log(res);
              var list = res.data.message.list;
              if (list.length > 2) {
             that.footSecond = list;

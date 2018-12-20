@@ -100,13 +100,11 @@ export default {
     },
     created(){
         this.address=localStorage.getItem('address') || '';
-        console.log(this.address)
         if(this.address){
             this.$http({
                 url:'/api/'+'money/rechange?user_id='+this.address,
                 type:'GET'
             }).then(res=>{
-                console.log(res)
                 this.addr=res.data.message.company_eth_address;
                 this.url='http://qr.liantu.com/api.php?&w=300&text='+res.data.message.company_eth_address;
                 var content = this.addr;

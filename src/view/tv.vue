@@ -203,7 +203,6 @@
 
 						});
 						let handleClick = (e, value) => {
-							console.log(value)
 							_this.setSymbol = function(symbol,value){
 								gh.chart().setSymbol(symbol,value);
 							};
@@ -382,7 +381,7 @@
 				Datafeed.Container.prototype._logMessage = function(message) {
 					if (this._enableLogging) {
 						var now = new Date();
-						console.log("CHART LOGS: "+now.toLocaleTimeString() + '.' + now.getMilliseconds() + '> ' + message);
+						// console.log("CHART LOGS: "+now.toLocaleTimeString() + '.' + now.getMilliseconds() + '> ' + message);
 					}
 				};
 
@@ -496,7 +495,6 @@
 			},
 			updateData(data) {
 				if (data) {
-					console.log("emit real-time");
 					this.$emit('real-time', data);
 				}
 			},

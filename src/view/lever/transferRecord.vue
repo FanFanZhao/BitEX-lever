@@ -50,7 +50,6 @@ export default {
         data: {
         }
       }).then(res => {
-        console.log(res);
         if (res.data.type == "ok") {
           let msg = res.data.data;
           that.log = msg;

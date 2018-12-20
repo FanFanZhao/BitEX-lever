@@ -139,7 +139,6 @@ export default {
                 if(res.data.type=='ok'){
                     this.aceiteList=res.data.message;
                     this.setType();
-                    console.log(this.aceiteList)
                 }
             })
         },
@@ -157,7 +156,6 @@ export default {
                 layer.msg('请输入金额！')
                 return;
             }
-            console.log(this.way,this.way=='')
             if(this.way===''){
                 layer.msg('请选择充值方式！')
                 return;
@@ -176,7 +174,6 @@ export default {
             }
             var data={acceptor_id:this.id,address:this.address,way:way,type:this.current==0?'buy':'sell'}
             data=Object.assign(data,this.submitInfo)
-            console.log(data)
             this.$http({
                 url:'/api/'+'acceptor/deal',
                 method:'POST',

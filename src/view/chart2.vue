@@ -28,37 +28,9 @@
             changeCyle(index){
               var index=index;
               this.current=index;
-        //       this.getData();
             },
-            // Chart(){
-            
-            // this.$http({
-            //         url:'/api/'+'',
-            //         method:'post',
-            //         data:{
-                       
-            //         }
-            // }).then(res=>{
-            //     if(res.data.type=='ok'){
-            //         console.log(data)
-            //     }else{
-            //         layer.msg(res.data.message)
-            //     }
-            // })
+           
             getData(){
-                // this.$http({
-                //         url:'https://data.jianshukeji.com/stock/history/000001',
-                //         method:'get',
-                // }).then(res=>{
-
-                // console.log(res.data.data)
-                // // this.kData.push(res.data.data)
-                // // this.kData=this.kData
-                // // console.log(res.data.data[0])
-                // // console.log(this.kData[0][0])
-                // // this.chartLine(this.kData)
-
-                // })
                     this.$http({
                         url: 'http://www.2kex.com/api/deal/info',
                         method:'post',
@@ -69,11 +41,9 @@
                         }
                     }).then(res=>{
                         if(res.data.type=='ok'){
-                            console.log(res.data.message)
                             var day=res.data.message.day;
                             var week=res.data.message.week;
                             var month=res.data.message.month;
-                        //     console.log(month)
                             var dline=[];
                             var wline=[];
                             var mline=[];
@@ -83,30 +53,24 @@
                                 dayData.push((day[i].data.timestamp*1000),Number(day[i].data.open),Number(day[i].data.hight),Number(day[i].data.low),Number(day[i].data.close),Number(day[i].data.volume))
                                 dline.push(dayData)
                             }
-                        //     console.log(dline)
                         // 周
                             for(let i=0;i<week.length;i++){
                                 var weekData=[];
                                 weekData.push((week[i].data.timestamp*1000),Number(week[i].data.open),Number(week[i].data.hight),Number(week[i].data.low),Number(week[i].data.close),Number(week[i].data.volume))
                                 wline.push(weekData)
                             }
-                        //     console.log(wline) 
                         //  月
                              for(let i=0;i<month.length;i++){
                                 var monthData=[];
                                 monthData.push((month[i].data.timestamp*1000),Number(month[i].data.open),Number(month[i].data.hight),Number(month[i].data.low),Number(month[i].data.close),Number(month[i].data.volume))
                                 mline.push(monthData)
                             }
-                        //     console.log(mline)
                         if(this.current==0){
                            this.kData=dline;   
-                        console.log('day')  
                         }else if(this.current==1){
                            this.kData=wline;   
-                        console.log('week')
                         }else{
                            this.kData=mline; 
-                        console.log('month')    
                         }
                             
                             this.chartLine(this.kData)
@@ -123,7 +87,6 @@
                 }
                 });
                 data = data;
-                // console.log(data)
                 var ohlc = [],
                 volume = [],
                 dataLength = data.length,

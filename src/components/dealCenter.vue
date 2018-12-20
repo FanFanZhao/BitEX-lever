@@ -87,11 +87,7 @@ export default {
     
   },
   mounted(){
-    // console.log('wejdewhbewjdbewjdhbcwj')
-    // if(this.load==1){
-    //   window.location.reload();
-    //   this.load=2;
-    // }
+    
    
   }
 };

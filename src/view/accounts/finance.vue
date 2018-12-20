@@ -301,7 +301,7 @@ export default {
               text: res.data.message
             });
           } else {
-            console.log(res.data.message);
+           
           }
         })
         .catch(error => {

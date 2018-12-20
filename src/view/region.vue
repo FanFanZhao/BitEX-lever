@@ -62,7 +62,6 @@ export default {
                 method:'get',
                 headers: {'Authorization':  that.token},
                 }).then(res=>{
-                    console.log(res)
                     if (res.data.type=="ok"){
                         if(res.data.message.data.length>0){
                            that.aceiteList=that.aceiteList.concat(res.data.message.data); 
@@ -71,7 +70,7 @@ export default {
                         }
                         
                     }else{
-                        console.log(res.data.message)
+
                         that.isRegion=true;
                     }
                 }).catch(error=>{
@@ -80,7 +79,7 @@ export default {
         },
         getmore(){
             this.page++;
-            console.log(this.page)
+
             this.getData();
 
         }

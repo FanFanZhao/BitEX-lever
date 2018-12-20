@@ -43,7 +43,6 @@
                     }
                 }).then(res=>{
                     this.tradeList=res.data.message.complete;
-                    // console.log(this.tradeList)
                     if(res.data.type=='ok'){
 
                     }else{

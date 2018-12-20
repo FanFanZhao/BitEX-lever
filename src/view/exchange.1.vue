@@ -51,17 +51,14 @@ export default {
     var l_id,c_id;
     var that = this;
     eventBus.$on("toExchange0", function(data0) {
-      console.log(data0);
       c_id = data0.currency_id,
       l_id = data0.legal_id;
       that.currency_name = data0.currency_name;
       that.legal_name = data0.leg_name;
-      console.log(local_lid,local_cid)
       that.buy_sell(l_id,c_id);
       that.connect(l_id,c_id)
     });
     eventBus.$on("toExchange", function(data) {
-      console.log(data);
       c_id = data.currency_id,
       l_id = data.legal_id;
        window.localStorage.setItem('c_id',data.currency_id);
@@ -132,12 +129,9 @@ export default {
                 })
     },
     connect(legal_id,currency_id) { 
-      console.log(legal_id,currency_id)
       var that=this;
-      console.log('socket')
       that.$socket.emit("login", localStorage.getItem('user_id'));
       that.$socket.on("transaction", msg => {
-        console.log(msg);
         if (msg.type == "transaction") {
         //组件间传值
         var newPrice = {

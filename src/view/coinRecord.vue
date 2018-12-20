@@ -79,7 +79,6 @@ export default {
                 }).then(res=>{
                     res = res.data;
                     if(res.type  === 'ok'){
-                        console.log(res.message)
                         this.coinList=res.message
                     }else{
                         // layer.msg(res.message);
