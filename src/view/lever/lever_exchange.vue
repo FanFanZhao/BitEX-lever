@@ -3,7 +3,7 @@
     <!-- <div class="title fColor1">交易所</div> -->
     <div class="content fColor1">
       <div class="new_price">
-        <span class="ft14">最新价 {{newData | tofixedFour}}{{currency_name}}</span>
+        <span class="ft14">最新价 {{newData | tofixedFour}}</span>
       </div>
       <div class="exchange_title ft12 clear tc">
         <span>方向</span>
@@ -124,10 +124,18 @@ export default {
             eventBus.$emit("toNew01", newPrice);
           }, 1000);
           var inData = JSON.parse(msg.in);
-          var outData = JSON.parse(msg.out);
+          var outData = JSON.parse(msg.out).reverse();
           if (msg.currency_id == currency_id && msg.legal_id == legal_id) {
             that.inlist = inData;
-            that.outlist = outData.reverse();
+            that.outlist = outData;
+            for(let i in inData){
+              that.inlist[i].price = inData[i].price;
+              that.inlist[i].number = inData[i].number;
+            }
+            for(let i in outData){
+              that.outlist[i].price = outData[i].price;
+              that.outlist[i].number = outData[i].number;
+            }
           }
         }
       });

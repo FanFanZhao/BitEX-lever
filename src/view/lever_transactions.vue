@@ -137,7 +137,7 @@ export default {
       // 当前盈亏
       profitsPrice: "",
       orderType: "",
-      shareNum:''
+      shareNum: ""
     };
   },
   created() {
@@ -145,9 +145,7 @@ export default {
     this.legal_id = localStorage.getItem("legal_id");
     this.currency_id = localStorage.getItem("currency_id");
     this.init();
-    that.leverDealall = setInterval(function() {
-      that.loads();
-    }, 6000);
+    that.loads();
   },
   filters: {
     tofixed: function(val) {
@@ -200,51 +198,31 @@ export default {
     // 轮询
     loads() {
       let that = this;
-      this.$http({
-        url: "/api/" + "lever/dealall",
-        method: "post",
-        data: {
-          legal_id: this.legal_id,
-          currency_id: this.currency_id,
-          page: 1
-        },
-        headers: { Authorization: localStorage.getItem("token") }
-      })
-        .then(res => {
-          if (res.data.type == "ok") {
-            let datas = res.data.message.order.data;
-            that.riskRate = res.data.message.hazard_rate;
-            that.totalPro = res.data.message.profits_total;
-            that.profitsPrice = res.data.message.profits;
-            if (datas.length > 0) {
-              for (let i in datas) {
-                that.list_content[i].type = datas[i].type;
-                that.list_content[i].symbol = datas[i].symbol;
-                that.list_content[i].share = datas[i].share;
-                that.list_content[i].price = datas[i].price;
-                that.list_content[i].transaction_time =
-                  datas[i].transaction_time;
-                that.list_content[i].caution_money = datas[i].caution_money;
-                that.list_content[i].id = datas[i].id;
-                that.list_content[i].profits = datas[i].profits;
-                that.list_content[i].update_price = datas[i].update_price;
-                that.list_content[i].target_profit_price =
-                  datas[i].target_profit_price;
-                that.list_content[i].stop_loss_price = datas[i].stop_loss_price;
-                that.list_content[i].trade_fee = datas[i].trade_fee;
-                that.list_content[i].overnight_money = datas[i].overnight_money;
-              }
-              console.log(that.list_content);
-            } else {
-              that.more = "暂无数据";
-            }
-          } else {
-            layer.msg(res.data.message);
+      that.$socket.emit("login", localStorage.getItem("user_id"));
+      that.$socket.on("lever_trade", msg => {
+        if (msg.type == "lever_trade") {
+          var datas = JSON.parse(msg.trades_cur);
+          that.riskRate = msg.hazard_rate;
+          that.totalPro = msg.profits_all;
+          that.profitsPrice = msg.profits;
+          console.log(datas);
+          for (let i in datas) {
+            that.list_content[i].type = datas[i].type;
+            that.list_content[i].symbol = datas[i].symbol;
+            that.list_content[i].share = datas[i].share;
+            that.list_content[i].price = datas[i].price;
+            that.list_content[i].transaction_time = datas[i].transaction_time;
+            that.list_content[i].caution_money = datas[i].caution_money;
+            that.list_content[i].id = datas[i].id;
+            that.list_content[i].profits = datas[i].profits;
+            that.list_content[i].update_price = datas[i].update_price;
+            that.list_content[i].target_profit_price =datas[i].target_profit_price;
+            that.list_content[i].stop_loss_price = datas[i].stop_loss_price;
+            that.list_content[i].trade_fee = datas[i].trade_fee;
+            that.list_content[i].overnight_money = datas[i].overnight_money;
           }
-        })
-        .catch(error => {
-          console.log(error);
-        });
+        }
+      });
     },
 
     pingcang(id) {
@@ -306,24 +284,42 @@ export default {
           if (that.list_content[i].type == 1) {
             that.orderType = "buy";
             if (that.list_content[i].target_profit_price > 0) {
-              that.modalProfit = (((that.targetProfit - parseFloat(that.list_content[i].price)) - 0) * (that.list_content[i].share - 0)).toFixed(2);
+              that.modalProfit = (
+                (that.targetProfit -
+                  parseFloat(that.list_content[i].price) -
+                  0) *
+                (that.list_content[i].share - 0)
+              ).toFixed(2);
             } else {
               that.modalProfit = "0.00";
             }
             if (that.list_content[i].stop_loss_price > 0) {
-              that.modalStop = (((parseFloat(that.list_content[i].price).toFixed(2) -that.stopLose) - 0) * (that.list_content[i].share - 0)).toFixed(2);
+              that.modalStop = (
+                (parseFloat(that.list_content[i].price).toFixed(2) -
+                  that.stopLose -
+                  0) *
+                (that.list_content[i].share - 0)
+              ).toFixed(2);
             } else {
               that.modalStop = "0.00";
             }
           } else {
             that.orderType = "sell";
             if (that.list_content[i].target_profit_price > 0) {
-              that.modalProfit = (((parseFloat(that.list_content[i].price).toFixed(2) -that.targetProfit)-0) * (that.list_content[i].share - 0)).toFixed(2);
+              that.modalProfit = (
+                (parseFloat(that.list_content[i].price).toFixed(2) -
+                  that.targetProfit -
+                  0) *
+                (that.list_content[i].share - 0)
+              ).toFixed(2);
             } else {
               that.modalProfit = "0.00";
             }
             if (that.list_content[i].stop_loss_price > 0) {
-              that.modalStop = (((that.stopLose - parseFloat(that.list_content[i].price)) -0) * (that.list_content[i].share - 0)).toFixed(2);
+              that.modalStop = (
+                (that.stopLose - parseFloat(that.list_content[i].price) - 0) *
+                (that.list_content[i].share - 0)
+              ).toFixed(2);
             } else {
               that.modalStop = "0.00";
             }
@@ -337,18 +333,30 @@ export default {
       if (that.orderType == "buy") {
         if (type == 1) {
           that.targetProfit = (parseFloat(that.targetProfit) + 0.01).toFixed(2);
-          that.modalProfit = (((parseFloat(that.targetProfit) - that.presentPrice) -0) * (that.shareNum - 0)).toFixed(2);
+          that.modalProfit = (
+            (parseFloat(that.targetProfit) - that.presentPrice - 0) *
+            (that.shareNum - 0)
+          ).toFixed(2);
         } else {
           that.stopLose = (parseFloat(that.stopLose) + 0.01).toFixed(2);
-          that.modalStop = (((that.presentPrice - that.stopLose) - 0) * (that.shareNum - 0)).toFixed(2);
+          that.modalStop = (
+            (that.presentPrice - that.stopLose - 0) *
+            (that.shareNum - 0)
+          ).toFixed(2);
         }
-      }else{
+      } else {
         if (type == 1) {
           that.targetProfit = (parseFloat(that.targetProfit) + 0.01).toFixed(2);
-          that.modalProfit = ((parseFloat(that.presentPrice - that.targetProfit) - 0) * (that.shareNum - 0)).toFixed(2);
+          that.modalProfit = (
+            (parseFloat(that.presentPrice - that.targetProfit) - 0) *
+            (that.shareNum - 0)
+          ).toFixed(2);
         } else {
           that.stopLose = (parseFloat(that.stopLose) + 0.01).toFixed(2);
-          that.modalStop = (((parseFloat(that.stopLose -  that.presentPrice)) -0) * (that.shareNum - 0)).toFixed(2);
+          that.modalStop = (
+            (parseFloat(that.stopLose - that.presentPrice) - 0) *
+            (that.shareNum - 0)
+          ).toFixed(2);
         }
       }
     },
@@ -358,31 +366,47 @@ export default {
       if (that.orderType == "buy") {
         if (type == 1) {
           if (that.targetProfit > 0) {
-            that.targetProfit = (parseFloat(that.targetProfit) - 0.01).toFixed(2);
-            that.modalProfit = (((parseFloat(that.targetProfit) - that.presentPrice) -0) * (that.shareNum - 0)).toFixed(2);
+            that.targetProfit = (parseFloat(that.targetProfit) - 0.01).toFixed(
+              2
+            );
+            that.modalProfit = (
+              (parseFloat(that.targetProfit) - that.presentPrice - 0) *
+              (that.shareNum - 0)
+            ).toFixed(2);
           } else {
             layer.msg("设置的值必须大于0");
           }
         } else {
           if (that.stopLose > 0) {
             that.stopLose = (parseFloat(that.stopLose) - 0.01).toFixed(2);
-            that.modalStop = (((that.presentPrice - that.stopLose)- 0) * (that.shareNum - 0)).toFixed(2);
+            that.modalStop = (
+              (that.presentPrice - that.stopLose - 0) *
+              (that.shareNum - 0)
+            ).toFixed(2);
           } else {
             layer.msg("设置的值必须大于0");
           }
         }
-      }else{
+      } else {
         if (type == 1) {
           if (that.targetProfit > 0) {
-            that.targetProfit = (parseFloat(that.targetProfit) - 0.01).toFixed(2);
-            that.modalProfit = (((that.presentPrice - that.targetProfit) - 0) * (that.shareNum - 0)).toFixed(2);
+            that.targetProfit = (parseFloat(that.targetProfit) - 0.01).toFixed(
+              2
+            );
+            that.modalProfit = (
+              (that.presentPrice - that.targetProfit - 0) *
+              (that.shareNum - 0)
+            ).toFixed(2);
           } else {
             layer.msg("设置的值必须大于0");
           }
         } else {
           if (that.stopLose > 0) {
             that.stopLose = (parseFloat(that.stopLose) - 0.01).toFixed(2);
-            that.modalStop = (((parseFloat(that.stopLose -  that.presentPrice)) - 0) * (that.shareNum - 0)).toFixed(2);
+            that.modalStop = (
+              (parseFloat(that.stopLose - that.presentPrice) - 0) *
+              (that.shareNum - 0)
+            ).toFixed(2);
           } else {
             layer.msg("设置的值必须大于0");
           }
@@ -394,14 +418,22 @@ export default {
       let that = this;
       if (that.orderType == "buy") {
         if (type == 1) {
-          let inputModal = (((parseFloat(that.targetProfit) - parseFloat(that.presentPrice))- 0) * (that.shareNum - 0)).toFixed(2);
+          let inputModal = (
+            (parseFloat(that.targetProfit) -
+              parseFloat(that.presentPrice) -
+              0) *
+            (that.shareNum - 0)
+          ).toFixed(2);
           if (inputModal > 0) {
             that.modalProfit = inputModal;
           } else {
             that.modalProfit = 0.0;
           }
         } else {
-          let inputModal = (((parseFloat(that.presentPrice) - parseFloat(that.stopLose)) - 0) * (that.shareNum - 0)).toFixed(2);
+          let inputModal = (
+            (parseFloat(that.presentPrice) - parseFloat(that.stopLose) - 0) *
+            (that.shareNum - 0)
+          ).toFixed(2);
           if (inputModal > 0) {
             that.modalStop = inputModal;
           } else {
@@ -410,14 +442,22 @@ export default {
         }
       } else {
         if (type == 1) {
-          let inputModal = (((parseFloat(that.presentPrice) - parseFloat(that.targetProfit)) - 0) * (that.shareNum - 0)).toFixed(2);
+          let inputModal = (
+            (parseFloat(that.presentPrice) -
+              parseFloat(that.targetProfit) -
+              0) *
+            (that.shareNum - 0)
+          ).toFixed(2);
           if (inputModal > 0) {
             that.modalProfit = inputModal;
           } else {
             that.modalProfit = 0.0;
           }
         } else {
-          let inputModal = (((parseFloat(that.stopLose) - parseFloat(that.presentPrice)) -0) * (that.shareNum - 0)).toFixed(2);
+          let inputModal = (
+            (parseFloat(that.stopLose) - parseFloat(that.presentPrice) - 0) *
+            (that.shareNum - 0)
+          ).toFixed(2);
           if (inputModal > 0) {
             that.modalStop = inputModal;
           } else {
@@ -522,7 +562,7 @@ export default {
 };
 </script>
 <style scoped>
-.total-pro{
+.total-pro {
   margin-bottom: 20px;
 }
 .wrap {

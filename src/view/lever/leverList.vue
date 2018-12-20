@@ -64,18 +64,20 @@ export default {
       page: 1,
       more: "加载更多",
       status: 0,
-      set: function() {}
+      set: function() {},
+      flag:true
     };
   },
   created() {
     let that = this;
-    that.legal_id = localStorage.getItem("legal_id");
-    that.currency_id = localStorage.getItem("currency_id");
+    // that.legal_id = localStorage.getItem("legal_id");
+    // that.currency_id = localStorage.getItem("currency_id");
     that.init();
     if (that.status == 0 || that.status == 1) {
-      that.set = setInterval(function() {
-        that.polling();
-      }, 2000);
+       setTimeout(function(){
+         that.polling();
+       },2000)
+      
     }
   },
   filters: {
@@ -92,7 +94,9 @@ export default {
     init() {
       let that = this;
       that.more = "加载中...";
-      this.$http({
+      if(that.flag){
+        var i = layer.load();
+        this.$http({
         url: "/api/" + "lever/my_trade",
         method: "post",
         data: {
@@ -105,9 +109,16 @@ export default {
       })
         .then(res => {
           console.log(res);
+          layer.close(i)
+          that.flag = true;
           if (res.data.type == "ok") {
             that.more = "加载更多";
-            that.list_content = that.list_content.concat(res.data.message.data);
+            if(that.page == 1){
+              that.list_content = res.data.message.data;
+            }else{
+              that.list_content = that.list_content.concat(res.data.message.data);
+            }
+            
             if (res.data.message.data.length == 0) {
               that.more = "没有更多了...";
             }
@@ -121,61 +132,53 @@ export default {
         .catch(error => {
           console.log(error);
         });
+      }
+      
     },
 
     // 轮询数据
     polling() {
       let that = this;
-      this.$http({
-        url: "/api/" + "lever/my_trade",
-        method: "post",
-        data: {
-          status: that.status,
-          legal_id: that.legal_id,
-          currency_id: that.currency_id,
-          page: 1
-        },
-        headers: { Authorization: localStorage.getItem("token") }
-      })
-        .then(res => {
-          console.log(res);
-          if (res.data.type == "ok") {
-            that.more = "加载更多";
-            if (res.data.message.data.length == 0) {
-              that.more = "暂无数据";
-              that.list_content = [];
-            } else {
-              var list = res.data.message.data;
-              for (let i in list) {
-                that.list_content[i].type = list[i].type;
-                that.list_content[i].symbol = list[i].symbol;
-                that.list_content[i].share = list[i].share;
-                that.list_content[i].price = list[i].price;
-                that.list_content[i].update_price = list[i].update_price;
-                that.list_content[i].target_profit_price =list[i].target_profit_price;
-                that.list_content[i].stop_loss_price = list[i].stop_loss_price;
-                that.list_content[i].origin_caution_money =list[i].origin_caution_money;
-                that.list_content[i].caution_money = list[i].caution_money;
-                that.list_content[i].transaction_time = list[i].transaction_time;
-                that.list_content[i].profits = list[i].profits;
-                that.list_content[i].status_name = list[i].status_name;
-                that.list_content[i].id = list[i].id;
-                that.list_content[i].trade_fee = list[i].trade_fee;
-                that.list_content[i].overnight_money = list[i].overnight_money;
-              }
-            }
-          } else {
-            layer.msg(res.data.message);
+      that.$socket.emit("login", localStorage.getItem("user_id"));
+      that.$socket.on("lever_trade", msg => {
+        if (msg.type == "lever_trade") {
+          console.log(msg);
+          if (that.status == 0) {
+            var datas = JSON.parse(msg.trades_entrust);
+            that.list_content = datas;
+            // for (let i in datas) {
+            //   that.list_content = datas;
+            //   that.list_content[i].type = datas[i].type;
+            //   that.list_content[i].symbol = datas[i].symbol;
+            //   that.list_content[i].share = datas[i].share;
+            //   that.list_content[i].price = datas[i].price;
+            //   that.list_content[i].update_price = datas[i].update_price;
+            //   that.list_content[i].target_profit_price =
+            //     datas[i].target_profit_price;
+            //   that.list_content[i].stop_loss_price = datas[i].stop_loss_price;
+            //   that.list_content[i].origin_caution_money =
+            //     datas[i].origin_caution_money;
+            //   that.list_content[i].caution_money = datas[i].caution_money;
+            //   that.list_content[i].transaction_time = datas[i].transaction_time;
+            //   that.list_content[i].profits = datas[i].profits;
+            //   that.list_content[i].status_name = datas[i].status_name;
+            //   that.list_content[i].id = datas[i].id;
+            //   that.list_content[i].trade_fee = datas[i].trade_fee;
+            //   that.list_content[i].overnight_money = datas[i].overnight_money;
+            // }
+          } else if (that.status == 1) {
+            let datas = JSON.parse(msg.trades_all);
+            that.list_content = datas;
+            
           }
-        })
-        .catch(error => {
-          console.log(error);
-        });
+        }
+      });
     },
     // 加载更多
     load_more() {
       this.page++;
       this.init();
+      that.flag = false;
     },
     // 状态切换
     tabClick(type) {
@@ -184,11 +187,10 @@ export default {
       that.list_content = [];
       that.page = 1;
       that.init();
+      that.flag = false;
       clearInterval(that.set);
       if (type == 0 || type == 1) {
-        that.set = setInterval(function() {
-          that.polling();
-        }, 2000);
+         that.polling();
       }
     },
     // 平仓
@@ -196,7 +198,8 @@ export default {
       let that = this;
       layer.confirm("确定平仓？", function() {
         var i = layer.load();
-        that.$http({
+        that
+          .$http({
             url: "/api/" + "lever/close",
             method: "post",
             data: {
@@ -226,7 +229,8 @@ export default {
       let that = this;
       layer.confirm("确定撤消订单吗？", function() {
         var i = layer.load();
-        that.$http({
+        that
+          .$http({
             url: "/api/" + "lever/cancel",
             method: "post",
             data: {

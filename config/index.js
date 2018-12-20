@@ -14,8 +14,8 @@ module.exports = {
     proxyTable: {
       '/api': {
           // target: 'http://ice.adminchao.com/api',//后端接口地址
-          // target: 'http://www.bitex.ren/api',//后端接口地址
-          target: 'http://lever.mobile369.com/api',
+          target: 'http://www.bitex.ren/api',//后端接口地址
+          // target: 'http://lever.mobile369.com/api',
           changeOrigin: true,//是否允许跨越
           pathRewrite: {
               '^/api': '/',//重写,

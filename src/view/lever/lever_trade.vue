@@ -414,7 +414,6 @@ export default {
             this.shareList = res.data.message.multiple.share;
             this.minShare = res.data.message.lever_share_limit.min;
             this.maxShare = res.data.message.lever_share_limit.max;
-            // console.log(res.data)
             this.buyInfo.buyPrice = 0;
             this.buyInfo.buyNum = 0;
             this.type = this.shareList[0].value;
@@ -441,7 +440,6 @@ export default {
         that.sellShare = options;
       }
       if (that.selectedStatus != 0) {
-        console.log(1);
         if (values == "sell" && that.sellInfo.sell_selected != "") {
           // 价格
           var bond = parseFloat(localStorage.getItem("lastPrice")).toFixed(4);
@@ -492,9 +490,6 @@ export default {
       }
     },
     pricesType(bond, type, share, muitNum) {
-      console.log(bond);
-      console.log(share);
-      console.log(muitNum);
       let that = this;
       var i = layer.load();
       this.$http({
@@ -569,7 +564,6 @@ export default {
           var muitNum = parseFloat(that.buyInfo.buy_selected).toFixed(4);
           // 手数
           var share = parseFloat(that.buySahre).toFixed(4);
-          console.log(muitNum);
           that.pricesType(bond, type, share, muitNum);
         } else {
           that.totalPriceBuy = 0.0;
@@ -595,7 +589,6 @@ export default {
             var muitNum = parseFloat(that.buyInfo.buy_selected).toFixed(4);
             // 手数
             var share = parseFloat(that.buySahre).toFixed(4);
-            console.log(muitNum)
             that.pricesType(bond, type, share, muitNum);
           }
         } else {
@@ -727,25 +720,35 @@ export default {
       let that = this;
       let data;
       if (that.buyType == 2) {
-        data = {
-          legal_id: that.legal_id,
-          currency_id: that.currency_id,
-          multiple: that.sellInfo.sell_selected,
-          share: that.sellShare,
-          type: 2,
-          status:that.selectedStatus,
-				  target_price:that.sellInputValue,
-        };
+        if(that.legal_id != '' && that.currency_id != ''){
+          data = {
+            legal_id: that.legal_id,
+            currency_id: that.currency_id,
+            multiple: that.sellInfo.sell_selected,
+            share: that.sellShare,
+            type: 2,
+            status:that.selectedStatus,
+            target_price:that.sellInputValue,
+          };
+        }else{
+          layer.msg('该交易对已下架，请重新切换交易对');
+        }
+        
       } else {
-        data = {
-          legal_id: that.legal_id,
-          currency_id: that.currency_id,
-          multiple: that.buyInfo.buy_selected,
-          share: that.buySahre,
-          type: 1,
-          status:that.selectedStatus,
-			  	target_price:that.inputPrice,
-        };
+        if(that.legal_id != '' && that.currency_id != ''){
+          data = {
+            legal_id: that.legal_id,
+            currency_id: that.currency_id,
+            multiple: that.buyInfo.buy_selected,
+            share: that.buySahre,
+            type: 1,
+            status:that.selectedStatus,
+            target_price:that.inputPrice,
+          };
+        }else{
+          layer.msg('该交易对已下架，请重新切换交易对');
+        }
+        
       }
       var i = layer.load();
       this.$http({
