@@ -6,10 +6,10 @@
         持仓总盈亏：
         <span :class="['red','flex1',{'green':totalPro > 0}]">{{totalPro | tofixedFour}}</span>
         <br>
-        <span style="margin-top:5px;display:block;">
+        <!-- <span style="margin-top:5px;display:block;">
           当前盈亏：
           <b :class="['red','flex1',{'green':profitsPrice > 0}]">{{profitsPrice | tofixedFour}}</b>
-        </span>
+        </span> -->
       </p>
 
       <button class="fr" type="button" @click="stopTotal()">一键平仓</button>
@@ -131,7 +131,6 @@ export default {
       totalPro: "",
       stopModal: false,
       selectType: "all",
-      leverDealall: function() {},
       // 当前价
       openPrice: "",
       // 当前盈亏
@@ -200,25 +199,17 @@ export default {
       that.$socket.emit("login", localStorage.getItem("user_id"));
       that.$socket.on("lever_trade", msg => {
         if (msg.type == "lever_trade") {
-          var datas = JSON.parse(msg.trades_cur);
+          var datas = JSON.parse(msg.trades_all);
           that.riskRate = msg.hazard_rate;
           that.totalPro = msg.profits_all;
           that.profitsPrice = msg.profits;
+          let arr = [];
           for (let i in datas) {
-            that.list_content[i].type = datas[i].type;
-            that.list_content[i].symbol = datas[i].symbol;
-            that.list_content[i].share = datas[i].share;
-            that.list_content[i].price = datas[i].price;
-            that.list_content[i].transaction_time = datas[i].transaction_time;
-            that.list_content[i].caution_money = datas[i].caution_money;
-            that.list_content[i].id = datas[i].id;
-            that.list_content[i].profits = datas[i].profits;
-            that.list_content[i].update_price = datas[i].update_price;
-            that.list_content[i].target_profit_price =datas[i].target_profit_price;
-            that.list_content[i].stop_loss_price = datas[i].stop_loss_price;
-            that.list_content[i].trade_fee = datas[i].trade_fee;
-            that.list_content[i].overnight_money = datas[i].overnight_money;
+          	if(that.legal_id == datas[i].legal && that.currency_id == datas[i].currency){
+          		arr.push(datas[i]);
+          	}
           }
+          that.list_content = arr;
         }
       });
     },
@@ -550,12 +541,6 @@ export default {
         });
     }
   },
-  destroyed() {
-    let that = this;
-    if (that.leverDealall) {
-      clearInterval(that.leverDealall);
-    }
-  }
 };
 </script>
 <style scoped>

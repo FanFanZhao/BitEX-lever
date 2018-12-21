@@ -6,7 +6,7 @@
                <!-- <div class="swiper-slide sliders" v-for="(item,index) in swiperImgs" :key="index"> -->
                    <a href="">
                    <!-- <img :src="item.thumbnail" /> -->
-                   <img src="http://www.2kex.com/upload/1543204418600761.jpg" alt="">
+                   <img src="../assets/images/index-header.jpg" alt="">
                    </a>
                </div>
             </div>

@@ -64,7 +64,6 @@ export default {
       page: 1,
       more: "加载更多",
       status: 0,
-      set: function() {},
       flag:true
     };
   },
@@ -74,10 +73,7 @@ export default {
     // that.currency_id = localStorage.getItem("currency_id");
     that.init();
     if (that.status == 0 || that.status == 1) {
-       setTimeout(function(){
-         that.polling();
-       },2000)
-      
+      that.polling();
     }
   },
   filters: {
@@ -186,7 +182,6 @@ export default {
       that.page = 1;
       that.init();
       that.flag = false;
-      clearInterval(that.set);
       if (type == 0 || type == 1) {
          that.polling();
       }
@@ -254,12 +249,6 @@ export default {
       });
     }
   },
-  destroyed() {
-    let that = this;
-    if (that.set) {
-      clearInterval(that.set);
-    }
-  }
 };
 </script>
 <style scoped>

@@ -40,7 +40,6 @@ export default {
       legal_name: "",
       currency_id: "",
       legal_id: "",
-      buySell:function(){}
     };
   },
   filters: {
@@ -155,12 +154,6 @@ export default {
     },
 
   },
-  destroyed(){
-    let that = this;
-    if(that.buySell){
-      clearInterval(that.buySell)
-    }
-  }
 };
 </script>
 
