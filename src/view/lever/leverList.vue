@@ -13,9 +13,9 @@
         <span class="width1">开仓价</span>
         <span class="width1">当前价</span>
         <span class="width1">止盈价</span>
+        <span class="width1">止损价</span>
         <span class="width1">保证金</span>
         <span class="width1">可用保证金</span>
-        <span class="width1">止损价</span>
         <span class="width2">开仓时间</span>
         <span class="width2" v-if="status == 3">平仓时间</span>
         <span class="width1">手续费</span>
