@@ -10,7 +10,8 @@
     <ul class="list_head ft14">
       <li class="flex" v-if="list_content.length">
         <span class="width2">类型</span>
-        <span class="width1">开仓价</span>
+        <span class="width1" v-if="status == 0 || status == 4">委托价</span>
+        <span class="width1" v-else>开仓价</span>
         <span class="width1">当前价</span>
         <span class="width1">止盈价</span>
         <span class="width1">止损价</span>
@@ -28,7 +29,8 @@
     <ul class="list_content fColor1 ft12">
       <li v-for="(item,index) in list_content" :key="index" class="flex">
         <span class="width2">{{item.type == 1? '买入':'卖出'}} {{item.symbol}} x{{item.share}}</span>
-        <span class="width1">{{item.price || '0.00' | tofixedFour}}</span>
+        <span class="width1" v-if="status == 0 || status == 4">{{item.origin_price || '0.00' | tofixedFour}}</span>
+        <span class="width1" v-else>{{item.price || '0.00' | tofixedFour}}</span>
         <span class="width1">{{item.update_price || '0.00' | tofixedFour}}</span>
         <span class="width1">{{item.target_profit_price || '0.00' | tofixedFour}}</span>
         <span class="width1">{{item.stop_loss_price || '0.00' | tofixedFour}}</span>
