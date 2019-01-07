@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       name: "法币账户",
-      leverName: "杠杆账户",
+      leverName: "合约账户",
       totalMoney: "",
       leverMoney: "",
       tradeMoney: "",
@@ -85,11 +85,11 @@ export default {
       if (that.type == 1) {
         that.type = 2;
         that.name = "法币账户";
-        that.leverName = "杠杆账户";
+        that.leverName = "合约账户";
         that.totalMoney = that.tradeMoney;
       } else {
         that.type = 1;
-        that.name = "杠杆账户";
+        that.name = "合约账户";
         that.leverName = "法币账户";
         that.totalMoney = that.leverMoney;
       }

@@ -91,7 +91,7 @@
           </div>
           <div>
             <div>全球数字资产交易平台</div>
-            <div>支持杠杆交易、法币交易的区块链数字资产交易平台，由全球多国多领域顶级人才构成的精英团队，在系统安全、微秒级高负载、金融领域拥有资深经验</div>
+            <div>支持合约交易、法币交易的区块链数字资产交易平台，由全球多国多领域顶级人才构成的精英团队，在系统安全、微秒级高负载、金融领域拥有资深经验</div>
           </div>
         </div>
         <div class="notice flex">
@@ -120,7 +120,7 @@
           <img src="../assets/images/homemb.jpg" alt="">
            <div>
             <div> 随时随地 不错过任何机会</div>
-            <p> 实时交易：买入、卖出、杠杆</p>
+            <p> 实时交易：买入、卖出、合约</p>
             <p> 随身充提：充值、提现</p>
             <p>实时提醒：行情提醒、事件提醒</p>
            </div>
@@ -143,7 +143,7 @@
             <dl>
               <dt>关于我们</dt>
               <!-- <router-link to="/c2c" tag="dd">c2c交易</router-link>
-              <router-link to="/leverdealCenter" tag="dd">杠杆交易</router-link> -->
+              <router-link to="/leverdealCenter" tag="dd">合约交易</router-link> -->
               <dd v-for="item in footFrist" @click="goDetail(item.id)">{{item.title}}</dd>
             </dl>
             <dl>
@@ -155,8 +155,8 @@
             </dl>
             <dl>
               <dt>联系我们</dt>
-              <dd>客服QQ：3044274988</dd>
-              <dd>联系邮箱：dfhsijiang1258@gmail.com</dd>
+              <dd>客服QQ：644285595</dd>
+              <dd>联系邮箱：644285595@qq.com</dd>
             </dl>
           </div>
           <p>©2014-2018 www.965kj.net,All Rights Reserved</p>

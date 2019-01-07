@@ -338,7 +338,7 @@ export default new Router({
 			]
 
 		},
-	    // 杠杆管理
+	    // 合约管理
 		{
 			
 			path:'/lever_manger',

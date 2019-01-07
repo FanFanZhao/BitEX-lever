@@ -3,14 +3,14 @@
         <indexHeader></indexHeader>
         <div class="content ft14">
             <div class="topcontent ft20 fColor1">
-                <span class="baseColor">杠杆账户</span>
+                <span class="baseColor">合约账户</span>
                 <span class="ft12" style="padding:0 10px">></span>
-                <span>杠杆管理</span>
+                <span>合约管理</span>
             </div>
             <div class="mainbox">
                 <div class="main-left fl">
                     <div class="bar-hd fColor1 pl10">
-                        <p class="ft16 bar-title">杠杆账户</p>
+                        <p class="ft16 bar-title">合约账户</p>
                         <ul class="flex">
                             <li class="active">USDT</li>
                             <li>BTC</li>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="main-right ft">
                     <div class="ttBk fColor1 blod topshadow mr-title">
-                        <span class="ft16 bold">ETH/USDT 杠杆账户</span>
+                        <span class="ft16 bold">ETH/USDT 合约账户</span>
                         <span class="ml10 fColor4">当风险率≤110%时，账户将触发爆仓以归还借贷资金</span>
                     </div>
                     <div class="mod-bd">
@@ -101,7 +101,7 @@
                 <div class="ap-list">
                     <ul class="fColor3 flex ft12 ul-title">
                         <li class="w18">申请时间</li>
-                        <li class="w15">杠杆账户</li>
+                        <li class="w15">合约账户</li>
                         <li class="w8">币种</li>
                         <li class="w8 tr">数量</li>
                         <li class="w10 tr">利率</li>
@@ -119,7 +119,7 @@
                 <div class="ap-list">
                     <ul class="fColor3 flex ft12 ul-title">
                         <li class="w18">申请时间</li>
-                        <li class="w15">杠杆账户</li>
+                        <li class="w15">合约账户</li>
                         <li class="w8">币种</li>
                         <li class="w8 tr">数量</li>
                         <li class="w10 tr">利率</li>

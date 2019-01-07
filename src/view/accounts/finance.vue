@@ -234,7 +234,7 @@ export default {
       ],
       page: 1,
       more: "加载更多",
-      balanceList: ["法币账户", "杠杆账户"],
+      balanceList: ["法币账户", "合约账户"],
       transferData: {
         modalShow: false,
         transferName: "",

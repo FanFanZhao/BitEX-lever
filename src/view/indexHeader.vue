@@ -7,7 +7,7 @@
 				<li  class="base" ><router-link to="/" exact>首页</router-link></li>
 				<!-- <li  class="base" ><router-link to="/c2c">C2C交易</router-link></li> -->
 				<li  class="base"><router-link to="/legalTrade">法币交易</router-link></li>
-        <li  class="base"><router-link to="/leverdealCenter">杠杆交易</router-link></li>
+        <li  class="base"><router-link to="/leverdealCenter">合约交易</router-link></li>
         <li  class="base" v-if="isShow"><router-link to="/myLegalShops">我的商铺</router-link></li>
         <li  class="base"><router-link to="/finance">我的资产</router-link></li>
         <li  class="base"><router-link to="/noticeList">帮助中心</router-link></li>
@@ -111,7 +111,7 @@ export default {
         { title: "法币交易", page: "c2c" },
         // { title: "币币交易", page: "dealCenter" },
         // { title: "安全设置", page: "userSetting" },
-        { title: "杠杆交易", page: "leverdealCenter" },
+        { title: "合约交易", page: "leverdealCenter" },
         // { title: "我的资产", page: "homeContent" },
         {title:"收款设置",page:"userSetting"}
       ],

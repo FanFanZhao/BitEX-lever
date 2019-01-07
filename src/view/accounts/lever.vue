@@ -11,7 +11,7 @@
         </div>
         <div class="leverbody contentBK ft12">
             <ul class="titlebox fColor3 clearfix">
-                <li class="w16">杠杆账户</li>
+                <li class="w16">合约账户</li>
                 <li class="w20 tr">可用</li>
                 <li class="w20 tr">冻结</li>
                 <!-- <li class="w16 tr">已借</li> -->
@@ -54,7 +54,7 @@
                         </div>
                         <div class="flex alcenter frombox">
                             <span class="fColor3 ft12 tc">到</span>
-                            <p class="ft14 flex1">BTC/{{nowCoin.currency_name}}杠杆账户</p>
+                            <p class="ft14 flex1">BTC/{{nowCoin.currency_name}}合约账户</p>
                         </div>
                     </div>
                     <div class="div-input mt20">
@@ -94,7 +94,7 @@
                     <div class="dia-container">
                         <div class="flex alcenter frombox">
                             <span class="fColor3 ft12 tc">从</span>
-                            <p class="ft14 flex1">BTC/{{nowCoin.currency_name}}杠杆账户</p>
+                            <p class="ft14 flex1">BTC/{{nowCoin.currency_name}}合约账户</p>
                         </div>
                         <div class="frombox flex alcenter w10 tc">
                             <img src="@/assets/images/trade.png" alt="" class="coinimg">                      

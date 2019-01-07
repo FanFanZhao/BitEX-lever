@@ -18,7 +18,7 @@
 					{
 						src1: require("@/assets/images/icon_delegate.png"),
 						src2: require("@/assets/images/icon_delegate_s.png"),
-						text: '杠杆账户',
+						text: '合约账户',
 						page:'finance',
 						children:['finance']
 					},

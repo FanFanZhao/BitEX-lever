@@ -5,7 +5,7 @@
                 <span>当前委托</span>
             </div>
             <div class="inblock fr">
-                <span class="all" @click="links">杠杆持仓</span>
+                <span class="all" @click="links">合约持仓</span>
                 <span class="all" @click="all">全部</span>
                 <span class="all" @click="recordList">交易记录</span>
             </div>
@@ -109,7 +109,7 @@ export default {
         all(){
             this.$router.push({name:'allTransaction'})
         },
-        // 杠杆持仓
+        // 合约持仓
         links(){
             this.$router.push({name:'leverTransactions'})
         },
