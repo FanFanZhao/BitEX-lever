@@ -15,15 +15,15 @@
           <div class="appcode tl" v-show="appshow">
             <span></span>
             <div class="app-left">
-              <p class="code"><img src="@/assets/images/qrcode.png" alt=""></p>
+              <p class="code"><img src="@/assets/images/qrcode2.png" alt=""></p>
               <p class="texts">扫码下载</p>
             </div>
-            <div class="app-right">
+            <!-- <div class="app-right">
               <a href="http://www.bitex.ren/download/bitex.exe">
                 <b><img src="../assets/images/windows.png" alt=""></b>
                 <p class="texts"> <img src="../assets/images/down.png" alt=""> 点击下载</p>
               </a>
-            </div>
+            </div> -->
             
           </div>
         </li>
@@ -499,15 +499,18 @@ export default {
     position: absolute;
     top: 50px;
     z-index: 10;
-    left: -80px;
-    width: 260px;
+    // left: -80px;
+    left: 0;
+    // width: 260px;
+    width: 130px;
     background-color: #fff;
     height: 140px;
     border-radius: 4px;
     span{
         position: absolute;
         top: -20px;
-        left: 130px;
+        // left: 130px;
+        left:55px;
         display: inline-block;
         width: 0;
         height: 0;
@@ -516,14 +519,14 @@ export default {
         border-color:  transparent transparent #fff  transparent ;
     }
     .app-left{
-      width: 110px;
+      width: 130px;
       float: left;
       text-align: center;
       position: relative;
       .code{
         position: relative;
         top: 5px;
-        left: 10px;
+        left: 0px;
         img{
           width: 100px;
           height: 100px;
