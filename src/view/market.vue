@@ -52,7 +52,7 @@ export default {
       isShow: 0,
       tabList: [],
       marketList: [],
-      newData: ["BitEX", "$0.076128", "-1.11%"],
+      newData: ["MTS", "$0.076128", "-1.11%"],
       legal_index: this.$route.params.legal_index,
       currency_index: this.$route.params.currency_index,
       tradeDatas: "",

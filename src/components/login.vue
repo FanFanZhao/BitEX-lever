@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="right-tip ">
-                        <p>还不是BitEX的用户？</p>
+                        <p>还不是MTS的用户？</p>
                         <p>立即注册，在全球领先的数字资产交易平台开始交易。</p>
                         <router-link :to="{ name: 'register'}">
                             <p class="baseColor mt20">免费注册</p>

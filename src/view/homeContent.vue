@@ -14,7 +14,7 @@
         </div>
         <div class="topusdt">
           <ul class="flex">
-            <li v-for="(item,index) in quotation" v-if="item.is_display == 1" :key="index">
+            <li v-for="(item,index) in quotation" v-if="item.is_display == 1 &&index<5" :key="index">
               <div class="flex ft12 between" :data-name='item.currency_name+"/"+item.legal_name'>
                 <div>
                   <p>{{item.currency_name}}/{{item.legal_name}}</p>
@@ -108,7 +108,7 @@
           <div>
             <div class="notpic3"></div>
             <div>极速交易安全稳定</div>
-            <div>超高性能技术架构，多级数据灾备，1:1准备金仓储，BitEX不仅仅是交易所也是您的高级资产安全管理钱包！</div>
+            <div>超高性能技术架构，多级数据灾备，1:1准备金仓储，MTS不仅仅是交易所也是您的高级资产安全管理钱包！</div>
           </div>
           <div>
             <div class="notpic4"></div>
@@ -159,7 +159,7 @@
               <dd>联系邮箱：dfhsijiang1258@gmail.com</dd>
             </dl>
           </div>
-          <p>©2014-2018 BitEX.ren,All Rights Reserved</p>
+          <p>©2014-2018 www.965kj.net,All Rights Reserved</p>
         </footer>
     </div>
 </template>
