@@ -18,12 +18,12 @@
               <p class="code"><img src="@/assets/images/qrcode2.png" alt=""></p>
               <p class="texts">扫码下载</p>
             </div>
-            <!-- <div class="app-right">
-              <a href="http://www.bitex.ren/download/bitex.exe">
+            <div class="app-right">
+              <a href="http://www.965kj.net/mts.exe">
                 <b><img src="../assets/images/windows.png" alt=""></b>
                 <p class="texts"> <img src="../assets/images/down.png" alt=""> 点击下载</p>
               </a>
-            </div> -->
+            </div>
             
           </div>
         </li>
@@ -499,18 +499,15 @@ export default {
     position: absolute;
     top: 50px;
     z-index: 10;
-    // left: -80px;
-    left: 0;
-    // width: 260px;
-    width: 130px;
+    left: -80px;
+    width: 260px;
     background-color: #fff;
     height: 140px;
     border-radius: 4px;
     span{
         position: absolute;
         top: -20px;
-        // left: 130px;
-        left:55px;
+        left: 130px;
         display: inline-block;
         width: 0;
         height: 0;
@@ -526,7 +523,7 @@ export default {
       .code{
         position: relative;
         top: 5px;
-        left: 0px;
+        left: 10px;
         img{
           width: 100px;
           height: 100px;
