@@ -38,7 +38,7 @@
       </div>
       <div class="main-bottom flex">
         <div class="tran-box">
-          <leverTransaction></leverTransaction>
+          <leverTransactions></leverTransactions>
         </div>
         <div class="trade-box">
           <trade></trade>
@@ -62,6 +62,8 @@ import detail from "@/view/detail";
 import currency from "@/view/currency";
 import complete from "@/view/complete";
 import leverTransaction from "@/view/lever/lever_transaction";
+import leverTransactions from "@/view/lever_transactions";
+
 // import kline from "@/view/lever/lever_kline";
 import tv from '../view/tv'
 export default {
@@ -82,6 +84,7 @@ export default {
     currency,
     complete,
     leverTransaction,
+    leverTransactions,
     // kline
   },
   data() {
@@ -119,11 +122,11 @@ export default {
         height: 500px;
       }
       .tran-box{
-        width: calc(100% - 606px);
+        width: calc(100% - 490px);
         height: 650px;
       }
       .trade-box{
-        width: 600px;
+        width: 480px;
         height: 650px;
       }
     }

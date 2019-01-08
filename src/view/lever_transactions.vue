@@ -1,110 +1,121 @@
 <template>
   <div class="wrap">
-    <div class="lever-header fColor1 mb15">风险率：{{riskRate}}%</div>
-    <div class="total-pro fColor1 clearfix">
-      <p class="fl">
-        持仓总盈亏：
-        <span :class="['red','flex1',{'green':totalPro > 0}]">{{totalPro | tofixedFour}}</span>
-        <br>
-        <!-- <span style="margin-top:5px;display:block;">
-          当前盈亏：
-          <b :class="['red','flex1',{'green':profitsPrice > 0}]">{{profitsPrice | tofixedFour}}</b>
-        </span> -->
-      </p>
-
-      <button class="fr" type="button" @click="stopTotal()">一键平仓</button>
+    <div class="title fColor1 topshadow">
+        <div class="inblock">
+            <span>合约持仓</span>
+        </div>
+        <div class="inblock fr nextlink">
+            <span class="all curPer" @click="all">当前委托</span>
+            <span class="all curPer" @click="recordList">交易记录</span>
+        </div>
     </div>
-    <ul class="list_head ft14">
-      <li class="flex">
-        <span class="width2">类型</span>
-        <span class="width1">开仓价</span>
-        <span class="width1">当前价</span>
-        <span class="width1">保证金</span>
-        <span class="width1">止盈价</span>
-        <span class="width1">止损价</span>
-        <span class="width2">开仓时间</span>
-        <span class="width1">手续费</span>
-        <span class="width1">隔夜费</span>
-        <span class="width1">盈亏</span>
-        <span class="width3">操作</span>
-      </li>
-    </ul>
-    <ul class="list_content fColor1 ft12">
-      <li v-for="(item,index) in list_content" :key="index" class="flex alcenter">
-        <span class="width2">{{item.type == 1? '买入':'卖出'}} {{item.symbol}} x{{item.share}}</span>
-        <span class="width1">{{item.price || '0.00' | tofixedFour}}</span>
-        <span class="width1">{{item.update_price || '0.00' | tofixedFour}}</span>
-        <span class="width1">{{item.caution_money || '0.00' | tofixedFour}}</span>
-        <span class="width1">{{item.target_profit_price || '0.00' | tofixedFour}}</span>
-        <span class="width1">{{item.stop_loss_price || '0.00' | tofixedFour}}</span>
-        <span class="width2">{{item.transaction_time}}</span>
-        <span class="width1">{{item.trade_fee || '0.00' | tofixedFour}}</span>
-        <span class="width1">{{item.overnight_money || '0.00' | tofixedFour}}</span>
-        <span
-          :class="['red','width1',{'green':item.profits > 0}]"
-        >{{item.profits || '0.00' | tofixedFour}}</span>
-        <div class="width3">
-          <span class="stop-btn" @click="stopLoss(item.id)">设置止盈止损</span>
-          <span @click="pingcang(item.id)">平仓</span>
-        </div>
-      </li>
-    </ul>
-    <div class="mores" @click="load_more">
-      <img v-if="list_content.length == 0" src="../assets/images/nodata.png" alt>
-      <span>{{more}}</span>
-    </div>
+    <div style="margin:10px">
+      <div class="lever-header fColor1 mb15">风险率：{{riskRate}}%</div>
+      <div class="total-pro fColor1 clearfix">
+        <p class="fl">
+          持仓总盈亏：
+          <span :class="['red','flex1',{'green':totalPro > 0}]">{{totalPro | tofixedFour}}</span>
+          <br>
+          <!-- <span style="margin-top:5px;display:block;">
+            当前盈亏：
+            <b :class="['red','flex1',{'green':profitsPrice > 0}]">{{profitsPrice | tofixedFour}}</b>
+          </span> -->
+        </p>
 
-    <!-- 止盈止损弹窗 -->
-    <div class="loss-modal flex" v-show="modalShow">
-      <div class="content">
-        <div class="loss-modal-header">
-          <h3>设置止盈止损</h3>
-          <p @click="closeMosal()">X</p>
-        </div>
-        <div class="loss-madal-content">
-          <div class="flex">
-            <span>止盈价格：</span>
-            <p>
-              <span @click="reduce(1)">-</span>
-              <input type="text" v-model="targetProfit" @input="inputValue(1)">
-              <span @click="add(1)">+</span>
-            </p>
+        <button class="fr" type="button" @click="stopTotal()">一键平仓</button>
+      </div>
+      <ul class="list_head ft14">
+        <li class="flex">
+          <span class="width2">类型</span>
+          <span class="width1">开仓价</span>
+          <span class="width1">当前价</span>
+          <span class="width1">保证金</span>
+          <span class="width1">止盈价</span>
+          <span class="width1">止损价</span>
+          <span class="width2">开仓时间</span>
+          <span class="width1">手续费</span>
+          <span class="width1">隔夜费</span>
+          <span class="width1">盈亏</span>
+          <span class="width3">操作</span>
+        </li>
+      </ul>
+      <ul class="list_content fColor1 ft12">
+        <li v-for="(item,index) in list_content" :key="index" class="flex alcenter">
+          <span class="width2">{{item.type == 1? '买入':'卖出'}} {{item.symbol}} x{{item.share}}</span>
+          <span class="width1">{{item.price || '0.00' | tofixedFour}}</span>
+          <span class="width1">{{item.update_price || '0.00' | tofixedFour}}</span>
+          <span class="width1">{{item.caution_money || '0.00' | tofixedFour}}</span>
+          <span class="width1">{{item.target_profit_price || '0.00' | tofixedFour}}</span>
+          <span class="width1">{{item.stop_loss_price || '0.00' | tofixedFour}}</span>
+          <span class="width2">{{item.transaction_time}}</span>
+          <span class="width1">{{item.trade_fee || '0.00' | tofixedFour}}</span>
+          <span class="width1">{{item.overnight_money || '0.00' | tofixedFour}}</span>
+          <span
+            :class="['red','width1',{'green':item.profits > 0}]"
+          >{{item.profits || '0.00' | tofixedFour}}</span>
+          <div class="width3">
+            <span class="stop-btn" @click="stopLoss(item.id)">设置止盈止损</span>
+            <span @click="pingcang(item.id)">平仓</span>
           </div>
-          <p class="modal-text">预期盈利：{{modalProfit}}</p>
-          <div class="flex">
-            <span>止损价格：</span>
-            <p>
-              <span @click="reduce(2)">-</span>
-              <input type="text" v-model="stopLose" @input="inputValue(2)">
-              <span @click="add(2)">+</span>
-            </p>
+        </li>
+      </ul>
+      <div class="mores" @click="load_more">
+        <img v-if="list_content.length == 0" src="../assets/images/nodata.png" alt>
+        <span>{{more}}</span>
+      </div>
+
+      <!-- 止盈止损弹窗 -->
+      <div class="loss-modal flex" v-show="modalShow">
+        <div class="content">
+          <div class="loss-modal-header">
+            <h3>设置止盈止损</h3>
+            <p @click="closeMosal()">X</p>
           </div>
-          <p class="modal-text">预期亏损：{{modalStop}}</p>
-        </div>
-        <div class="modal-btn">
-          <button type="button" @click="closeMosal()">取消</button>
-          <button type="button" @click="comfirm()">确认</button>
+          <div class="loss-madal-content">
+            <div class="flex">
+              <span>止盈价格：</span>
+              <p>
+                <span @click="reduce(1)">-</span>
+                <input type="text" v-model="targetProfit" @input="inputValue(1)">
+                <span @click="add(1)">+</span>
+              </p>
+            </div>
+            <p class="modal-text">预期盈利：{{modalProfit}}</p>
+            <div class="flex">
+              <span>止损价格：</span>
+              <p>
+                <span @click="reduce(2)">-</span>
+                <input type="text" v-model="stopLose" @input="inputValue(2)">
+                <span @click="add(2)">+</span>
+              </p>
+            </div>
+            <p class="modal-text">预期亏损：{{modalStop}}</p>
+          </div>
+          <div class="modal-btn">
+            <button type="button" @click="closeMosal()">取消</button>
+            <button type="button" @click="comfirm()">确认</button>
+          </div>
         </div>
       </div>
-    </div>
-    <!-- 一键平仓弹窗 -->
-    <div class="loss-modal flex" v-show="stopModal">
-      <div class="content">
-        <div class="loss-modal-header">
-          <h5>确认平仓</h5>
-          <p @click="closeStopModal()">X</p>
-        </div>
-        <div class="stopModal">
-          <span :class="['stopall',{'alls':selectType == 'all'}]" @click="selectStop('all')">全部平仓</span>
-          <span :class="['stopbuy',{'buys':selectType == 'buy'}]" @click="selectStop('buy')">只平多单</span>
-          <span
-            :class="['stopsell',{'sells':selectType == 'sell'}]"
-            @click="selectStop('sell')"
-          >只平空单</span>
-        </div>
-        <div class="stop-modal-btns">
-          <button type="button" @click="closeStopModal()">取消</button>
-          <button type="button" @click="comfirmModal()">确认</button>
+      <!-- 一键平仓弹窗 -->
+      <div class="loss-modal flex" v-show="stopModal">
+        <div class="content">
+          <div class="loss-modal-header">
+            <h5>确认平仓</h5>
+            <p @click="closeStopModal()">X</p>
+          </div>
+          <div class="stopModal">
+            <span :class="['stopall',{'alls':selectType == 'all'}]" @click="selectStop('all')">全部平仓</span>
+            <span :class="['stopbuy',{'buys':selectType == 'buy'}]" @click="selectStop('buy')">只平多单</span>
+            <span
+              :class="['stopsell',{'sells':selectType == 'sell'}]"
+              @click="selectStop('sell')"
+            >只平空单</span>
+          </div>
+          <div class="stop-modal-btns">
+            <button type="button" @click="closeStopModal()">取消</button>
+            <button type="button" @click="comfirmModal()">确认</button>
+          </div>
         </div>
       </div>
     </div>
@@ -157,6 +168,17 @@ export default {
     }
   },
   methods: {
+    all(){
+        this.$router.push({name:'leverTransaction'})
+    },
+    // 合约持仓
+    links(){
+        this.$router.push({name:'leverTransactions'})
+    },
+    // 跳转交易记录
+    recordList(){
+        this.$router.push({name:'leverList'}) 
+    },
     init() {
       this.more = "加载中...";
       this.$http({
@@ -547,12 +569,13 @@ export default {
 .total-pro {
   margin-bottom: 20px;
 }
+.title{height: 48px;line-height: 46px;padding: 0 40px 0 30px;background-color: #181b2a;}
 .wrap {
   min-height: 500px;
   background: #181b2a;
-  width: 97%;
-  margin: 30px auto;
-  padding: 30px;
+  width: 100%;
+  /* margin: 0 auto 30px auto; */
+  /* padding: 30px; */
 }
 ul li {
   padding: 8px 0;
@@ -590,6 +613,9 @@ ul li div span {
 .stop-btn {
   margin-right: 10px;
 }
+.nextlink span:hover{
+  color: #638bd4;
+}
 .mores {
   color: #999;
   font-size: 14px;
@@ -615,7 +641,7 @@ ul li div span {
   text-align: center;
 }
 .width3 {
-  width: 20%;
+  width: 21%;
   text-align: center;
 }
 .loss-modal {

@@ -5,7 +5,7 @@
                 <span>当前委托</span>
             </div>
             <div class="inblock fr">
-                <span class="all" @click="links">合约持仓</span>
+                <!-- <span class="all" @click="links">合约持仓</span> -->
                 <span class="all" @click="all">全部</span>
                 <span class="all" @click="recordList">交易记录</span>
             </div>
@@ -34,7 +34,7 @@
 </template>
 <script>
 export default {
-    name:"detail",
+    name:"leverTransaction",
     data (){
         return{
             address:'',
@@ -144,6 +144,7 @@ export default {
 }
 </script>
 <style scoped>
+.detail{margin: 30px;}
 .red{
     color: #cc4951;
     cursor: pointer;

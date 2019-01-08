@@ -914,10 +914,10 @@ export default {
   margin-right: 40px;
 }
 .content .first {
-  padding: 0 15px 0 25px;
+  padding: 0 10px 0 15px;
 }
 .content .second {
-  padding: 0 25px 0 15px;
+  padding: 0 15px 0 10px;
 }
 .available {
   height: 48px;
@@ -992,7 +992,7 @@ input:disabled {
   font-size: 14px;
   color: #fff;
   line-height: 1.2;
-  width: 23.5%;
+  width: 22.5%;
   text-align: center;
   padding: 5px 0;
   margin-right: 3.14px;

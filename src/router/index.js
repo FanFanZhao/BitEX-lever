@@ -41,6 +41,7 @@ import transferLegal from '@/view/accounts/transferLegal'
 import transferLog from '@/view/transfer_log'
 import allTransaction from '@/view/all_transaction'
 import leverTransactions from '@/view/lever_transactions'
+import leverTransaction from '@/view/lever/lever_transaction'
 import leverList from '@/view/lever/leverList'
 import transferRecord from '@/view/lever/transferRecord'
 
@@ -180,6 +181,11 @@ export default new Router({
 					path:'/leverTransactions',
 					name:'leverTransactions',
 					component:leverTransactions
+				},
+				{
+					path:'/leverTransaction',
+					name:'leverTransaction',
+					component:leverTransaction
 				},
 				{
 					path:'/leverList',
