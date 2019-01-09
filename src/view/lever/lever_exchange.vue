@@ -13,14 +13,14 @@
       <ul class="list-item ft12 tc">
         <li class="curPer" v-for="(out,index) in outlist" :key="out.id" @click="price(out.price)">
           <span class="red">卖 {{outlist.length-index}}</span>
-          <span>{{out.price | tofixedFour}}</span>
-          <span>{{out.number | tofixed}}</span>
+          <span>{{out[0] | tofixedFour}}</span>
+          <span>{{out[1] | tofixed}}</span>
         </li>
         <div class="line"></div>
         <li class="curPer" v-for="(buy,index) in inlist" :key="index" @click="price(buy.price)">
           <span class="green">买 {{index+1}}</span>
-          <span>{{buy.price | tofixedFour}}</span>
-          <span>{{buy.number | tofixed}}</span>
+          <span>{{buy[0] | tofixedFour}}</span>
+          <span>{{buy[1] | tofixed}}</span>
         </li>
       </ul>
     </div>
@@ -58,7 +58,7 @@ export default {
   created: function() {
     let that = this;
     var local_lid = window.localStorage.getItem("lever_l_id"),
-      local_cid = window.localStorage.getItem("lever_c_id");
+    local_cid = window.localStorage.getItem("lever_c_id");
     that.legal_id = localStorage.getItem("legal_id");
     that.currency_id = localStorage.getItem("currency_id");
     that.legal_name = localStorage.getItem("legal_name");
@@ -86,16 +86,16 @@ export default {
       })
         .then(res => {
           if (res.data.type == "ok") {
-            that.inlist = res.data.message.lever_transaction.in;
-            that.outlist = res.data.message.lever_transaction.out.reverse();
+            // that.inlist = res.data.message.lever_transaction.in;
+            // that.outlist = res.data.message.lever_transaction.out.reverse();
             that.newData = res.data.message.last_price;
             window.localStorage.setItem('lastPrice',that.newData);
             that.buyInfo.buyPrice = 0;
             that.buyInfo.buyNum = 0;
-            that.connect(
-              legals_id,
-              currencys_id
-            );
+            // that.connect(
+            //   legals_id,
+            //   currencys_id
+            // );
           } else if (res.data.type == "999") {
             this.$router.push("/components/login");
           } else {
@@ -106,11 +106,46 @@ export default {
           // console.log(error)
         });
     },
-    connect(legal_id, currency_id) {
+    // connect(legal_id, currency_id) {
+    //   var that = this;
+    //   that.$socket.emit("login", localStorage.getItem("user_id"));
+    //   that.$socket.on("lever_data", msg => {
+    //     if (msg.type == "lever_data") {
+    //       console.log(msg)
+    //       //组件间传值
+    //       var newPrice = {
+    //         newprice: msg.last_price,
+    //         newup: msg.proportion,
+    //         istoken: msg.token,
+    //         yesprice: msg.yesterday,
+    //         toprice: msg.today
+    //       };
+    //       setTimeout(() => {
+    //         eventBus.$emit("toNew01", newPrice);
+    //       }, 1000);
+    //       var inData = JSON.parse(msg.in);
+    //       var outData = JSON.parse(msg.out).reverse();
+    //       if (msg.currency_id == currency_id && msg.legal_id == legal_id) {
+    //         that.inlist = inData;
+    //         that.outlist = outData;
+    //         for(let i in inData){
+    //           that.inlist[i].price = inData[i].price;
+    //           that.inlist[i].number = inData[i].number;
+    //         }
+    //         for(let i in outData){
+    //           that.outlist[i].price = outData[i].price;
+    //           that.outlist[i].number = outData[i].number;
+    //         }
+    //       }
+    //     }
+    //   });
+    // },
+     connect(legal_id, currency_id) {
       var that = this;
       that.$socket.emit("login", localStorage.getItem("user_id"));
-      that.$socket.on("lever_data", msg => {
-        if (msg.type == "lever_data") {
+      that.$socket.on("market_depth", msg => {
+        if (msg.type == "market_depth") {
+          console.log(msg)
           //组件间传值
           var newPrice = {
             newprice: msg.last_price,
@@ -122,8 +157,9 @@ export default {
           setTimeout(() => {
             eventBus.$emit("toNew01", newPrice);
           }, 1000);
-          var inData = JSON.parse(msg.in);
-          var outData = JSON.parse(msg.out).reverse();
+          var inData = JSON.parse(msg.bids);
+          var outData = JSON.parse(msg.asks).reverse();
+          console.log(inData)
           if (msg.currency_id == currency_id && msg.legal_id == legal_id) {
             that.inlist = inData;
             that.outlist = outData;
