@@ -154,9 +154,9 @@
               <router-link to="/forgetPwd" tag="dd">找回密码</router-link> -->
             </dl>
             <dl>
-              <dt>联系我们</dt>
+              <!-- <dt>联系我们</dt>
               <dd>客服QQ：495631438</dd>
-              <dd>联系邮箱：495631438@qq.com</dd>
+              <dd>联系邮箱：495631438@qq.com</dd> -->
             </dl>
           </div>
           <p>©2014-2018 www.965kj.net,All Rights Reserved</p>
