@@ -32,7 +32,7 @@
            
             getData(){
                     this.$http({
-                        url: 'http://www.2kex.com/api/deal/info',
+                        url: 'http://www.965kj.net/api/deal/info',
                         method:'post',
                         data:{
                            legal_id:3,

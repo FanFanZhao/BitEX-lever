@@ -38,7 +38,7 @@
               _that.Kline.symbol="BTC/coin4";
               _that.Kline.symbolName="COIN5_COIN4";
               _that.Kline.type="poll"; 
-              _that.Kline.url='http://www.2kex.com/api/deal/info';
+              _that.Kline.url='http://www.965kj.net/api/deal/info';
               _that.Kline.limit=1000;
               _that.Kline.intervalTime=50000;
               _that.Kline.debug=true;
