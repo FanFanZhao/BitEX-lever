@@ -526,11 +526,11 @@ export default {
                   (totalPrice * transactionFee) / 100
                 ).toFixed(4);
                 if (type == "buy") {
-                  that.totalPriceBuy = (bond * share).toFixed(4);
+                  that.totalPriceBuy = (bond * share * shareNum).toFixed(4);
                   that.trandeFreeBuy = tradeFreeValue;
                   that.bonsBuy = bondsValue;
                 } else {
-                  that.totalPrice = (bond * share).toFixed(4);
+                  that.totalPrice = (bond * share * shareNum).toFixed(4);
                   that.trandeFree = tradeFreeValue;
                   that.bons = bondsValue;
                 }
