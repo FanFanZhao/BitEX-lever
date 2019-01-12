@@ -15,45 +15,12 @@
 			return {
 				curActive:0,
 				array:[
-					// {
-					// 	src1: require("@/assets/images/icon_mine.png"),
-					// 	src2: require("@/assets/images/icon_mine_s.png"),
-					// 	text: '账户中心',
-					// 	page:'accountCenter',
-					// 	children:['recharge']
-					// },
-
-					// {
-					// 	src1: require("@/assets/images/icon_delegate.png"),
-					// 	src2: require("@/assets/images/icon_delegate_s.png"),
-					// 	text: '我的交易',
-					// 	page:'accountEntrust'
-					// },
 					{
 						src1: require("@/assets/images/icon_account_settings.png"),
 						src2: require("@/assets/images/icon_account_settings_s.png"),
 						text: '账户设置',
 						page:'accountSet'
 					},
-					// {
-					// 	src1: require("@/assets/images/icon_news.png"),
-					// 	src2: require("@/assets/images/icon_news_s.png"),
-					// 	text: '我的消息',
-					// 	page:'accountMessage'
-					// },
-					// {
-					// 	src1: require("@/assets/images/icon_mine.png"),
-					// 	src2: require("@/assets/images/icon_mine_s.png"),
-					// 	text: '承兑商',
-					// 	page:'aceite',
-					// 	children: ['chargeRecord']
-					// },
-					// {
-					// 	src1: require("@/assets/images/s0.png"),
-					// 	src2: require("@/assets/images/s1.png"),
-					// 	text: '区域代理',
-					// 	page:'region',
-					// },
 					{
 						src1: require("@/assets/images/icon_news.png"),
 						src2: require("@/assets/images/icon_news_s.png"),
@@ -65,6 +32,12 @@
 						src2: require("@/assets/images/icon_mine_s.png"),
 						text: '身份认证',
 						page:'authentication',
+					},
+					{
+						src1: require("@/assets/images/icon_news.png"),
+						src2: require("@/assets/images/icon_news_s.png"),
+						text: '支付',
+						page:'payment'
 					},
 				],
 			}

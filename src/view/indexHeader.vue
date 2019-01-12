@@ -31,38 +31,18 @@
 			<div class="fr">
 				<div class="account-box fl positionR curPer flex">
 					<div class="msg_wrap">
-					<!-- <div class="assets_item fColor1 fl" @mouseover="assets_over" @mouseout="assets_out" v-if="address.length>0">
-						<img class="assets_icon_img" src="@/assets/images/assets.png" alt="">
-						<span class="sp">{{assets}}</span>
-						<img src="@/assets/images/arrow0.png" alt="">
-					</div> -->
-					<!-- <div class="order_item fColor1 fl" @mouseover="order_over" @mouseout="order_out" v-if="address.length>0">
-						<img class="order_icon_img" src="@/assets/images/order.png" alt="">
-						<span class="sp">{{orders}}</span>
-						<img src="@/assets/images/arrow0.png" alt="
-					</div> -->
 					<div class="account_login fColor1 fl" @mouseover="mine_over" @mouseout="mine_out"  v-if="address.length>0">
 						<img class="icon_img" src="@/assets/images/account.png" alt="">
 						<span>{{account_number | hideFour}}</span>
-            <!-- <span v-if="extension_code.length>0">(邀请码：{{extension_code}})</span> -->
 						<img src="@/assets/images/arrow0.png" alt="">
 					</div>
 					</div>
-					<!-- <div class="asset-choose ft14 fColor1" v-if="show1" @mouseover="assets_over" @mouseout="assets_out">
-						<p class="curPer" v-for="(item,index) in assetstList" :key="index" @click="gotoAccount(index,item.page)">
-							<img :src="item.src1" alt="">
-							<img :src="item.src2" alt="">
-							<span>{{item.title}}</span>
-						</p>
-						
-					</div> -->
 					<div class=" order-choose ft14 fColor1" v-if="show2" @mouseover="order_over" @mouseout="order_out" >
 						<p class="curPer" v-for="(item,index) in orderList" :key="index" @click="goto(null,item.page)">
 							<img :src="item.src1" alt="">
 							<img :src="item.src2" alt="">
 							<span>{{item.title}}</span>
 						</p>
-						
 					</div>
 					<div class="account-choose mine ft14 fColor1" v-show="show3" @mouseover="mine_over" @mouseout="mine_out"  >
 						<p class="curPer" v-for="(item,index) in accountList" :key="index" @click="goto(null,item.page)">
@@ -106,53 +86,15 @@ export default {
       show3: false,
       current: 0,
       extension_code: "",
-      tabList: [
-        { title: "首页", page: "homeContent" },
-        { title: "法币交易", page: "c2c" },
-        // { title: "币币交易", page: "dealCenter" },
-        // { title: "安全设置", page: "userSetting" },
-        { title: "合约交易", page: "leverdealCenter" },
-        // { title: "我的资产", page: "homeContent" },
-        {title:"收款设置",page:"userSetting"}
-      ],
+      tabList: [],
       
       accountList: [
-        // {
-        //   src1: require("@/assets/images/m0.png"),
-        //   src2: require("@/assets/images/m1.png"),
-        //   title: "我的资产",
-        //   page: "accountCenter"
-        // },
-        // {
-        //   src1: require("@/assets/images/e0.png"),
-        //   src2: require("@/assets/images/e1.png"),
-        //   title: "我的交易",
-        //   page: "accountEntrust"
-        // },
-        // {
-        //   src1: require("@/assets/images/c0.png"),
-        //   src2: require("@/assets/images/c1.png"),
-        //   title: "充值",
-        //   page: "recharge"
-        // },
         {
           src1: require("@/assets/images/z0.png"),
           src2: require("@/assets/images/z1.png"),
           title: "账户设置",
           page: "accountSet"
         },
-        // {
-        //   src1: require("@/assets/images/s0.png"),
-        //   src2: require("@/assets/images/s1.png"),
-        //   title: "承兑商",
-        //   page: "aceite"
-        // },
-        // {
-        //   src1: require("@/assets/images/s0.png"),
-        //   src2: require("@/assets/images/s1.png"),
-        //   title: "区域代理",
-        //   page: "region"
-        // },
         {
           src1: require("@/assets/images/icon_news.png"),
 					src2: require("@/assets/images/icon_news_s.png"),
@@ -171,32 +113,15 @@ export default {
           title: '身份认证',
           page:'authentication',
         },
-      ],
-      assetstList: [
-        // {
-        //   src1: require("@/assets/images/s0.png"),
-        //   src2: require("@/assets/images/s1.png"),
-        //   title: "充币&提币",
-        //   page:'finance'
-		    // },
-	    	{
+        {
           src1: require("@/assets/images/s0.png"),
           src2: require("@/assets/images/s1.png"),
-          title: "交易",
-           page:'finance'
-        }
-      ],
-      orderList: [
-		  {
-          title: "当前委托"
-		},
-		{
-          title: "委托历史"
+          title: "支付",
+          page: "payment"
         },
-		{
-          title: "成交明细"
-        }
-	  ]
+      ],
+      assetstList: [],
+      orderList: []
     };
   },
   filters: {

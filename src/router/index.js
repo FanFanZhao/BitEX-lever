@@ -19,6 +19,7 @@ import accountCenter from '@/view/accountCenter'
 import accountEntrust from '@/view/accountEntrust'
 import accountSet from '@/view/accountSet'
 import authentication from '@/view/authentication'
+import payment from '@/view/payment'
 import accountMessage from '@/view/accountMessage'
 import setCash from '@/components/setCash'
 import recharge from '@/view/recharge'
@@ -44,6 +45,7 @@ import leverTransactions from '@/view/lever_transactions'
 import leverTransaction from '@/view/lever/lever_transaction'
 import leverList from '@/view/lever/leverList'
 import transferRecord from '@/view/lever/transferRecord'
+import success from '@/view/success'
 
 import ForgetPwd from '@/components/ForgetPwd'  //忘记密码
 import ResetPwd from '@/components/ResetPwd'  //重置密码密码
@@ -197,6 +199,11 @@ export default new Router({
 					name:'transferRecord',
 					component:transferRecord
 				},
+				{
+					path:'/success',
+					name:'success',
+					component:success
+				}
 				
 			]
 		},
@@ -299,6 +306,11 @@ export default new Router({
 					path:'/authentication',
 					name:'authentication',
 					component:authentication
+				},
+				{
+					path:'/payment',
+					name:'payment',
+					component:payment
 				},
 
 			]
