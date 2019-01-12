@@ -62,8 +62,7 @@ export default {
         $('#formdata').submit();
     }
   },
-  mounted() {
-        
+  mounted() {   
   }
 };
 </script>
