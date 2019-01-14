@@ -113,12 +113,12 @@ export default {
           title: '身份认证',
           page:'authentication',
         },
-        {
-          src1: require("@/assets/images/s0.png"),
-          src2: require("@/assets/images/s1.png"),
-          title: "支付",
-          page: "payment"
-        },
+        // {
+        //   src1: require("@/assets/images/s0.png"),
+        //   src2: require("@/assets/images/s1.png"),
+        //   title: "支付",
+        //   page: "payment"
+        // },
       ],
       assetstList: [],
       orderList: []

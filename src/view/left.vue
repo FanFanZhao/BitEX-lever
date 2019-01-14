@@ -33,12 +33,12 @@
 						text: '身份认证',
 						page:'authentication',
 					},
-					{
-						src1: require("@/assets/images/icon_news.png"),
-						src2: require("@/assets/images/icon_news_s.png"),
-						text: '支付',
-						page:'payment'
-					},
+					// {
+					// 	src1: require("@/assets/images/icon_news.png"),
+					// 	src2: require("@/assets/images/icon_news_s.png"),
+					// 	text: '支付',
+					// 	page:'payment'
+					// },
 				],
 			}
 		},
